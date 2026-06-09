@@ -76,9 +76,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0f14; --bg-2:#11161d; --card:#151c24; --line:#222b35;
-    --ink:#eef3f8; --muted:#9fb0c0; --soft:#6f8197;
-    --accent:#5ee0a0; --accent-2:#6cb6ff; --gold:#e0b863;
+    --bg:#0d0a12; --bg-2:#171019; --card:#1a121f; --line:#3a2733;
+    --ink:#fbf3e9; --muted:#cbb4ac; --soft:#9a8390;
+    /* folk-art floral palette */
+    --marigold:#FF8A1E; --magenta:#FF3D7F; --teal:#1DE9B6; --yellow:#FFC83D; --coral:#FF5A52;
+    --accent:#FF8A1E; --accent-2:#1DE9B6; --gold:#FFC83D;
     --radius:18px;
   }
   *{box-sizing:border-box}
@@ -86,13 +88,15 @@
   body{margin:0;background:var(--bg);color:var(--ink);font-family:'Heebo',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
-  .wrap{max-width:1120px;margin:0 auto;padding-inline:1.2rem}
+  .wrap{max-width:1120px;margin:0 auto;padding-inline:1.2rem;position:relative;z-index:1}
   .mono{font-family:'Space Grotesk',monospace}
 
-  /* glow backdrop */
-  body::before{content:"";position:fixed;inset:0;z-index:-1;background:
-    radial-gradient(700px 420px at 80% -5%, rgba(94,224,160,.10), transparent 60%),
-    radial-gradient(620px 420px at 10% 8%, rgba(108,182,255,.10), transparent 60%);}
+  /* warm floral backdrop */
+  body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(780px 480px at 84% -8%, rgba(255,138,30,.18), transparent 60%),
+    radial-gradient(700px 480px at 4% 2%, rgba(255,61,127,.15), transparent 58%),
+    radial-gradient(760px 620px at 50% 112%, rgba(29,233,182,.11), transparent 60%),
+    var(--bg);}
 
   header.hero{padding:5.5rem 0 2.5rem;text-align:center}
   .logo{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.6rem}
@@ -131,11 +135,94 @@
   footer a{color:var(--muted);border-bottom:1px solid transparent;transition:.2s}
   footer a:hover{color:var(--ink);border-color:var(--accent)}
   footer .row{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:.9rem;font-family:'Space Grotesk',monospace;font-size:.9rem}
+
+  /* ── 🌼 flowerish layer ─────────────────────────────── */
+  .logo .dot{background:linear-gradient(135deg,var(--marigold),var(--magenta));box-shadow:0 0 18px var(--magenta)}
+  h1 .grad{background:linear-gradient(110deg,var(--marigold),var(--magenta) 55%,var(--yellow));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .pill{border-color:var(--line);background:rgba(255,138,30,.07);color:var(--muted)}
+  .section-label{color:var(--marigold)}
+  .section-label::after{background:linear-gradient(90deg,rgba(255,138,30,.5),transparent)}
+  .card .tag{color:var(--marigold);background:rgba(255,138,30,.12);border-color:rgba(255,138,30,.3)}
+  .card .go{color:var(--teal)}
+  footer a:hover{border-color:var(--marigold)}
+
+  /* drifting petals */
+  .petals{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+  .petal{position:absolute;top:-6vh;width:13px;height:13px;border-radius:62% 0 62% 62%;opacity:0;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));animation:petalfall linear infinite}
+  @keyframes petalfall{0%{opacity:0;transform:translate(0,-6vh) rotate(0deg)}9%{opacity:.6}90%{opacity:.5}100%{opacity:0;transform:translate(52px,108vh) rotate(430deg)}}
+
+  /* hero floral flourishes */
+  .hero{position:relative;overflow:hidden}
+  .hero-flora{position:absolute;top:-6px;width:clamp(110px,17vw,205px);pointer-events:none;animation:sway 7s ease-in-out infinite}
+  .hero-flora.l{left:-12px}
+  .hero-flora.r{right:-12px;transform:scaleX(-1);animation-delay:-3.5s}
+  @keyframes sway{0%,100%{rotate:0deg}50%{rotate:3deg}}
+  @media(max-width:680px){.hero-flora{opacity:.45;width:108px}}
+
+  /* blooming cards + floral corner glow */
+  .card{transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+  .card:hover{transform:translateY(-6px) scale(1.012);border-color:var(--marigold);box-shadow:0 30px 70px -34px rgba(255,138,30,.55),0 0 0 1px rgba(255,138,30,.22)}
+  .card::after{content:"";position:absolute;top:-20px;inset-inline-end:-20px;width:72px;height:72px;background:radial-gradient(circle,var(--marigold),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:3}
+  .card:hover::after{opacity:.5}
+  .card .thumb::after{background:linear-gradient(180deg,transparent 50%,rgba(13,10,18,.72))}
+
+  /* floral divider under the hero */
+  .flora-div{display:flex;align-items:center;justify-content:center;gap:.6rem;margin:.2rem 0 0}
+  .flora-div .ln{height:1px;width:min(130px,20vw);background:linear-gradient(90deg,transparent,var(--marigold))}
+  .flora-div .ln.r{background:linear-gradient(90deg,var(--marigold),transparent)}
+  .flora-div svg{width:26px;height:26px}
+  @media(prefers-reduced-motion:reduce){.petal,.hero-flora{animation:none}.petal{display:none}}
 </style>
 </head>
 <body>
 
+<!-- folk-art flower symbol (reused) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="flora" viewBox="0 0 230 210">
+  <path d="M8 8 C 64 26, 36 92, 96 112 S 156 154, 206 142" fill="none" stroke="#2e9e6b" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+  <path d="M44 120 q-26 6 -34 30 q26 4 38 -10 z" fill="#2e9e6b" opacity=".8"/>
+  <path d="M120 150 q24 10 30 34 q-26 0 -36 -16 z" fill="#1f8f5e" opacity=".8"/>
+  <g transform="translate(72,80)">
+    <g fill="#FF8A1E">
+      <ellipse cx="0" cy="-26" rx="9" ry="17"/><ellipse cx="0" cy="-26" rx="9" ry="17" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-26" rx="9" ry="17" transform="rotate(90)"/><ellipse cx="0" cy="-26" rx="9" ry="17" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-26" rx="9" ry="17" transform="rotate(180)"/><ellipse cx="0" cy="-26" rx="9" ry="17" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-26" rx="9" ry="17" transform="rotate(270)"/><ellipse cx="0" cy="-26" rx="9" ry="17" transform="rotate(315)"/>
+    </g>
+    <circle r="15" fill="#FFC83D"/><circle r="7" fill="#E8590C"/>
+  </g>
+  <g transform="translate(152,120)">
+    <g fill="#FF3D7F">
+      <ellipse cx="0" cy="-19" rx="8" ry="14"/><ellipse cx="0" cy="-19" rx="8" ry="14" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-19" rx="8" ry="14" transform="rotate(120)"/><ellipse cx="0" cy="-19" rx="8" ry="14" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-19" rx="8" ry="14" transform="rotate(240)"/><ellipse cx="0" cy="-19" rx="8" ry="14" transform="rotate(300)"/>
+    </g>
+    <circle r="9" fill="#FFC83D"/>
+  </g>
+  <circle cx="36" cy="58" r="9" fill="#1DE9B6"/><circle cx="36" cy="58" r="4" fill="#0d0a12"/>
+  <circle cx="120" cy="42" r="7" fill="#FFC83D"/>
+</symbol></svg>
+
+<!-- drifting petals -->
+<div class="petals" aria-hidden="true">
+  <span class="petal" style="left:5%;background:#FF8A1E;animation-duration:14s;animation-delay:-2s"></span>
+  <span class="petal" style="left:13%;background:#FF3D7F;animation-duration:19s;animation-delay:-9s;width:10px;height:10px"></span>
+  <span class="petal" style="left:22%;background:#FFC83D;animation-duration:16s;animation-delay:-5s"></span>
+  <span class="petal" style="left:31%;background:#1DE9B6;animation-duration:21s;animation-delay:-14s;width:9px;height:9px"></span>
+  <span class="petal" style="left:42%;background:#FF5A52;animation-duration:15s;animation-delay:-7s"></span>
+  <span class="petal" style="left:51%;background:#FF8A1E;animation-duration:23s;animation-delay:-3s;width:11px;height:11px"></span>
+  <span class="petal" style="left:60%;background:#FF3D7F;animation-duration:17s;animation-delay:-11s"></span>
+  <span class="petal" style="left:69%;background:#FFC83D;animation-duration:20s;animation-delay:-6s;width:9px;height:9px"></span>
+  <span class="petal" style="left:78%;background:#1DE9B6;animation-duration:14.5s;animation-delay:-13s"></span>
+  <span class="petal" style="left:86%;background:#FF8A1E;animation-duration:18s;animation-delay:-1s;width:12px;height:12px"></span>
+  <span class="petal" style="left:93%;background:#FF3D7F;animation-duration:22s;animation-delay:-8s"></span>
+  <span class="petal" style="left:36%;background:#FFC83D;animation-duration:25s;animation-delay:-17s;width:8px;height:8px"></span>
+  <span class="petal" style="left:64%;background:#FF5A52;animation-duration:16.5s;animation-delay:-4s;width:10px;height:10px"></span>
+  <span class="petal" style="left:48%;background:#1DE9B6;animation-duration:19.5s;animation-delay:-15s"></span>
+</div>
+
 <header class="hero">
+  <svg class="hero-flora l"><use href="#flora"/></svg>
+  <svg class="hero-flora r"><use href="#flora"/></svg>
   <div class="wrap">
     <span class="logo"><span class="dot"></span> <b>wattsonworks</b></span>
     <h1>Websites that <span class="grad">convert</span>.</h1>
@@ -147,6 +234,11 @@
       <span class="pill">Hebrew RTL + English</span>
       <span class="pill">SEO + schema</span>
       <span class="pill">GitHub Pages</span>
+    </div>
+    <div class="flora-div">
+      <span class="ln"></span>
+      <svg viewBox="0 0 40 40" aria-hidden="true"><g transform="translate(20,20)"><g fill="#FF8A1E"><ellipse cy="-11" rx="4" ry="7"/><ellipse cy="-11" rx="4" ry="7" transform="rotate(45)"/><ellipse cy="-11" rx="4" ry="7" transform="rotate(90)"/><ellipse cy="-11" rx="4" ry="7" transform="rotate(135)"/><ellipse cy="-11" rx="4" ry="7" transform="rotate(180)"/><ellipse cy="-11" rx="4" ry="7" transform="rotate(225)"/><ellipse cy="-11" rx="4" ry="7" transform="rotate(270)"/><ellipse cy="-11" rx="4" ry="7" transform="rotate(315)"/></g><circle r="6" fill="#FFC83D"/><circle r="2.6" fill="#E8590C"/></g></svg>
+      <span class="ln r"></span>
     </div>
   </div>
 </header>
@@ -201,7 +293,7 @@
 
     <article class="card">
       <a class="full" href="https://wattsonworks.github.io/LIQUIDEX/" aria-label="LIQUIDEX"></a>
-      <div class="thumb"><img loading="lazy" src="https://wattsonworks.github.io/LIQUIDEX/og-image.svg" alt="LIQUIDEX liquidity scanner"></div>
+      <div class="thumb"><img loading="lazy" src="https://wattsonworks.github.io/LIQUIDEX/assets/img/signals-in-context.webp" alt="LIQUIDEX liquidity scanner — real chart"></div>
       <div class="body">
         <span class="tag">Trading · TradingView</span>
         <h3>LIQUIDEX</h3>
@@ -212,7 +304,7 @@
 
     <article class="card">
       <a class="full" href="https://wattsonworks.github.io/SG/" aria-label="Surge Guru"></a>
-      <div class="thumb"><img loading="lazy" src="https://wattsonworks.github.io/SG/og-image.svg" alt="Surge Guru crypto scanner"></div>
+      <div class="thumb"><img loading="lazy" src="https://wattsonworks.github.io/SG/assets/img/scanner-booms.webp" alt="Surge Guru — live scanner with real booms"></div>
       <div class="body">
         <span class="tag">Trading · Crypto</span>
         <h3>Surge Guru</h3>
@@ -223,7 +315,7 @@
 
     <article class="card">
       <a class="full" href="https://wattsonworks.github.io/LRE/" aria-label="LIQUIDEX Risk Engine"></a>
-      <div class="thumb"><img loading="lazy" src="https://wattsonworks.github.io/LRE/og-image.svg" alt="LIQUIDEX Risk Engine"></div>
+      <div class="thumb"><img loading="lazy" src="https://wattsonworks.github.io/LRE/assets/img/risk-pane.svg" alt="LIQUIDEX Risk Engine — risk sub-pane"></div>
       <div class="body">
         <span class="tag">Trading · Risk</span>
         <h3>LIQUIDEX Risk Engine</h3>
