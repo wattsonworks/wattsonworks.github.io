@@ -1,0 +1,17 @@
+# wattsonworks.github.io — origin-root robots.txt
+# NOTE: On GitHub Pages user-sites, ONLY this origin-root robots.txt is
+# authoritative for the whole origin. Per-project /<repo>/robots.txt files
+# are NOT consulted by crawlers. All crawl directives live here.
+
+User-agent: *
+Allow: /
+
+# LIQUIDEX paid Pine-script source — never expose (also gitignored, so normally
+# not deployed; this is belt-and-suspenders at the authoritative location).
+Disallow: /LIQUIDEX/LIQUIDEX.txt
+
+# Stale generated artifact on the peptides site
+Disallow: /isra-peptides/standalone.html
+
+# Master sitemap index (references every project's sitemap)
+Sitemap: https://wattsonworks.github.io/sitemap.xml
