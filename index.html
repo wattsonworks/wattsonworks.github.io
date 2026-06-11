@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>wattsonworks® — UX/UI Designer & Design Engineer · Portfolio</title>
-<meta name="description" content="wattsonworks — UX/UI design & design engineering by Avi Mor, Safed IL. Selected work: hospitality, food, community apps and real-time trading products. עיצוב ופיתוח ממשקים — אבי מור.">
+<meta name="description" content="wattsonworks — UX/UI design & design engineering by Mor Moshe Menahem, Safed IL. Owner of ROUX Villa & La Buffet; builder of real-time trading tools. עיצוב ופיתוח ממשקים — מור משה מנחם.">
 <meta name="theme-color" content="#0a0a0b">
 <link rel="canonical" href="https://wattsonworks.github.io/">
 <meta property="og:title" content="wattsonworks® — UX/UI Designer & Design Engineer">
-<meta property="og:description" content="Interfaces where craft meets conversion — hospitality, food, community and real-time trading products.">
+<meta property="og:description" content="UX/UI design & engineering by Mor Moshe Menahem — hospitality, food, community and real-time trading products.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wattsonworks.github.io/">
 <meta property="og:image" content="https://wattsonworks.github.io/roux/img/hi/hero-meron-view.png">
 <meta property="og:image:alt" content="wattsonworks — selected work">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="wattsonworks® — UX/UI Designer & Design Engineer">
-<meta name="twitter:description" content="Interfaces where craft meets conversion — selected work in hospitality, food, community and trading.">
+<meta name="twitter:description" content="UX/UI design & engineering by Mor Moshe Menahem — selected work in hospitality, food, community and trading.">
 <meta name="twitter:image" content="https://wattsonworks.github.io/roux/img/hi/hero-meron-view.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0b'/%3E%3Cpath d='M6 9l4 14 4-9 4 9 4-14' fill='none' stroke='%23FF8E2B' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
@@ -29,23 +29,44 @@
       "url": "https://wattsonworks.github.io/",
       "name": "wattsonworks — UX/UI Design Portfolio",
       "inLanguage": ["en", "he"],
-      "publisher": { "@id": "https://wattsonworks.github.io/#avi-mor" }
+      "publisher": { "@id": "https://wattsonworks.github.io/#mor" }
     },
     {
       "@type": "Person",
-      "@id": "https://wattsonworks.github.io/#avi-mor",
-      "name": "Avi Mor",
-      "alternateName": "אבי מור",
+      "@id": "https://wattsonworks.github.io/#mor",
+      "name": "Mor Moshe Menahem",
+      "alternateName": "מור משה מנחם",
       "url": "https://wattsonworks.github.io/",
       "jobTitle": "UX/UI designer & design engineer",
       "image": "https://wattsonworks.github.io/assets/img/me-avatar.webp",
       "sameAs": ["https://github.com/wattsonworks"],
+      "owns": [
+        { "@id": "https://wattsonworks.github.io/#roux" },
+        { "@id": "https://wattsonworks.github.io/#labuffet" }
+      ],
       "identifier": [{
         "@type": "PropertyValue",
         "propertyID": "Israeli Osek Murshe (עוסק מורשה)",
         "value": "303092126"
       }],
-      "address": { "@type": "PostalAddress", "addressCountry": "IL" }
+      "address": { "@type": "PostalAddress", "addressLocality": "Safed", "addressCountry": "IL" }
+    },
+    {
+      "@type": "LodgingBusiness",
+      "@id": "https://wattsonworks.github.io/#roux",
+      "name": "ROUX Villa · וילת רוקס",
+      "url": "https://wattsonworks.github.io/roux/",
+      "founder": { "@id": "https://wattsonworks.github.io/#mor" },
+      "address": { "@type": "PostalAddress", "streetAddress": "HaPalmach 68", "addressLocality": "Safed", "addressCountry": "IL" }
+    },
+    {
+      "@type": "Restaurant",
+      "@id": "https://wattsonworks.github.io/#labuffet",
+      "name": "La Buffet · לה בופה",
+      "url": "https://wattsonworks.github.io/labuffet/",
+      "servesCuisine": "Mediterranean breakfast",
+      "founder": { "@id": "https://wattsonworks.github.io/#mor" },
+      "address": { "@type": "PostalAddress", "streetAddress": "Simtat Yud Zayin 23 (The Way Inn)", "addressLocality": "Safed", "addressCountry": "IL" }
     },
     {
       "@type": "CollectionPage",
@@ -53,7 +74,7 @@
       "url": "https://wattsonworks.github.io/",
       "name": "Selected work",
       "isPartOf": { "@id": "https://wattsonworks.github.io/#website" },
-      "about": { "@id": "https://wattsonworks.github.io/#avi-mor" },
+      "about": { "@id": "https://wattsonworks.github.io/#mor" },
       "mainEntity": {
         "@type": "ItemList",
         "itemListElement": [
@@ -233,6 +254,9 @@
     font-size:clamp(1.7rem,5.2vw,4.4rem);transition:color .3s}
   .w-name .he{font-stretch:100%;font-weight:600;font-size:.42em;letter-spacing:0;color:var(--faint);vertical-align:.5em;margin-inline-start:.6em;transition:color .3s}
   .w-tag{font-family:var(--grot);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);text-align:right;transition:color .3s}
+  .w-tag i{display:block;font-style:normal;font-size:.86em;letter-spacing:.12em;color:var(--faint);margin-top:.35rem;transition:color .3s}
+  .work-item:hover .w-tag i{color:rgba(10,10,11,.5)}
+  @media(max-width:899px){.work-item:hover .w-tag i{color:var(--faint)}}
   .w-arrow{width:clamp(22px,2.6vw,34px);height:clamp(22px,2.6vw,34px);color:var(--accent);transition:transform .45s var(--ease)}
   .w-arrow svg{width:100%;height:100%}
   .work-item:hover .w-idx,.work-item:hover .w-tag{color:rgba(10,10,11,.6)}
@@ -346,7 +370,7 @@
     <div class="hero-foot">
       <p class="hf-l" data-intro>Based in Safed, Israel<br>— shipping worldwide</p>
       <p class="hf-c" data-intro>( scroll )</p>
-      <p class="hf-r" data-intro>Interfaces where <em class="serif">craft</em><br>meets <em class="serif">conversion</em>.</p>
+      <p class="hf-r" data-intro>Design, <em class="serif">hospitality</em><br>&amp; <em class="serif">markets</em>.</p>
     </div>
   </div>
 </header>
@@ -354,8 +378,8 @@
 <!-- marquee -->
 <div class="marquee" aria-hidden="true">
   <div class="track">
-    <span>UX/UI Design <i>✦</i> Design Engineering <i>✦</i> WebGL &amp; Motion <i>✦</i> Typography <i>✦</i> Conversion <i>✦</i> SEO &amp; Schema <i>✦</i> EN + HE RTL <i>✦</i> Real-time Products <i>✦</i></span>
-    <span>UX/UI Design <i>✦</i> Design Engineering <i>✦</i> WebGL &amp; Motion <i>✦</i> Typography <i>✦</i> Conversion <i>✦</i> SEO &amp; Schema <i>✦</i> EN + HE RTL <i>✦</i> Real-time Products <i>✦</i></span>
+    <span>UX/UI Design <i>✦</i> Design Engineering <i>✦</i> WebGL &amp; Motion <i>✦</i> Typography <i>✦</i> Hospitality <i>✦</i> Markets &amp; Trading <i>✦</i> SEO &amp; Schema <i>✦</i> EN + HE RTL <i>✦</i></span>
+    <span>UX/UI Design <i>✦</i> Design Engineering <i>✦</i> WebGL &amp; Motion <i>✦</i> Typography <i>✦</i> Hospitality <i>✦</i> Markets &amp; Trading <i>✦</i> SEO &amp; Schema <i>✦</i> EN + HE RTL <i>✦</i></span>
   </div>
 </div>
 
@@ -369,12 +393,12 @@
       <span class="count">( 01 )</span>
     </div>
     <div class="manifesto">
-      <p id="manifesto">I’m Avi — a UX/UI designer and design engineer. I design, write and build digital products end-to-end, where <em class="serif">craft</em> meets <em class="serif">conversion</em> — hospitality, food, community and real-time trading tools. Every pixel earns its place. Every page is built to perform.</p>
+      <p id="manifesto">I’m Mor Moshe Menahem — designer, developer and trading enthusiast. I own and run <em class="serif">ROUX Villa</em> and <em class="serif">La Buffet</em> in Safed, and I build the digital products behind them — research, interface, code and SEO, end-to-end. The same discipline drives the real-time trading tools I ship for my own desk.</p>
     </div>
     <div class="facts">
       <div class="fact" data-reveal><b>0<em>8</em></b><span>Live products shipped</span></div>
       <div class="fact" data-reveal><b>EN·<em>HE</em></b><span>Bilingual — full RTL craft</span></div>
-      <div class="fact" data-reveal><b>0<em>1</em></b><span>Person — design to deploy</span></div>
+      <div class="fact" data-reveal><b>0<em>2</em></b><span>Venues owned &amp; run in Safed</span></div>
     </div>
   </section>
 
@@ -423,25 +447,25 @@
       </a>
 
       <a class="work-item" href="https://wattsonworks.github.io/roux/" data-view
-         data-img="https://wattsonworks.github.io/roux/img/hi/hero-meron-view.png" data-cap="Boutique villa · Safed">
+         data-img="https://wattsonworks.github.io/roux/img/hi/hero-meron-view.png" data-cap="Owner · HaPalmach 68, Safed">
         <span class="fill" aria-hidden="true"></span>
         <span class="work-row">
           <span class="w-idx">04</span>
           <span class="w-name">Roux Villa<span class="he">וילת רוקס</span></span>
           <span class="w-thumb"><img loading="lazy" src="https://wattsonworks.github.io/roux/img/hi/hero-meron-view.png" alt="ROUX villa — view to Mount Meron"></span>
-          <span class="w-tag">Hospitality</span>
+          <span class="w-tag">Hospitality · Owner<i>HaPalmach 68, Safed</i></span>
           <span class="w-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M9 6h9v9"/></svg></span>
         </span>
       </a>
 
       <a class="work-item" href="https://wattsonworks.github.io/labuffet/" data-view
-         data-img="https://wattsonworks.github.io/labuffet/img/mezze-overhead-1280.jpg" data-cap="Breakfast · The Way Inn">
+         data-img="https://wattsonworks.github.io/labuffet/img/mezze-overhead-1280.jpg" data-cap="Owner · Simtat Yud Zayin 23, Safed">
         <span class="fill" aria-hidden="true"></span>
         <span class="work-row">
           <span class="w-idx">05</span>
           <span class="w-name">La Buffet<span class="he">לה בופה</span></span>
           <span class="w-thumb"><img loading="lazy" src="https://wattsonworks.github.io/labuffet/img/mezze-overhead-1280.jpg" alt="La Buffet — Mediterranean breakfast spread"></span>
-          <span class="w-tag">Food &amp; Hospitality</span>
+          <span class="w-tag">Restaurant · Owner<i>Simtat Yud Zayin 23, Safed</i></span>
           <span class="w-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M9 6h9v9"/></svg></span>
         </span>
       </a>
@@ -500,7 +524,7 @@
       <div class="cap" data-reveal>
         <span class="c-idx">01</span>
         <h3>UX &amp; Product Strategy</h3>
-        <p>Flows, information architecture and <b>conversion paths</b> — pages built around the one action that matters, validated against real visitor behavior.</p>
+        <p>Flows, information architecture and <b>conversion paths</b> — informed by running real businesses, validated against real visitor behavior.</p>
       </div>
       <div class="cap" data-reveal>
         <span class="c-idx">02</span>
@@ -515,7 +539,7 @@
       <div class="cap" data-reveal>
         <span class="c-idx">04</span>
         <h3>SEO &amp; Growth</h3>
-        <p>Structured data, technical SEO and copy that sells — every site ships with <b>schema, sitemaps and meta</b> wired in from day one, then iterated on data.</p>
+        <p>Structured data, technical SEO and clear writing — every site ships with <b>schema, sitemaps and meta</b> in place from day one, then iterates on real data.</p>
       </div>
     </div>
   </section>
@@ -531,7 +555,7 @@
       <span class="mask"><span class="line">Let’s</span></span>
       <span class="mask"><span class="line outline">Work</span></span>
     </span>
-    <p class="sub" data-reveal>Got a product, a place or an idea that needs to <em class="serif">convert</em>?<br>I take on a few projects a year.</p>
+    <p class="sub" data-reveal>I take on a few projects a year, end-to-end.<br>The rest of my time belongs to the villa, the buffet and the <em class="serif">charts</em>.</p>
     <div class="cta-wrap" data-reveal>
       <a class="cta" href="https://github.com/wattsonworks" target="_blank" rel="noopener" data-magnetic data-hover>Say hello ↗</a>
     </div>
@@ -540,7 +564,7 @@
 </main>
 
 <footer>
-  <span class="f-id"><img class="me" src="assets/img/me-avatar.webp" alt="Avi Mor" width="26" height="26" loading="lazy">© <span id="yr">2026</span> wattsonworks® — Safed, IL</span>
+  <span class="f-id"><img class="me" src="assets/img/me-avatar.webp" alt="Mor Moshe Menahem" width="26" height="26" loading="lazy">© <span id="yr">2026</span> wattsonworks® — Safed, IL</span>
   <div class="f-links">
     <a href="https://github.com/wattsonworks" target="_blank" rel="noopener" data-hover>GitHub</a>
     <a href="https://wattsonworks.github.io/LIQUIDEX/" data-hover>Liquidex</a>
