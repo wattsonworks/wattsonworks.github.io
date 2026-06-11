@@ -38,6 +38,7 @@
       "alternateName": "אבי מור",
       "url": "https://wattsonworks.github.io/",
       "jobTitle": "UX/UI designer & design engineer",
+      "image": "https://wattsonworks.github.io/assets/img/me-avatar.webp",
       "sameAs": ["https://github.com/wattsonworks"],
       "identifier": [{
         "@type": "PropertyValue",
@@ -189,6 +190,24 @@
   .sec-head h2{font-family:var(--grot);font-weight:500;font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
   .sec-head .count{font-family:var(--grot);font-size:.78rem;letter-spacing:.2em;color:var(--faint)}
 
+  /* ───────────── ghost portraits (hints of the designer) ───────────── */
+  .ghost{position:absolute;pointer-events:none;z-index:0;margin:0}
+  .ghost img{display:block}
+  #about{overflow:hidden}
+  #about .sec-head,#about .manifesto,#about .facts{position:relative;z-index:1}
+  .ghost-about{top:-2%;right:-4%;width:clamp(300px,34vw,520px);height:104%}
+  .ghost-about img{width:100%;height:100%;object-fit:cover;object-position:top;
+    filter:grayscale(1) contrast(1.1) brightness(.74);opacity:.3;
+    -webkit-mask-image:radial-gradient(82% 66% at 62% 30%,#000 34%,transparent 78%);
+    mask-image:radial-gradient(82% 66% at 62% 30%,#000 34%,transparent 78%)}
+  @media(max-width:760px){.ghost-about{width:78vw;right:-22%}.ghost-about img{opacity:.13}}
+  .contact{overflow:hidden}
+  .contact .sec-head,.contact .big,.contact .sub,.cta-wrap{position:relative;z-index:1}
+  .ghost-contact{left:50%;top:52%;transform:translate(-50%,-50%);width:min(1280px,98%)}
+  .ghost-contact img{width:100%;filter:grayscale(1) contrast(1.05) brightness(.75);opacity:.15;
+    -webkit-mask-image:radial-gradient(70% 86% at 50% 50%,#000 34%,transparent 76%);
+    mask-image:radial-gradient(70% 86% at 50% 50%,#000 34%,transparent 76%)}
+
   /* ───────────── about / manifesto ───────────── */
   .manifesto{max-width:1200px}
   .manifesto p{font-weight:600;font-stretch:108%;font-size:clamp(1.55rem,3.6vw,3.3rem);line-height:1.22;letter-spacing:-.015em;color:var(--ink)}
@@ -270,6 +289,10 @@
   footer a{position:relative;color:var(--soft);transition:color .25s}
   footer a:hover{color:var(--ink)}
   footer .f-links{display:flex;gap:1.4rem;flex-wrap:wrap}
+  footer .f-id{display:inline-flex;align-items:center;gap:.65rem}
+  footer .me{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);
+    filter:grayscale(1) brightness(.7);opacity:.55;transition:filter .4s var(--ease),opacity .4s,transform .4s var(--ease)}
+  footer .me:hover{filter:none;opacity:1;transform:scale(1.35) rotate(-6deg)}
 
   /* generic reveal default — JS sets initial states, CSS keeps content visible without JS */
   @media(prefers-reduced-motion:reduce){
@@ -340,6 +363,7 @@
 
   <!-- ═══════════ ABOUT ═══════════ -->
   <section id="about">
+    <figure class="ghost ghost-about" aria-hidden="true"><img src="assets/img/me-ghost.webp" alt="" loading="lazy" width="709" height="991"></figure>
     <div class="sec-head">
       <h2>About</h2>
       <span class="count">( 01 )</span>
@@ -498,6 +522,7 @@
 
   <!-- ═══════════ CONTACT ═══════════ -->
   <section id="contact" class="contact">
+    <figure class="ghost ghost-contact" aria-hidden="true"><img src="assets/img/me-pano.webp" alt="" loading="lazy" width="1800" height="376"></figure>
     <div class="sec-head">
       <h2>Contact</h2>
       <span class="count">( 05 )</span>
@@ -515,7 +540,7 @@
 </main>
 
 <footer>
-  <span>© <span id="yr">2026</span> wattsonworks® — Safed, IL</span>
+  <span class="f-id"><img class="me" src="assets/img/me-avatar.webp" alt="Avi Mor" width="26" height="26" loading="lazy">© <span id="yr">2026</span> wattsonworks® — Safed, IL</span>
   <div class="f-links">
     <a href="https://github.com/wattsonworks" target="_blank" rel="noopener" data-hover>GitHub</a>
     <a href="https://wattsonworks.github.io/LIQUIDEX/" data-hover>Liquidex</a>
@@ -633,6 +658,16 @@
         scrollTrigger: { trigger: '#about', start: 'top 74%', end: 'center 46%', scrub: true }
       });
     }
+
+    /* ghost portraits breathe in on scroll */
+    gsap.fromTo('.ghost-about img', { opacity: .08 }, {
+      opacity: .34, ease: 'none',
+      scrollTrigger: { trigger: '#about', start: 'top 80%', end: 'center 40%', scrub: true }
+    });
+    gsap.fromTo('.ghost-contact img', { yPercent: -14, opacity: .07 }, {
+      yPercent: 10, opacity: .17, ease: 'none',
+      scrollTrigger: { trigger: '.contact', start: 'top 85%', end: 'bottom 30%', scrub: true }
+    });
 
     /* generic reveals */
     gsap.utils.toArray('[data-reveal]').forEach(function(el, i){
