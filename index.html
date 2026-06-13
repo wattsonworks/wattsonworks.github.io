@@ -1729,25 +1729,54 @@ try{
   scene.add(new THREE.Line(ridgeGeo, ridgeMat));
   const ridgeBase = ridgePts.map(p => p.y);
 
-  /* ── 3. VALLEY FLOOR — the heritage dot-wave, demoted ── */
+  /* ── 3. VALLEY FLOOR — the heritage dot-wave, now a living reactive net ── */
   const geo = new THREE.PlaneGeometry(30, 14, mobile ? 80 : 130, mobile ? 44 : 64);
   const valU = {
     uTime:{value:0}, uSize:{value:(mobile?1.9:2.3)*Math.min(devicePixelRatio,2)},
     uOpacity:{value:0},
     uColA:{value:new THREE.Color('#4a4640')},
-    uColB:{value:new THREE.Color('#FF8E2B')}
+    uColB:{value:new THREE.Color('#FF8E2B')},
+    uPointer:{value:new THREE.Vector2(0,-999)},
+    uPointerStr:{value:0},
+    uRipPos:{value:[new THREE.Vector2(),new THREE.Vector2(),new THREE.Vector2(),new THREE.Vector2()]},
+    uRipT:{value:[-1,-1,-1,-1]}
   };
+
+  /* shared displacement — the wave, the cursor wake, and click shockwaves.
+     The dots and the wireframe both call this, so they flex as one surface. */
+  const DISP = `
+    uniform float uTime;
+    uniform vec2 uPointer; uniform float uPointerStr;
+    uniform vec2 uRipPos[4]; uniform float uRipT[4];
+    float surfaceZ(vec2 xy){
+      float w = sin(xy.x*.36 + uTime*.55)*.42
+              + sin(xy.y*.30 + uTime*.38)*.42
+              + sin((xy.x+xy.y)*.17 + uTime*.22)*.58;
+      float pd = distance(xy, uPointer);
+      w += exp(-pd*pd*0.10) * uPointerStr * (0.5 + 0.22*sin(pd*2.2 - uTime*3.0));
+      for(int i=0;i<4;i++){
+        float st = uRipT[i];
+        if(st < 0.0) continue;
+        float age = uTime - st;
+        if(age < 0.0 || age > 3.0) continue;
+        float rd = distance(xy, uRipPos[i]);
+        float front = age * 4.5;
+        w += exp(-(rd-front)*(rd-front)*0.55) * sin((rd-front)*3.0) * 0.9 * exp(-age*1.3);
+      }
+      return w;
+    }`;
+
   const valMat = new THREE.ShaderMaterial({
     uniforms: valU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    vertexShader: `
-      uniform float uTime; uniform float uSize;
+    vertexShader: DISP + `
+      uniform float uSize;
       varying float vElev; varying float vFade;
       void main(){
         vec3 p = position;
-        float w = sin(p.x*.36 + uTime*.55)*.42 + sin(p.y*.30 + uTime*.38)*.42 + sin((p.x+p.y)*.17 + uTime*.22)*.58;
+        float w = surfaceZ(p.xy);
         p.z += w;
         vec4 mv = modelViewMatrix * vec4(p,1.0);
-        gl_PointSize = uSize * (9.0 / -mv.z);
+        gl_PointSize = uSize * (9.0 / -mv.z) * (1.0 + max(w,0.0)*0.28);
         gl_Position = projectionMatrix * mv;
         vElev = w;
         vFade = clamp(1.0 - (-mv.z - 6.0) / 15.0, 0.0, 1.0);
@@ -1757,9 +1786,12 @@ try{
       varying float vElev; varying float vFade;
       void main(){
         float d = length(gl_PointCoord - .5);
-        float a = smoothstep(.5,.16,d) * vFade * uOpacity;
+        float core = smoothstep(.5,.07,d);
+        float halo = smoothstep(.5,.0,d) * 0.32;
+        float a = (core + halo) * pow(vFade, 1.3) * uOpacity;
         if(a < .003) discard;
         vec3 col = mix(uColA, uColB, smoothstep(-.35, 1.05, vElev));
+        col += uColB * max(vElev,0.0) * 0.38;
         gl_FragColor = vec4(col, a);
       }`
   });
@@ -1767,6 +1799,54 @@ try{
   valley.rotation.x = -Math.PI/2 + .14;
   valley.position.y = -1.3;
   scene.add(valley);
+
+  /* living wireframe — a coarser net woven through the same surface */
+  function buildNet(wseg, hseg){
+    const g = new THREE.PlaneGeometry(30, 14, wseg, hseg);
+    const cols = wseg+1, rows = hseg+1, idx = [];
+    for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+      const a = r*cols + c;
+      if(c < cols-1) idx.push(a, a+1);
+      if(r < rows-1) idx.push(a, a+cols);
+    }
+    g.setIndex(idx);
+    return g;
+  }
+  const netMat = new THREE.ShaderMaterial({
+    uniforms: valU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    vertexShader: DISP + `
+      varying float vElev; varying float vFade;
+      void main(){
+        vec3 p = position;
+        float w = surfaceZ(p.xy);
+        p.z += w;
+        vec4 mv = modelViewMatrix * vec4(p,1.0);
+        gl_Position = projectionMatrix * mv;
+        vElev = w;
+        vFade = clamp(1.0 - (-mv.z - 6.0) / 15.0, 0.0, 1.0);
+      }`,
+    fragmentShader: `
+      uniform float uOpacity; uniform vec3 uColB;
+      varying float vElev; varying float vFade;
+      void main(){
+        float a = (0.085 + max(vElev,0.0)*0.13) * pow(vFade,1.4) * uOpacity;
+        gl_FragColor = vec4(uColB, a);
+      }`
+  });
+  const net = new THREE.LineSegments(buildNet(mobile?26:44, mobile?12:20), netMat);
+  net.rotation.x = valley.rotation.x;
+  net.position.y = valley.position.y;
+  scene.add(net);
+
+  /* invisible hit-plane for pointer ray (canvas is pointer-events:none) */
+  const hitPlane = new THREE.Mesh(
+    new THREE.PlaneGeometry(30, 14),
+    new THREE.MeshBasicMaterial({ colorWrite:false, depthWrite:false, depthTest:false })
+  );
+  hitPlane.rotation.x = valley.rotation.x;
+  hitPlane.position.y = valley.position.y;
+  scene.add(hitPlane);
+  const raycaster = new THREE.Raycaster();
 
   /* ── phase targets ── */
   const PH = {
@@ -1817,6 +1897,40 @@ try{
   let visible = true;
   new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(canvas);
 
+  /* ── pointer ripple (cursor + touch) ── */
+  const ndc = new THREE.Vector2(0, -999);
+  let pointerActive = false, lastMove = 0, ripIdx = 0;
+  function aimRipple(){
+    raycaster.setFromCamera(ndc, camera);
+    const hit = raycaster.intersectObject(hitPlane, false)[0];
+    if(hit && hit.uv){ valU.uPointer.value.set((hit.uv.x-0.5)*30, (hit.uv.y-0.5)*14); return true; }
+    return false;
+  }
+  function spawnRipple(){
+    if(!aimRipple()) return;
+    const i = ripIdx++ % 4;
+    valU.uRipPos.value[i].copy(valU.uPointer.value);
+    valU.uRipT.value[i] = clock.getElapsedTime();
+  }
+  if(!reduced){
+    addEventListener('pointermove', e => {
+      ndc.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1);
+      pointerActive = true; lastMove = clock.getElapsedTime();
+    }, { passive: true });
+    addEventListener('pointerdown', e => {
+      ndc.set((e.clientX/innerWidth)*2-1, -(e.clientY/innerHeight)*2+1);
+      pointerActive = true; lastMove = clock.getElapsedTime();
+      spawnRipple();
+    }, { passive: true });
+  }
+  function updateRipple(t){
+    if(pointerActive) aimRipple();
+    const target = (pointerActive && (t - lastMove) < 0.6) ? 1 : 0;
+    valU.uPointerStr.value += (target - valU.uPointerStr.value) * 0.08;
+    const rt = valU.uRipT.value;
+    for(let i=0;i<4;i++){ if(rt[i] >= 0 && t - rt[i] > 3.2) rt[i] = -1; }
+  }
+
   if(reduced){
     /* one designed still frame */
     starU.uTime.value = 3; starU.uOpacity.value = .9;
@@ -1829,6 +1943,7 @@ try{
       const t = clock.getElapsedTime();
       starU.uTime.value = t;
       valU.uTime.value = t;
+      updateRipple(t);
       if(starU.uOpacity.value < 1) starU.uOpacity.value = Math.min(1, t/2.4);
       if(valU.uOpacity.value < phT.valley) valU.uOpacity.value = Math.min(phT.valley, t/2.2);
       else valU.uOpacity.value += (phT.valley - valU.uOpacity.value) * .02;
