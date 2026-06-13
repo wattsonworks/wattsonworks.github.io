@@ -606,10 +606,10 @@
   .ah-clips{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.5rem .85rem 0}
   .ah-clip{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid var(--line);display:block;cursor:pointer;transition:border-color .25s}
   .ah-clip:hover{border-color:var(--accent)}
-  /* ── ON AIR featured band ── */
-  #onair{padding-top:clamp(2.5rem,6vh,4.5rem);padding-bottom:0}
+  /* ── ON AIR featured clip (sits in the Operator column, under the facts) ── */
   .onair{margin:0}
-  .onair-stage{position:relative;width:100%;height:clamp(240px,54vh,580px);background:#000}
+  .op-onair{margin-top:clamp(1.4rem,3.2vh,2.4rem)}
+  .onair-stage{position:relative;width:100%;aspect-ratio:16/9;background:#000}
   @media(max-width:760px){.ah-grid{grid-template-columns:1fr}}
 
   /* ───────────── command terminal ───────────── */
@@ -748,24 +748,6 @@
 <p class="vh">wattsonworks runs ten live products: LIQUIDEX, Surge Guru, the Risk Engine and the free Web3 Surge &amp; Risk Engine for traders; ROUX Villa and La Buffet in Safed; Jesta, Avihu the gardener, Isra.Peptides and the Healed IMO recovery guide.</p>
 
 <main id="main">
-
-  <!-- ═══════════ ON AIR (featured live clip) ═══════════ -->
-  <section id="onair" aria-label="On air — live gameplay with sound">
-    <figure class="ah-panel onair">
-      <figcaption class="ah-bar">
-        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="ah-title">ON AIR — MW2 · DMZ, LIVE<span class="intel-live">● LIVE</span></span>
-        <a class="ah-open" href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Twitch ↗</a>
-      </figcaption>
-      <div class="onair-stage">
-        <video class="ah-feat" id="dmz-feat" controls loop playsinline preload="auto" poster="assets/dmz2.jpg" aria-label="MW2 DMZ — live, with sound (singing through a raid)">
-          <source src="assets/dmz2.mp4" type="video/mp4">
-        </video>
-        <button class="ah-unmute" id="dmz-sound" type="button" hidden aria-label="Turn the sound on">🔊 Sound on</button>
-      </div>
-      <p class="ah-cap"><b>MW2 DMZ — live.</b> Running a raid and singing through it <em class="serif">(turn it up ♪)</em>. The desk trades by day; the nights sound like this. Full vods <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>on Twitch ↗</a>.</p>
-    </figure>
-  </section>
 
   <!-- ═══════════ THE BOARD ═══════════ -->
   <section id="board" aria-labelledby="board-h">
@@ -1103,6 +1085,20 @@
           <div class="fact" data-reveal><b>EN·<em>HE</em></b><span>Bilingual — full RTL craft</span></div>
           <div class="fact" data-reveal><b><span data-count="2" data-pad="2">02</span></b><span>Venues owned &amp; run in Safed</span></div>
         </div>
+        <figure class="ah-panel onair op-onair">
+          <figcaption class="ah-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="ah-title">ON AIR — MW2 · DMZ, LIVE<span class="intel-live">● LIVE</span></span>
+            <a class="ah-open" href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Twitch ↗</a>
+          </figcaption>
+          <div class="onair-stage">
+            <video class="ah-feat" id="dmz-feat" controls loop playsinline preload="auto" poster="assets/dmz2.jpg" aria-label="MW2 DMZ — live, with sound (singing through a raid)">
+              <source src="assets/dmz2.mp4" type="video/mp4">
+            </video>
+            <button class="ah-unmute" id="dmz-sound" type="button" hidden aria-label="Turn the sound on">🔊 Sound on</button>
+          </div>
+          <p class="ah-cap"><b>Off the desk</b> — running an <b>MW2 DMZ</b> raid and singing through it <em class="serif">(turn it up ♪)</em>. <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Live on Twitch ↗</a>.</p>
+        </figure>
       </div>
     </div>
   </section>
