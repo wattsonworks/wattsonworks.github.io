@@ -533,29 +533,57 @@
   .intel-stage{position:relative;width:100%;height:clamp(440px,74vh,780px);
     background:radial-gradient(120% 80% at 50% 0,rgba(255,142,43,.05),transparent 60%),var(--bg)}
   .intel-stage iframe{width:100%;height:100%;border:0;display:block}
-  .intel-facade{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;background:transparent;color:inherit;font:inherit;
+  .intel-facade{position:absolute;inset:0;width:100%;height:100%;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem}
   .if-rows{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:.7rem;padding:0 8%;
     opacity:.3;pointer-events:none}
+  .if-actions{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.7rem}
+  .if-tab{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+  .if-tab:hover{color:var(--accent)}
+  .intel-escape{position:absolute;top:.6rem;right:.6rem;z-index:2;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--soft);background:rgba(7,7,8,.7);border:1px solid var(--line);padding:.25rem .5rem}
+  .intel-escape:hover{color:var(--accent)}
   .if-row{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--soft);text-align:left;
     border-bottom:1px solid var(--line);padding-bottom:.55rem}
   .if-row.dim{opacity:.5}
   .if-row .sev{display:inline-block;font-size:.58rem;padding:.14rem .42rem;margin-inline-end:.6rem;color:var(--accent-ink);letter-spacing:.1em}
   .if-row .sev.hi{background:var(--down)}
   .if-row .sev.md{background:var(--candle)}
-  .if-go{position:relative;z-index:1;font-family:var(--mono);font-size:clamp(.86rem,1.5vw,1.08rem);letter-spacing:.12em;
+  .if-go{font-family:var(--mono);font-size:clamp(.86rem,1.5vw,1.08rem);letter-spacing:.12em;cursor:pointer;
     text-transform:uppercase;color:var(--ink);display:inline-flex;align-items:center;gap:.7rem;
     padding:.95rem 1.5rem;border:1px solid var(--phosphor);background:rgba(7,7,8,.62);transition:background .3s var(--ease),color .3s}
   .if-play{color:var(--phosphor);transition:color .3s}
-  .intel-facade:hover .if-go,.intel-facade:focus-visible .if-go{background:var(--phosphor);color:#04150d}
-  .intel-facade:hover .if-play,.intel-facade:focus-visible .if-play{color:#04150d}
-  .intel-facade:focus-visible{outline:none}
+  .if-go:hover,.if-go:focus-visible{background:var(--phosphor);color:#04150d;outline:none}
+  .if-go:hover .if-play,.if-go:focus-visible .if-play{color:#04150d}
   .if-note{position:relative;z-index:1;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
   .intel-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
   .intel-cap{margin-top:1.2rem;max-width:62ch;color:var(--soft);font-size:clamp(.95rem,1.4vw,1.05rem);line-height:1.7}
   .intel-cap .serif{color:var(--accent)}
   @media(max-width:680px){.intel-stage{height:80vh}.if-rows{padding:0 6%}}
+
+  /* ───────────── after hours ───────────── */
+  .ah-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,1.8rem)}
+  .ah-panel{margin:0;display:flex;flex-direction:column;border:1px solid var(--line);background:var(--bg-2);overflow:hidden}
+  .ah-bar{display:flex;align-items:center;gap:.8rem;padding:.65rem 1rem;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+  .ah-bar .dots{display:inline-flex;gap:.4rem;flex:none}
+  .ah-bar .dots i{width:9px;height:9px;border-radius:50%;background:var(--faint)}
+  .ah-title{flex:1;min-width:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ah-open{flex:none;color:var(--accent)}
+  .ah-open:hover{color:var(--candle)}
+  .ah-media{position:relative;background:#000;aspect-ratio:16/9}
+  .ah-video{width:100%;height:100%;display:block;object-fit:cover;background:#000}
+  .ah-badge{position:absolute;top:.7rem;left:.7rem;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.18em;
+    color:var(--accent-ink);background:var(--accent);padding:.2rem .5rem;pointer-events:none}
+  .ah-sc{aspect-ratio:auto;height:100%;min-height:300px;display:flex}
+  .ah-sc iframe{width:100%;height:100%;min-height:300px;border:0;display:block}
+  .ah-cap{padding:1rem;color:var(--soft);font-size:.95rem;line-height:1.65}
+  .ah-cap b{color:var(--ink);font-weight:600}
+  .ah-cap .serif{color:var(--accent)}
+  .ah-cap a{color:var(--accent)}
+  .ah-cap a:hover{color:var(--candle)}
+  @media(max-width:760px){.ah-grid{grid-template-columns:1fr}}
 
   /* ───────────── command terminal ───────────── */
   .cmdk{position:fixed;inset:0;z-index:260;display:flex;align-items:flex-start;justify-content:center;padding-top:14vh;
@@ -965,16 +993,19 @@
         <a class="intel-open" href="https://alertguru.base44.app/" target="_blank" rel="noopener" data-hover>open full ↗</a>
       </figcaption>
       <div class="intel-stage" id="intel-stage">
-        <button class="intel-facade" id="intel-facade" type="button" aria-label="Connect to the live Alert Guru intelligence feed">
+        <div class="intel-facade" id="intel-facade">
           <span class="if-rows" aria-hidden="true">
             <span class="if-row"><b class="sev hi">HIGH</b> Dogecoin surges on SpaceX IPO hype</span>
             <span class="if-row"><b class="sev md">MED</b> BlackRock &amp; Securitize expand BUIDL to BNB</span>
             <span class="if-row"><b class="sev md">MED</b> Bittensor (TAO) rises amid AI-token rally</span>
             <span class="if-row dim"><b class="sev md">MED</b> Bitcoin's 'calm top' challenges bottom calls</span>
           </span>
-          <span class="if-go"><span class="if-play" aria-hidden="true">▶</span> Go live — real-time intelligence feed</span>
-          <span class="if-note">embeds the running app · alertguru.base44.app</span>
-        </button>
+          <span class="if-actions">
+            <button class="if-go" id="intel-go" type="button"><span class="if-play" aria-hidden="true">▶</span> Go live — embed the feed</button>
+            <a class="if-tab" href="https://alertguru.base44.app/" target="_blank" rel="noopener" data-hover>or open in a new tab ↗</a>
+          </span>
+          <span class="if-note">live BTC/ETH · market structure · severity-ranked news</span>
+        </div>
       </div>
     </figure>
     <p class="intel-cap">A product I designed &amp; built, running <em class="serif">live</em> inside the page — real-time BTC/ETH, market structure and a severity-ranked news-intelligence stream, streamed straight from the app.</p>
@@ -1039,6 +1070,45 @@
     </div>
   </section>
 
+  <!-- ═══════════ AFTER HOURS ═══════════ -->
+  <section id="afterhours" aria-labelledby="ah-h">
+    <div class="sec-head">
+      <h2 id="ah-h">After Hours <span class="he" dir="rtl" lang="he">אחרי השעות</span></h2>
+      <span class="count">( 06 )</span>
+    </div>
+    <div class="ah-grid">
+
+      <figure class="ah-panel">
+        <figcaption class="ah-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="ah-title">MW2 · DMZ — 1V3, THE FIGHT</span>
+          <a class="ah-open" href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Twitch ↗</a>
+        </figcaption>
+        <div class="ah-media">
+          <video class="ah-video" controls preload="none" playsinline poster="assets/dmz-1v3.jpg" aria-label="MW2 DMZ — a 1v3 firefight highlight">
+            <source src="assets/dmz-1v3.mp4" type="video/mp4">
+          </video>
+          <span class="ah-badge" aria-hidden="true">1V3</span>
+        </div>
+        <p class="ah-cap">Tarkov-tense extraction on <b>MW2 DMZ</b> — one operator, three contacts, one exfil. The full vods stream <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>live on Twitch ↗</a>.</p>
+      </figure>
+
+      <figure class="ah-panel">
+        <figcaption class="ah-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="ah-title">SOUNDCLOUD — NATURE RAVE / TECH</span>
+          <a class="ah-open" href="https://soundcloud.com/limgamosz" target="_blank" rel="noopener" data-hover>SoundCloud ↗</a>
+        </figcaption>
+        <div class="ah-media ah-sc">
+          <iframe title="limgamosz on SoundCloud" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/limgamosz&color=%23ff8e2b&inverse=true&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+        </div>
+        <p class="ah-cap"><b>South-America-style nature rave</b> — organic tech-house built from field-recorded jungle and stone. Off-desk frequencies for <em class="serif">Safed</em> nights.</p>
+      </figure>
+
+    </div>
+  </section>
+
   <!-- ═══════════ PLACE AN ORDER ═══════════ -->
   <section id="contact" class="contact" aria-labelledby="ct-h">
     <figure class="ghost ghost-contact" aria-hidden="true"><img src="assets/img/me-pano.webp" alt="" loading="lazy" width="1800" height="376"></figure>
@@ -1069,9 +1139,10 @@
   <span class="f-id"><img class="me" src="assets/img/me-avatar.webp" alt="Mor Moshe Menahem" width="26" height="26" loading="lazy">© <span id="yr">2026</span> wattsonworks® · SAFED IL · <span id="f-heb" dir="rtl" lang="he">ה׳תשפ״ו</span> · SESSION <span id="f-sess">———</span></span>
   <div class="f-links">
     <a href="https://github.com/wattsonworks" target="_blank" rel="noopener" data-hover>GitHub</a>
+    <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Twitch</a>
+    <a href="https://soundcloud.com/limgamosz" target="_blank" rel="noopener" data-hover>SoundCloud</a>
     <a href="https://wattsonworks.github.io/LIQUIDEX/" data-hover>Liquidex</a>
     <a href="https://wattsonworks.github.io/SG/" data-hover>Surge Guru</a>
-    <a href="https://wattsonworks.github.io/LRE/" data-hover>Risk Engine</a>
   </div>
   <span class="nominal">BUILT BY HAND · ALL SYSTEMS NOMINAL · <a href="#top" id="totop" data-hover>TOP ↑</a></span>
 </footer>
@@ -1794,24 +1865,30 @@
   (function(){
     var facade = document.getElementById('intel-facade');
     var stage  = document.getElementById('intel-stage');
+    var goBtn  = document.getElementById('intel-go');
     if(!facade || !stage) return;
     function goLive(){
       if(stage.dataset.live) return;
       stage.dataset.live = '1';
+      facade.remove();
       var load = document.createElement('div');
       load.className = 'intel-loading';
       load.textContent = 'CONNECTING TO LIVE FEED…';
       var f = document.createElement('iframe');
       f.src = 'https://alertguru.base44.app/';
       f.title = 'Alert Guru — live crypto intelligence';
-      f.loading = 'lazy';
       f.setAttribute('allow', 'autoplay; fullscreen');
-      f.addEventListener('load', function(){ load.remove(); });
-      facade.remove();
-      stage.appendChild(load);
+      var loaded = false;
+      f.addEventListener('load', function(){ loaded = true; load.remove(); });
       stage.appendChild(f);
+      stage.appendChild(load);
+      var esc = document.createElement('a');
+      esc.className = 'intel-escape'; esc.href = 'https://alertguru.base44.app/';
+      esc.target = '_blank'; esc.rel = 'noopener'; esc.textContent = 'open full ↗';
+      stage.appendChild(esc);
+      setTimeout(function(){ if(!loaded) load.innerHTML = 'STILL CONNECTING — <a href="https://alertguru.base44.app/" target="_blank" rel="noopener" style="color:var(--phosphor)">OPEN IN A NEW TAB ↗</a>'; }, 6500);
     }
-    facade.addEventListener('click', goLive);
+    if(goBtn) goBtn.addEventListener('click', goLive);
     WW.goLiveIntel = function(){ WW.goSection('#intel'); setTimeout(goLive, 320); };
   })();
 
@@ -1871,6 +1948,9 @@
       { ic:'☷', lbl:'Instrument Specs', hint:'nav', keys:'specs capabilities skills services', run:function(){ go('#capabilities'); } },
       { ic:'✎', lbl:'Place an Order', hint:'nav', keys:'order contact hire work email', run:function(){ go('#contact'); } },
       { ic:'↑', lbl:'Back to top', hint:'nav', keys:'top home hero start', run:function(){ go('#top'); } },
+      { ic:'▶', lbl:'After Hours — DMZ & music', hint:'nav', keys:'after hours dmz twitch soundcloud music gaming play mw2 stream rave', run:function(){ go('#afterhours'); } },
+      { ic:'↗', lbl:'Watch on Twitch — MW2 DMZ', hint:'open ↗', keys:'twitch stream dmz mw2 live gaming play vods', run:function(){ window.open('https://www.twitch.tv/WATTSONWORKS/videos', '_blank'); } },
+      { ic:'↗', lbl:'Listen on SoundCloud', hint:'open ↗', keys:'soundcloud music rave tech nature house limgamosz', run:function(){ window.open('https://soundcloud.com/limgamosz', '_blank'); } },
       { ic:'☾', lbl:'Set NIGHT session', hint:'phase', keys:'night dark stars', run:function(){ WW.forcePhase && WW.forcePhase('NIGHT'); } },
       { ic:'☽', lbl:'Set DUSK — bein hashmashot', hint:'phase', keys:'dusk evening bein hashmashot crossing', run:function(){ WW.forcePhase && WW.forcePhase('DUSK'); } },
       { ic:'☼', lbl:'Set DAWN session', hint:'phase', keys:'dawn morning sunrise', run:function(){ WW.forcePhase && WW.forcePhase('DAWN'); } },

@@ -5,3 +5,8 @@ hehe*
 .DS_Store
 Thumbs.db
 desktop.ini
+# heavy source media + working screenshots — never publish
+/DMZ.mp4
+/LIVENOTWORKING.png
+*.mov
+*.mkv
