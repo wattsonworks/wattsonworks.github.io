@@ -610,6 +610,8 @@
   .cmdk{position:fixed;inset:0;z-index:260;display:flex;align-items:flex-start;justify-content:center;padding-top:14vh;
     background:rgba(5,5,8,.66);backdrop-filter:blur(6px);opacity:0;transition:opacity .2s var(--ease)}
   .cmdk.on{opacity:1}
+  .cmdk[hidden]{display:none}
+  .cmdk:not(.on){pointer-events:none}
   .cmdk-box{width:min(560px,92vw);background:var(--bg-2);border:1px solid var(--line);overflow:hidden;
     box-shadow:0 30px 90px rgba(0,0,0,.6);transform:translateY(-8px);transition:transform .25s var(--ease)}
   .cmdk.on .cmdk-box{transform:none}
