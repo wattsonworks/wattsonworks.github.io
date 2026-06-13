@@ -1152,9 +1152,9 @@
           <a class="ah-open" href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Twitch ↗</a>
         </figcaption>
         <div class="ah-clips">
-          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz-1v3.jpg" aria-label="MW2 DMZ — 1v3 fight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz-1v3.mp4" type="video/mp4"></video>
-          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz3.jpg" aria-label="MW2 DMZ highlight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz3.mp4" type="video/mp4"></video>
-          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz4.jpg" aria-label="MW2 DMZ highlight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz4.mp4" type="video/mp4"></video>
+          <video class="ah-video ah-clip" autoplay muted loop playsinline preload="metadata" poster="assets/dmz-1v3.jpg" aria-label="MW2 DMZ — 1v3 fight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz-1v3.mp4" type="video/mp4"></video>
+          <video class="ah-video ah-clip" autoplay muted loop playsinline preload="metadata" poster="assets/dmz3.jpg" aria-label="MW2 DMZ highlight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz3.mp4" type="video/mp4"></video>
+          <video class="ah-video ah-clip" autoplay muted loop playsinline preload="metadata" poster="assets/dmz4.jpg" aria-label="MW2 DMZ highlight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz4.mp4" type="video/mp4"></video>
         </div>
         <p class="ah-cap">Three silent highlight loops — the <b>1v3 fight</b> and two more raids <em class="serif">(tap any to watch fullscreen)</em>. The live set with sound is up top; full vods <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>on Twitch ↗</a>.</p>
       </figure>
@@ -1497,7 +1497,7 @@
         if(e.isIntersecting){ var p = e.target.play(); if(p && p.catch) p.catch(function(){}); }
         else { e.target.pause(); }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.1 });
     vids.forEach(function(v){
       v.muted = true; v.loop = true; v.setAttribute('playsinline',''); io.observe(v);
       v.addEventListener('click', function(){
