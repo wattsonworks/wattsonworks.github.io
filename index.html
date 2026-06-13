@@ -543,6 +543,9 @@
   .intel-escape{position:absolute;top:.6rem;right:.6rem;z-index:2;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;
     text-transform:uppercase;color:var(--soft);background:rgba(7,7,8,.7);border:1px solid var(--line);padding:.25rem .5rem}
   .intel-escape:hover{color:var(--accent)}
+  .media-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+    background:rgba(7,7,8,.9);font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);line-height:1.9}
+  .media-fallback:hover{color:var(--accent)}
   .if-row{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--soft);text-align:left;
     border-bottom:1px solid var(--line);padding-bottom:.55rem}
   .if-row.dim{opacity:.5}
@@ -1424,6 +1427,65 @@
     }
   })();
 
+  /* ══════════ Live Intelligence — auto-load on view (library-independent) ══════════ */
+  (function(){
+    var facade = document.getElementById('intel-facade');
+    var stage  = document.getElementById('intel-stage');
+    var goBtn  = document.getElementById('intel-go');
+    var section = document.getElementById('intel');
+    if(!stage) return;
+    function goLive(){
+      if(stage.dataset.live) return;
+      stage.dataset.live = '1';
+      if(facade) facade.remove();
+      var load = document.createElement('div');
+      load.className = 'intel-loading';
+      load.textContent = 'CONNECTING TO LIVE FEED…';
+      var f = document.createElement('iframe');
+      f.src = 'https://alertguru.base44.app/';
+      f.title = 'Alert Guru — live crypto intelligence';
+      f.setAttribute('allow', 'autoplay; fullscreen');
+      var loaded = false;
+      f.addEventListener('load', function(){ loaded = true; load.remove(); });
+      stage.appendChild(f);
+      stage.appendChild(load);
+      var esc = document.createElement('a');
+      esc.className = 'intel-escape'; esc.href = 'https://alertguru.base44.app/';
+      esc.target = '_blank'; esc.rel = 'noopener'; esc.textContent = 'open full ↗';
+      stage.appendChild(esc);
+      setTimeout(function(){ if(!loaded) load.innerHTML = 'FEED BLOCKED BY YOUR BROWSER — <a href="https://alertguru.base44.app/" target="_blank" rel="noopener" style="color:var(--phosphor)">OPEN THE LIVE TERMINAL ↗</a>'; }, 6500);
+    }
+    if(goBtn) goBtn.addEventListener('click', goLive);
+    if(section && 'IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ goLive(); io.disconnect(); } });
+      }, { rootMargin: '250px 0px', threshold: 0 });
+      io.observe(section);
+      var armed = function(){ var r = section.getBoundingClientRect(); if(r.top < innerHeight + 250 && r.bottom > 0){ goLive(); removeEventListener('scroll', armed); } };
+      addEventListener('scroll', armed, { passive: true });
+      armed();
+    } else { goLive(); }
+    window.WW = window.WW || {};
+    WW.goLiveIntel = function(){ (WW.goSection || function(){ var s = document.getElementById('intel'); if(s) s.scrollIntoView(); })('#intel'); setTimeout(goLive, 320); };
+  })();
+
+  /* ══════════ SoundCloud — launch fallback if the embed can't load (library-independent) ══════════ */
+  (function(){
+    var sc = document.querySelector('.ah-sc');
+    var f = sc && sc.querySelector('iframe');
+    if(!sc || !f) return;
+    var loaded = false;
+    f.addEventListener('load', function(){ loaded = true; });
+    setTimeout(function(){
+      if(loaded) return;
+      var a = document.createElement('a');
+      a.className = 'media-fallback';
+      a.href = 'https://soundcloud.com/limgamosz'; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = 'Player blocked here —<br>open on SoundCloud ↗';
+      sc.appendChild(a);
+    }, 7000);
+  })();
+
   if(!hasGsap || typeof ScrollTrigger === 'undefined'){
     var b = document.getElementById('boot'); if(b) b.remove();
     document.querySelectorAll('.wipe').forEach(function(w){ w.remove(); });
@@ -1876,36 +1938,7 @@
     else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
   };
 
-  /* ══════════ live intelligence embed (click-to-load facade) ══════════ */
-  (function(){
-    var facade = document.getElementById('intel-facade');
-    var stage  = document.getElementById('intel-stage');
-    var goBtn  = document.getElementById('intel-go');
-    if(!facade || !stage) return;
-    function goLive(){
-      if(stage.dataset.live) return;
-      stage.dataset.live = '1';
-      facade.remove();
-      var load = document.createElement('div');
-      load.className = 'intel-loading';
-      load.textContent = 'CONNECTING TO LIVE FEED…';
-      var f = document.createElement('iframe');
-      f.src = 'https://alertguru.base44.app/';
-      f.title = 'Alert Guru — live crypto intelligence';
-      f.setAttribute('allow', 'autoplay; fullscreen');
-      var loaded = false;
-      f.addEventListener('load', function(){ loaded = true; load.remove(); });
-      stage.appendChild(f);
-      stage.appendChild(load);
-      var esc = document.createElement('a');
-      esc.className = 'intel-escape'; esc.href = 'https://alertguru.base44.app/';
-      esc.target = '_blank'; esc.rel = 'noopener'; esc.textContent = 'open full ↗';
-      stage.appendChild(esc);
-      setTimeout(function(){ if(!loaded) load.innerHTML = 'STILL CONNECTING — <a href="https://alertguru.base44.app/" target="_blank" rel="noopener" style="color:var(--phosphor)">OPEN IN A NEW TAB ↗</a>'; }, 6500);
-    }
-    if(goBtn) goBtn.addEventListener('click', goLive);
-    WW.goLiveIntel = function(){ WW.goSection('#intel'); setTimeout(goLive, 320); };
-  })();
+  /* live intelligence embed is initialized in the library-independent block above (auto-load on view) */
 
   /* ══════════ live market feed — Binance public WS (graceful fallback) ══════════ */
   (function(){
