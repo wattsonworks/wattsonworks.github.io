@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'Heebo','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="cyanPurple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3DDCFF"/><stop offset="1" stop-color="#764ba2"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="85%" cy="0%" r="60%">
+      <stop offset="0" stop-color="#3DDCFF" stop-opacity="0.28"/><stop offset="1" stop-color="#3DDCFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="8%" cy="100%" r="60%">
+      <stop offset="0" stop-color="#764ba2" stop-opacity="0.34"/><stop offset="1" stop-color="#764ba2" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="42" height="42" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0a0f17"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect width="1200" height="630" fill="url(#glowA)"/>
+  <rect width="1200" height="630" fill="url(#glowB)"/>
+
+  <!-- floating help bubbles -->
+  <g opacity="0.9">
+    <g transform="translate(950,150)"><circle r="34" fill="#3DDCFF" opacity="0.18"/><circle r="34" fill="none" stroke="#3DDCFF" stroke-opacity="0.4"/><text y="11" font-size="30" text-anchor="middle">🤝</text></g>
+    <g transform="translate(1040,330)"><circle r="28" fill="#fb7185" opacity="0.18"/><circle r="28" fill="none" stroke="#fb7185" stroke-opacity="0.4"/><text y="9" font-size="24" text-anchor="middle">🆘</text></g>
+    <g transform="translate(905,430)"><circle r="26" fill="#34d399" opacity="0.18"/><circle r="26" fill="none" stroke="#34d399" stroke-opacity="0.4"/><text y="9" font-size="22" text-anchor="middle">🎁</text></g>
+  </g>
+
+  <!-- sparkle mark -->
+  <g transform="translate(96,250)">
+    <path d="M40 0 L48 22 L72 28 L48 36 L40 64 L32 36 L8 28 L32 22 Z" fill="url(#cyanPurple)"/>
+    <circle cx="70" cy="8" r="5" fill="#3DDCFF"/>
+    <circle cx="8" cy="60" r="4" fill="#764ba2"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="186" y="320" font-family="'Space Grotesk','Segoe UI',sans-serif" font-size="120" font-weight="700" fill="url(#cyanPurple)" letter-spacing="-2">Jesta</text>
+
+  <!-- hebrew tagline -->
+  <text x="96" y="406" font-size="46" font-weight="800" fill="#E6EEF6" direction="rtl">קהילת העזרה ההדדית</text>
+  <text x="96" y="462" font-size="29" font-weight="500" fill="#AFC4D8" direction="rtl">בקשו עזרה · הציעו עזרה · הפכו טוב לב לכוכבים</text>
+
+  <!-- bottom strip -->
+  <rect x="96" y="520" width="372" height="2" fill="#3DDCFF" opacity="0.5"/>
+  <text x="96" y="556" font-family="'Space Grotesk','Segoe UI',sans-serif" font-size="24" font-weight="600" fill="#7e93a8">mutual-aid · made local · wattsonworks</text>
+</svg>
