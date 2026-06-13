@@ -586,9 +586,9 @@
   .ah-open:hover{color:var(--candle)}
   .ah-media{position:relative;background:#000;aspect-ratio:16/9}
   .ah-video,.ah-feat{width:100%;height:100%;display:block;object-fit:cover;background:#000}
-  .ah-unmute{position:absolute;left:.7rem;bottom:.7rem;z-index:2;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;
-    font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);
-    background:var(--accent);border:0;padding:.55rem .85rem;animation:pulseGlow 2s ease-in-out infinite}
+  .ah-unmute{position:absolute;right:.7rem;top:.7rem;z-index:3;display:inline-flex;align-items:center;gap:.4rem;cursor:pointer;
+    font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);
+    background:var(--accent);border:0;padding:.55rem .9rem;animation:pulseGlow 1.8s ease-in-out infinite}
   .ah-unmute:hover{background:var(--candle)}
   @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,142,43,.5)}50%{box-shadow:0 0 0 6px rgba(255,142,43,0)}}
   .ah-badge{position:absolute;top:.7rem;left:.7rem;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.18em;
@@ -1488,24 +1488,27 @@
     vids.forEach(function(v){ v.muted = true; v.loop = true; v.setAttribute('playsinline',''); io.observe(v); });
   })();
 
-  /* ══════════ featured DMZ clip — preloaded, plays WITH SOUND on view (muted fallback + unmute prompt where the browser blocks audio) ══════════ */
+  /* ══════════ featured DMZ clip — preloaded; tries sound-on, else muted + an always-visible 🔊 prompt (browsers forbid audio without a gesture) ══════════ */
   (function(){
     var f = document.getElementById('dmz-feat');
     if(!f) return;
     f.loop = true; f.setAttribute('playsinline','');
     var btn = document.getElementById('dmz-sound');
-    function unmute(){ f.muted = false; if(btn) btn.hidden = true; var p = f.play(); if(p && p.catch) p.catch(function(){}); }
-    function play(){
-      f.muted = false;
+    function showBtn(s){ if(btn) btn.hidden = !s; }
+    function unmute(){ f.muted = false; showBtn(false); var p = f.play(); if(p && p.catch) p.catch(function(){}); }
+    function attempt(){
+      f.muted = false;                          /* try with sound (works on high-engagement browsers) */
       var p = f.play();
-      if(p && p.then) p.then(function(){ if(btn) btn.hidden = true; }).catch(function(){
-        f.muted = true; var q = f.play(); if(q && q.catch) q.catch(function(){}); if(btn) btn.hidden = false;
-      });
+      if(p && p.then){
+        p.then(function(){ showBtn(!!f.muted); })   /* if the browser forced mute, surface the prompt */
+         .catch(function(){ f.muted = true; var q = f.play(); if(q && q.catch) q.catch(function(){}); showBtn(true); });
+      } else { showBtn(true); }
     }
+    if(btn) btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); unmute(); });
+    f.addEventListener('click', function(){ if(f.muted) unmute(); });   /* tapping the video also turns sound on */
     if('IntersectionObserver' in window){
-      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) play(); else f.pause(); }); }, { threshold: 0.4 }).observe(f);
-    } else { play(); }
-    if(btn) btn.addEventListener('click', function(e){ e.preventDefault(); unmute(); });
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) attempt(); else f.pause(); }); }, { threshold: 0.1 }).observe(f);
+    } else { attempt(); }
   })();
 
   /* ══════════ Live Intelligence — auto-load on view (library-independent) ══════════ */
