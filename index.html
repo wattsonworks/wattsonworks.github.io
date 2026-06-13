@@ -604,7 +604,12 @@
   .ah-track-h .acc{color:var(--accent);font-weight:400;margin-inline-end:.3em}
   .sc-embed{width:100%;height:160px;border:0;display:block;background:var(--bg-2)}
   .ah-clips{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.5rem .85rem 0}
-  .ah-clip{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid var(--line);display:block}
+  .ah-clip{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;border:1px solid var(--line);display:block;cursor:pointer;transition:border-color .25s}
+  .ah-clip:hover{border-color:var(--accent)}
+  /* ── ON AIR featured band ── */
+  #onair{padding-top:clamp(2.5rem,6vh,4.5rem);padding-bottom:0}
+  .onair{margin:0}
+  .onair-stage{position:relative;width:100%;height:clamp(240px,54vh,580px);background:#000}
   @media(max-width:760px){.ah-grid{grid-template-columns:1fr}}
 
   /* ───────────── command terminal ───────────── */
@@ -743,6 +748,24 @@
 <p class="vh">wattsonworks runs ten live products: LIQUIDEX, Surge Guru, the Risk Engine and the free Web3 Surge &amp; Risk Engine for traders; ROUX Villa and La Buffet in Safed; Jesta, Avihu the gardener, Isra.Peptides and the Healed IMO recovery guide.</p>
 
 <main id="main">
+
+  <!-- ═══════════ ON AIR (featured live clip) ═══════════ -->
+  <section id="onair" aria-label="On air — live gameplay with sound">
+    <figure class="ah-panel onair">
+      <figcaption class="ah-bar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="ah-title">ON AIR — MW2 · DMZ, LIVE<span class="intel-live">● LIVE</span></span>
+        <a class="ah-open" href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Twitch ↗</a>
+      </figcaption>
+      <div class="onair-stage">
+        <video class="ah-feat" id="dmz-feat" controls loop playsinline preload="auto" poster="assets/dmz2.jpg" aria-label="MW2 DMZ — live, with sound (singing through a raid)">
+          <source src="assets/dmz2.mp4" type="video/mp4">
+        </video>
+        <button class="ah-unmute" id="dmz-sound" type="button" hidden aria-label="Turn the sound on">🔊 Sound on</button>
+      </div>
+      <p class="ah-cap"><b>MW2 DMZ — live.</b> Running a raid and singing through it <em class="serif">(turn it up ♪)</em>. The desk trades by day; the nights sound like this. Full vods <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>on Twitch ↗</a>.</p>
+    </figure>
+  </section>
 
   <!-- ═══════════ THE BOARD ═══════════ -->
   <section id="board" aria-labelledby="board-h">
@@ -1129,21 +1152,15 @@
       <figure class="ah-panel">
         <figcaption class="ah-bar">
           <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="ah-title">MW2 · DMZ — LIVE, WITH SOUND</span>
+          <span class="ah-title">MW2 · DMZ — HIGHLIGHTS</span>
           <a class="ah-open" href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>Twitch ↗</a>
         </figcaption>
-        <div class="ah-media">
-          <video class="ah-feat" id="dmz-feat" controls loop playsinline preload="auto" poster="assets/dmz2.jpg" aria-label="MW2 DMZ — live, with sound (singing through a raid)">
-            <source src="assets/dmz2.mp4" type="video/mp4">
-          </video>
-          <button class="ah-unmute" id="dmz-sound" type="button" hidden aria-label="Turn the sound on">🔊 Sound on</button>
-        </div>
         <div class="ah-clips">
-          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz-1v3.jpg" aria-label="MW2 DMZ — 1v3 fight"><source src="assets/dmz-1v3.mp4" type="video/mp4"></video>
-          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz3.jpg" aria-label="MW2 DMZ highlight clip"><source src="assets/dmz3.mp4" type="video/mp4"></video>
-          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz4.jpg" aria-label="MW2 DMZ highlight clip"><source src="assets/dmz4.mp4" type="video/mp4"></video>
+          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz-1v3.jpg" aria-label="MW2 DMZ — 1v3 fight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz-1v3.mp4" type="video/mp4"></video>
+          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz3.jpg" aria-label="MW2 DMZ highlight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz3.mp4" type="video/mp4"></video>
+          <video class="ah-video ah-clip" preload="none" muted loop playsinline poster="assets/dmz4.jpg" aria-label="MW2 DMZ highlight (tap to watch fullscreen)" title="Tap to watch fullscreen"><source src="assets/dmz4.mp4" type="video/mp4"></video>
         </div>
-        <p class="ah-cap"><b>MW2 DMZ — live.</b> Running a raid and singing through it <em class="serif">(turn it up ♪)</em>. Below: the 1v3 fight and two more silent highlight loops. Full vods stream <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>on Twitch ↗</a>.</p>
+        <p class="ah-cap">Three silent highlight loops — the <b>1v3 fight</b> and two more raids <em class="serif">(tap any to watch fullscreen)</em>. The live set with sound is up top; full vods <a href="https://www.twitch.tv/WATTSONWORKS/videos" target="_blank" rel="noopener" data-hover>on Twitch ↗</a>.</p>
       </figure>
 
       <figure class="ah-panel">
@@ -1485,7 +1502,19 @@
         else { e.target.pause(); }
       });
     }, { threshold: 0.3 });
-    vids.forEach(function(v){ v.muted = true; v.loop = true; v.setAttribute('playsinline',''); io.observe(v); });
+    vids.forEach(function(v){
+      v.muted = true; v.loop = true; v.setAttribute('playsinline',''); io.observe(v);
+      v.addEventListener('click', function(){
+        v.muted = false;                         /* unmute (1v3 has audio; the silent clips are unaffected) */
+        var pr = v.play(); if(pr && pr.catch) pr.catch(function(){});
+        function goFs(){
+          if(v.requestFullscreen){ var r = v.requestFullscreen(); if(r && r.catch) r.catch(function(){}); }
+          else if(v.webkitRequestFullscreen){ v.webkitRequestFullscreen(); }
+          else if(v.webkitEnterFullscreen){ v.webkitEnterFullscreen(); }
+        }
+        if(v.readyState >= 1) goFs(); else v.addEventListener('loadedmetadata', goFs, { once: true });
+      });
+    });
   })();
 
   /* ══════════ featured DMZ clip — preloaded; tries sound-on, else muted + an always-visible 🔊 prompt (browsers forbid audio without a gesture) ══════════ */
