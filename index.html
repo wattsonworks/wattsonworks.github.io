@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>wattsonworks® — UX/UI Designer & Design Engineer · Portfolio</title>
-<meta name="description" content="wattsonworks — UX/UI design & design engineering by Mor Moshe Menahem, Safed IL. Nine live works: hospitality, food, community and real-time trading tools. עיצוב ופיתוח ממשקים — מור משה מנחם.">
+<meta name="description" content="wattsonworks — UX/UI design & design engineering by Mor Moshe Menahem, Safed IL. Ten live works: hospitality, food, community and real-time trading tools. עיצוב ופיתוח ממשקים — מור משה מנחם.">
 <meta name="theme-color" content="#070708">
 <link rel="canonical" href="https://wattsonworks.github.io/">
 <meta property="og:title" content="wattsonworks® — UX/UI Designer & Design Engineer">
-<meta property="og:description" content="The Safed Exchange — nine live works by Mor Moshe Menahem: hospitality, food, community and real-time trading products, on Safed solar time.">
+<meta property="og:description" content="The Safed Exchange — ten live works by Mor Moshe Menahem: hospitality, food, community and real-time trading products, on Safed solar time.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wattsonworks.github.io/">
 <meta property="og:image" content="https://wattsonworks.github.io/roux/img/hi/hero-meron-view.png">
 <meta property="og:image:alt" content="wattsonworks — selected work">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="wattsonworks® — UX/UI Designer & Design Engineer">
-<meta name="twitter:description" content="The Safed Exchange — nine live works in hospitality, food, community and trading, on Safed solar time.">
+<meta name="twitter:description" content="The Safed Exchange — ten live works in hospitality, food, community and trading, on Safed solar time.">
 <meta name="twitter:image" content="https://wattsonworks.github.io/roux/img/hi/hero-meron-view.png">
 <meta name="twitter:image:alt" content="wattsonworks — selected work">
 <meta property="og:site_name" content="wattsonworks">
@@ -261,6 +261,7 @@
   .quote-line b{color:var(--ink);font-weight:400}
   .quote-line .acc{color:var(--accent)}
   .quote-line .sep{color:var(--faint);padding:0 .7em;white-space:nowrap}
+  @media(max-width:680px){.quote-line{font-size:.58rem;letter-spacing:.08em;line-height:2.2}.quote-line .sep{padding:0 .45em}}
   .hero .hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:1.2rem;margin-top:clamp(1.1rem,3vh,2rem);flex-wrap:wrap}
   .hero .hf-l{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--soft);text-transform:uppercase;max-width:30ch;line-height:1.8}
   .hero .hf-c{font-family:var(--mono);font-size:.66rem;letter-spacing:.3em;color:var(--faint);text-transform:uppercase}
@@ -307,7 +308,8 @@
   @media(max-width:680px){
     .l-bar{grid-template-columns:auto 1fr auto;gap:.7rem;min-height:48px;align-items:center}
     .l-idx,.l-sect{display:none}
-    .l-name{min-width:0;overflow-wrap:anywhere}
+    .l-name{min-width:0;overflow-wrap:anywhere;display:block;padding:.85rem 0}
+    .l-bar .l-name{font-size:clamp(1rem,4vw,1.25rem);line-height:1.1}
     .l-quote{font-size:.66rem;min-width:6.5ch;letter-spacing:.06em}
   }
   .l-quote.up{color:var(--candle)}
@@ -495,13 +497,15 @@
   /* ───────────── mobile bottom status strip ───────────── */
   .strip{display:none}
   @media(max-width:680px){
-    .strip{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:110;justify-content:space-between;align-items:center;
+    .strip{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:130;justify-content:space-between;align-items:center;
       min-height:44px;padding:.7rem 1.1rem calc(.7rem + env(safe-area-inset-bottom));background:rgba(7,7,8,.82);backdrop-filter:blur(8px);
       border-top:1px solid var(--line);font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
       color:var(--soft);font-variant-numeric:tabular-nums}
     .strip b{color:var(--ink);font-weight:400}
     .strip .sim{display:none;color:var(--accent)}
     html.is-sim .strip .sim{display:inline}
+    /* keep the last interactive sections clear of the fixed strip */
+    #afterhours,#contact{padding-bottom:calc(clamp(4.5rem,11vh,9rem) + 3.4rem + env(safe-area-inset-bottom))}
     footer{padding-bottom:calc(3.4rem + env(safe-area-inset-bottom))}
   }
 
@@ -518,7 +522,10 @@
     border:1px solid var(--line);border-radius:6px;padding:.32rem .5rem;cursor:pointer;transition:color .25s,border-color .25s}
   .cmdk-btn:hover{color:var(--ink);border-color:rgba(236,232,223,.3)}
   .cmdk-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  @media(max-width:680px){.cmdk-btn{display:none}}
+  @media(max-width:680px){
+    .cmdk-btn{font-size:0;padding:.42rem .5rem}
+    .cmdk-btn::before{content:"⌕";font-size:.9rem;letter-spacing:0}
+  }
 
   /* ───────────── live intelligence ───────────── */
   #intel .intel-count{color:var(--phosphor)}
@@ -531,6 +538,9 @@
   .intel-live{color:var(--phosphor);margin-inline-start:.6em;letter-spacing:.1em}
   .intel-open{flex:none;color:var(--accent)}
   .intel-open:hover{color:var(--candle)}
+  @media(pointer:coarse){
+    .intel-open,.ah-open,.if-tab{display:inline-flex;align-items:center;min-height:44px;padding-block:.4rem}
+  }
   .intel-stage{position:relative;width:100%;height:clamp(440px,74vh,780px);
     background:radial-gradient(120% 80% at 50% 0,rgba(255,142,43,.05),transparent 60%),var(--bg)}
   .intel-stage iframe{width:100%;height:100%;border:0;display:block}
@@ -543,10 +553,8 @@
   .if-tab:hover{color:var(--accent)}
   .intel-escape{position:absolute;top:.6rem;right:.6rem;z-index:2;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;
     text-transform:uppercase;color:var(--soft);background:rgba(7,7,8,.7);border:1px solid var(--line);padding:.25rem .5rem}
+  @media(pointer:coarse){.intel-escape{padding:.55rem .7rem;font-size:.64rem}}
   .intel-escape:hover{color:var(--accent)}
-  .media-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
-    background:rgba(7,7,8,.9);font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);line-height:1.9}
-  .media-fallback:hover{color:var(--accent)}
   .if-row{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--soft);text-align:left;
     border-bottom:1px solid var(--line);padding-bottom:.55rem}
   .if-row.dim{opacity:.5}
@@ -564,7 +572,7 @@
     font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
   .intel-cap{margin-top:1.2rem;max-width:62ch;color:var(--soft);font-size:clamp(.95rem,1.4vw,1.05rem);line-height:1.7}
   .intel-cap .serif{color:var(--accent)}
-  @media(max-width:680px){.intel-stage{height:80vh}.if-rows{padding:0 6%}}
+  @media(max-width:680px){.intel-stage{height:min(560px,72svh)}.if-rows{padding:0 6%}}
 
   /* ───────────── after hours ───────────── */
   .ah-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,2.4vw,1.8rem)}
@@ -580,8 +588,6 @@
   .ah-video{width:100%;height:100%;display:block;object-fit:cover;background:#000}
   .ah-badge{position:absolute;top:.7rem;left:.7rem;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.18em;
     color:var(--accent-ink);background:var(--accent);padding:.2rem .5rem;pointer-events:none}
-  .ah-sc{aspect-ratio:auto;height:100%;min-height:300px;display:flex}
-  .ah-sc iframe{width:100%;height:100%;min-height:300px;border:0;display:block}
   .ah-cap{padding:1rem;color:var(--soft);font-size:.95rem;line-height:1.65}
   .ah-cap b{color:var(--ink);font-weight:600}
   .ah-cap .serif{color:var(--accent)}
@@ -641,7 +647,7 @@
     <div>CALIBRATING SOLAR EPHEMERIS … <b>OK</b></div>
     <div id="bl-sun">SUN —° · NIGHT</div>
     <div id="bl-seed">SEEDING SESSION … <b>OK</b></div>
-    <div>LOADING 9 LISTINGS … <b>OK</b></div>
+    <div>LOADING 10 LISTINGS … <b>OK</b></div>
   </div>
   <div class="boot-big" id="bootbig">NIGHT SESSION <i>OPEN</i></div>
 </div>
@@ -727,7 +733,7 @@
 <div class="tape" aria-hidden="true">
   <div class="track" id="tape-track"></div>
 </div>
-<p class="vh">wattsonworks runs nine live products: LIQUIDEX, Surge Guru and the Risk Engine for traders; ROUX Villa and La Buffet in Safed; Jesta, Avihu the gardener, Isra.Peptides and the Healed IMO recovery guide.</p>
+<p class="vh">wattsonworks runs ten live products: LIQUIDEX, Surge Guru, the Risk Engine and the free Web3 Surge &amp; Risk Engine for traders; ROUX Villa and La Buffet in Safed; Jesta, Avihu the gardener, Isra.Peptides and the Healed IMO recovery guide.</p>
 
 <main id="main">
 
@@ -1075,7 +1081,7 @@
   <section id="capabilities" aria-labelledby="cap-h">
     <div class="sec-head">
       <h2 id="cap-h">Instrument Specs <span class="he" dir="rtl" lang="he">מפרט</span></h2>
-      <span class="count">( 04 )</span>
+      <span class="count">( 03 )</span>
     </div>
     <div class="caps">
       <div class="cap" data-reveal>
@@ -1109,7 +1115,7 @@
   <section id="afterhours" aria-labelledby="ah-h">
     <div class="sec-head">
       <h2 id="ah-h">After Hours <span class="he" dir="rtl" lang="he">אחרי השעות</span></h2>
-      <span class="count">( 06 )</span>
+      <span class="count">( 04 )</span>
     </div>
     <div class="ah-grid">
 
@@ -1452,11 +1458,13 @@
     });
   }
 
-  /* ══════════ DMZ highlight — autoplay muted on view (library-independent) ══════════ */
+  /* ══════════ DMZ highlight — autoplay muted on view (desktop only; reduced-motion + phones keep poster + tap-to-play) ══════════ */
   (function(){
     var v = document.querySelector('.ah-video');
     if(!v) return;
     v.muted = true; v.loop = true; v.setAttribute('playsinline','');
+    if(reduced) return;
+    if(matchMedia('(pointer:coarse)').matches) return;
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){
         es.forEach(function(e){
@@ -1496,7 +1504,9 @@
       setTimeout(function(){ if(!loaded) load.innerHTML = 'FEED BLOCKED BY YOUR BROWSER — <a href="https://alertguru.base44.app/" target="_blank" rel="noopener" style="color:var(--phosphor)">OPEN THE LIVE TERMINAL ↗</a>'; }, 6500);
     }
     if(goBtn) goBtn.addEventListener('click', goLive);
-    if(section && 'IntersectionObserver' in window){
+    /* phones/tablets keep the facade — user taps "Go live" to load the heavy app (it embeds Twitch/YouTube/Reddit). desktop auto-embeds on approach. */
+    var autoEmbed = !matchMedia('(pointer:coarse)').matches;
+    if(autoEmbed && section && 'IntersectionObserver' in window){
       var io = new IntersectionObserver(function(es){
         es.forEach(function(e){ if(e.isIntersecting){ goLive(); io.disconnect(); } });
       }, { rootMargin: '250px 0px', threshold: 0 });
@@ -1504,7 +1514,7 @@
       var armed = function(){ var r = section.getBoundingClientRect(); if(r.top < innerHeight + 250 && r.bottom > 0){ goLive(); removeEventListener('scroll', armed); } };
       addEventListener('scroll', armed, { passive: true });
       armed();
-    } else { goLive(); }
+    } else if(autoEmbed){ goLive(); }
     window.WW = window.WW || {};
     WW.goLiveIntel = function(){ (WW.goSection || function(){ var s = document.getElementById('intel'); if(s) s.scrollIntoView(); })('#intel'); setTimeout(goLive, 320); };
   })();
@@ -1864,7 +1874,8 @@
       });
       /* crosshair readout on hover */
       li.addEventListener('mouseenter', function(){
-        xhText = '<b>' + (li.dataset.tkr || '') + '</b> ' + (li.dataset.price ? li.dataset.price : 'n=1');
+        var tag = li.dataset.price ? li.dataset.price : ('quiet' in li.dataset ? 'n=1' : 'FREE');
+        xhText = '<b>' + (li.dataset.tkr || '') + '</b> ' + tag;
         setXh();
       });
       li.addEventListener('mouseleave', function(){ xhText = xhDefault; setXh(); });
