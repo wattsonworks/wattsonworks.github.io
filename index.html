@@ -509,6 +509,80 @@
   .crossing p{font-family:var(--mono);font-size:clamp(.8rem,2vw,1.1rem);letter-spacing:.3em;text-transform:uppercase;color:var(--candle);text-align:center}
   .crossing p .he{font-family:var(--heb);font-size:1.5em;letter-spacing:.1em;display:block;margin-bottom:.6rem}
 
+  /* ───────────── live tape prices ───────────── */
+  .tape .lv{font-variant-numeric:tabular-nums;color:var(--soft)}
+
+  /* ───────────── ⌘K trigger ───────────── */
+  .cmdk-btn{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:var(--soft);background:none;
+    border:1px solid var(--line);border-radius:6px;padding:.32rem .5rem;cursor:pointer;transition:color .25s,border-color .25s}
+  .cmdk-btn:hover{color:var(--ink);border-color:rgba(236,232,223,.3)}
+  .cmdk-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media(max-width:680px){.cmdk-btn{display:none}}
+
+  /* ───────────── live intelligence ───────────── */
+  #intel .intel-count{color:var(--phosphor)}
+  .intel-window{margin:0;border:1px solid var(--line);background:var(--bg-2);overflow:hidden}
+  .intel-bar{display:flex;align-items:center;gap:.8rem;padding:.65rem 1rem;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+  .intel-bar .dots{display:inline-flex;gap:.4rem;flex:none}
+  .intel-bar .dots i{width:9px;height:9px;border-radius:50%;background:var(--faint)}
+  .intel-title{flex:1;min-width:0;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .intel-live{color:var(--phosphor);margin-inline-start:.6em;letter-spacing:.1em}
+  .intel-open{flex:none;color:var(--accent)}
+  .intel-open:hover{color:var(--candle)}
+  .intel-stage{position:relative;width:100%;height:clamp(440px,74vh,780px);
+    background:radial-gradient(120% 80% at 50% 0,rgba(255,142,43,.05),transparent 60%),var(--bg)}
+  .intel-stage iframe{width:100%;height:100%;border:0;display:block}
+  .intel-facade{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;background:transparent;color:inherit;font:inherit;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem}
+  .if-rows{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:.7rem;padding:0 8%;
+    opacity:.3;pointer-events:none}
+  .if-row{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--soft);text-align:left;
+    border-bottom:1px solid var(--line);padding-bottom:.55rem}
+  .if-row.dim{opacity:.5}
+  .if-row .sev{display:inline-block;font-size:.58rem;padding:.14rem .42rem;margin-inline-end:.6rem;color:var(--accent-ink);letter-spacing:.1em}
+  .if-row .sev.hi{background:var(--down)}
+  .if-row .sev.md{background:var(--candle)}
+  .if-go{position:relative;z-index:1;font-family:var(--mono);font-size:clamp(.86rem,1.5vw,1.08rem);letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink);display:inline-flex;align-items:center;gap:.7rem;
+    padding:.95rem 1.5rem;border:1px solid var(--phosphor);background:rgba(7,7,8,.62);transition:background .3s var(--ease),color .3s}
+  .if-play{color:var(--phosphor);transition:color .3s}
+  .intel-facade:hover .if-go,.intel-facade:focus-visible .if-go{background:var(--phosphor);color:#04150d}
+  .intel-facade:hover .if-play,.intel-facade:focus-visible .if-play{color:#04150d}
+  .intel-facade:focus-visible{outline:none}
+  .if-note{position:relative;z-index:1;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .intel-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+  .intel-cap{margin-top:1.2rem;max-width:62ch;color:var(--soft);font-size:clamp(.95rem,1.4vw,1.05rem);line-height:1.7}
+  .intel-cap .serif{color:var(--accent)}
+  @media(max-width:680px){.intel-stage{height:80vh}.if-rows{padding:0 6%}}
+
+  /* ───────────── command terminal ───────────── */
+  .cmdk{position:fixed;inset:0;z-index:260;display:flex;align-items:flex-start;justify-content:center;padding-top:14vh;
+    background:rgba(5,5,8,.66);backdrop-filter:blur(6px);opacity:0;transition:opacity .2s var(--ease)}
+  .cmdk.on{opacity:1}
+  .cmdk-box{width:min(560px,92vw);background:var(--bg-2);border:1px solid var(--line);overflow:hidden;
+    box-shadow:0 30px 90px rgba(0,0,0,.6);transform:translateY(-8px);transition:transform .25s var(--ease)}
+  .cmdk.on .cmdk-box{transform:none}
+  .cmdk-input{display:flex;align-items:center;gap:.6rem;padding:1rem 1.1rem;border-bottom:1px solid var(--line)}
+  .cmdk-caret{font-family:var(--mono);color:var(--accent)}
+  .cmdk-input input{flex:1;background:none;border:0;outline:none;color:var(--ink);font-family:var(--mono);font-size:.95rem;letter-spacing:.01em}
+  .cmdk-input input::placeholder{color:var(--faint)}
+  .cmdk-list{max-height:46vh;overflow:auto;padding:.4rem;margin:0}
+  .cmdk-item{display:flex;align-items:center;gap:.8rem;padding:.58rem .7rem;cursor:pointer;border:1px solid transparent;
+    font-family:var(--mono);font-size:.78rem;color:var(--soft)}
+  .cmdk-item .ic{width:1.4em;flex:none;color:var(--accent);text-align:center}
+  .cmdk-item .lbl{flex:1;color:var(--ink);letter-spacing:.01em}
+  .cmdk-item .hint{flex:none;color:var(--faint);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
+  .cmdk-item.sel,.cmdk-item:hover{background:rgba(236,232,223,.05);border-color:var(--line)}
+  .cmdk-item.sel{border-color:var(--accent)}
+  .cmdk-item.sel .ic{color:var(--candle)}
+  .cmdk-empty{padding:1rem .8rem;font-family:var(--mono);font-size:.74rem;color:var(--faint)}
+  .cmdk-foot{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 1.1rem;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .cmdk-foot b{color:var(--soft);font-weight:400}
+  @media(max-width:680px){.cmdk{padding-top:8vh}}
+
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
     .grain{display:none}
@@ -564,6 +638,7 @@
     <a href="#contact" data-hover>Order</a>
   </div>
   <div class="station">
+    <button class="cmdk-btn" id="cmdk-btn" type="button" aria-label="Open command terminal" title="Command terminal — press / or Ctrl/⌘ K">⌘K</button>
     <button class="dial" id="dial" type="button" title="Ephemeris — click: simulate +2h · double-click: real time" aria-label="Ephemeris dial — click to simulate time, double-click to return to real time">
       <svg viewBox="0 0 38 38">
         <circle cx="19" cy="19" r="14" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="1"/>
@@ -599,7 +674,7 @@
       <span class="mask"><span class="line outline">Works<sup>®</sup></span></span>
     </h1>
     <p class="quote-line" data-intro>
-      <b>WW®</b><span class="sep">·</span>STATUS: <b id="q-phase">NIGHT SESSION OPEN</b><span class="sep">·</span>SAFED 32.96°N 900M<span class="sep">·</span>SUN <b class="acc" id="q-sun">—°</b><span class="sep">·</span><span id="q-heb" dir="rtl" lang="he">ה׳תשפ״ו</span><span class="sep">·</span>SESSION <b id="q-sess">———</b>
+      <b>WW®</b><span class="sep">·</span>STATUS: <b id="q-phase">NIGHT SESSION OPEN</b><span class="sep">·</span>SAFED 32.96°N 900M<span class="sep">·</span>SUN <b class="acc" id="q-sun">—°</b><span class="sep">·</span><span id="q-heb" dir="rtl" lang="he">ה׳תשפ״ו</span><span class="sep">·</span>SESSION <b id="q-sess">———</b><span id="q-btc-wrap" hidden><span class="sep">·</span>BTC <b class="acc" id="q-btc">—</b></span>
     </p>
     <div class="hero-foot">
       <p class="hf-l" data-intro>Based in Safed, Israel<br>— shipping worldwide</p>
@@ -877,6 +952,34 @@
     </div>
   </section>
 
+  <!-- ═══════════ LIVE INTELLIGENCE ═══════════ -->
+  <section id="intel" aria-labelledby="intel-h">
+    <div class="sec-head">
+      <h2 id="intel-h">Live Intelligence <span class="he" dir="rtl" lang="he">מודיעין חי</span></h2>
+      <span class="count intel-count">● LIVE</span>
+    </div>
+    <figure class="intel-window">
+      <figcaption class="intel-bar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="intel-title">ALERT&nbsp;GURU — CRYPTO MONITOR PRO<span class="intel-live">● LIVE</span></span>
+        <a class="intel-open" href="https://alertguru.base44.app/" target="_blank" rel="noopener" data-hover>open full ↗</a>
+      </figcaption>
+      <div class="intel-stage" id="intel-stage">
+        <button class="intel-facade" id="intel-facade" type="button" aria-label="Connect to the live Alert Guru intelligence feed">
+          <span class="if-rows" aria-hidden="true">
+            <span class="if-row"><b class="sev hi">HIGH</b> Dogecoin surges on SpaceX IPO hype</span>
+            <span class="if-row"><b class="sev md">MED</b> BlackRock &amp; Securitize expand BUIDL to BNB</span>
+            <span class="if-row"><b class="sev md">MED</b> Bittensor (TAO) rises amid AI-token rally</span>
+            <span class="if-row dim"><b class="sev md">MED</b> Bitcoin's 'calm top' challenges bottom calls</span>
+          </span>
+          <span class="if-go"><span class="if-play" aria-hidden="true">▶</span> Go live — real-time intelligence feed</span>
+          <span class="if-note">embeds the running app · alertguru.base44.app</span>
+        </button>
+      </div>
+    </figure>
+    <p class="intel-cap">A product I designed &amp; built, running <em class="serif">live</em> inside the page — real-time BTC/ETH, market structure and a severity-ranked news-intelligence stream, streamed straight from the app.</p>
+  </section>
+
   <!-- ═══════════ THE OPERATOR ═══════════ -->
   <section id="operator" aria-labelledby="op-h">
     <div class="sec-head">
@@ -972,6 +1075,18 @@
   </div>
   <span class="nominal">BUILT BY HAND · ALL SYSTEMS NOMINAL · <a href="#top" id="totop" data-hover>TOP ↑</a></span>
 </footer>
+
+<!-- command terminal -->
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command terminal" hidden>
+  <div class="cmdk-box">
+    <div class="cmdk-input">
+      <span class="cmdk-caret" aria-hidden="true">⟩</span>
+      <input id="cmdk-q" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="type a command — try “night”, “roux”, “intel”, “help”" aria-label="Command" aria-controls="cmdk-list" aria-autocomplete="list">
+    </div>
+    <ul class="cmdk-list" id="cmdk-list" role="listbox" aria-label="Commands"></ul>
+    <div class="cmdk-foot"><span><b>↑↓</b> move&nbsp;·&nbsp;<b>↵</b> run&nbsp;·&nbsp;<b>esc</b> close</span><span>THE SAFED EXCHANGE — CLI</span></div>
+  </div>
+</div>
 
 <!-- libs -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
@@ -1106,7 +1221,7 @@
     var simTag = elReadout ? elReadout.querySelector('.sim') : null;
     if(elReadout){
       elReadout.childNodes[0].nodeValue = 'SAFED · ' + clock + ' · ☉ ' + sun;
-      if(simTag) simTag.style.display = WW.simOffset !== 0 ? 'inline' : 'none';
+      if(simTag) simTag.style.display = (WW.simOffset !== 0 || WW.phaseLock) ? 'inline' : 'none';
     }
     if(elStripL) elStripL.textContent = 'SAFED · ' + clock;
     if(elStripR) elStripR.textContent = '☉ ' + sun + ' · ' + WW.phase;
@@ -1116,7 +1231,7 @@
     if(elQSess) elQSess.textContent = sessionId;
     if(elFHeb) elFHeb.textContent = hebYear;
     if(elFSess) elFSess.textContent = sessionId;
-    docEl.classList.toggle('is-sim', WW.simOffset !== 0);
+    docEl.classList.toggle('is-sim', WW.simOffset !== 0 || !!WW.phaseLock);
     if(dialRot){
       /* rotate sun marker around dial by local hour fraction */
       var hrs;
@@ -1146,6 +1261,7 @@
   /* ══════════ phase re-check (60s, hysteresis via min interval) ══════════ */
   var lastSwitch = 0;
   function recheckPhase(force){
+    if(WW.phaseLock) return;
     var t = Date.now();
     var p = phaseFor(WW.now());
     if(p !== WW.phase && (force || t - lastSwitch > 60000)){
@@ -1157,11 +1273,17 @@
 
   /* ══════════ ephemeris override ══════════ */
   function simStep(){
+    WW.phaseLock = null;
     WW.simOffset += 7200000;
     if(WW.simOffset >= 86400000) WW.simOffset = 0;
     recheckPhase(true); updateStatusText();
   }
-  function simReset(){ WW.simOffset = 0; recheckPhase(true); updateStatusText(); }
+  function simReset(){ WW.phaseLock = null; WW.simOffset = 0; recheckPhase(true); updateStatusText(); }
+  WW.phaseLock = null;
+  WW.simStep = simStep;
+  WW.simReset = simReset;
+  WW.forcePhase = function(p){ WW.phaseLock = p; if(p !== WW.phase){ setPhase(p, false); } else { docEl.classList.add('is-sim'); updateStatusText(); } };
+  WW.realTime = function(){ WW.phaseLock = null; simReset(); };
   var dial = document.getElementById('dial');
   var strip = document.getElementById('strip');
   [dial, strip].forEach(function(el){
@@ -1194,6 +1316,7 @@
   if(tapeTrack){
     var segs = [
       'LQDX ▲ LIVE', 'SURG ▲ LIVE', 'RISK ● LIVE',
+      'BTC <span class="lv" data-sym="btc">⋯</span>', 'ETH <span class="lv" data-sym="eth">⋯</span>',
       'ROUX · OWNER · HAPALMACH 68',
       '<span class="he" dir="rtl" lang="he">לה בופה · בוקר בצפת</span>',
       'SUN <span data-tape-sun>' + fmtSun(WW.sun.elev) + '</span> OVER MERON',
@@ -1578,6 +1701,8 @@
     /* board reveal */
     gsap.fromTo('#board .sec-head', { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: .8, scrollTrigger: { trigger: board, start: 'top 80%' } });
 
+    WW.goListing = function(id){ var i = listings.findIndex(function(l){ return l.id === id; }); if(i >= 0) scrollToIdx(i); };
+
     /* tear down exchange mode if the window leaves desktop conditions (one-way; reload restores) */
     var deskMq = matchMedia('(min-width:900px)');
     function teardown(){
@@ -1616,6 +1741,7 @@
       docEl.classList.add('no-scan');
     }
     if(idxReadout) idxReadout.textContent = '09 LISTINGS';
+    WW.goListing = function(id){ var el = document.getElementById(id); if(!el) return; if(lenis) lenis.scrollTo(el, { duration: 1.2 }); else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); activate(el); };
   }
 
   /* ══════════ crosshair ══════════ */
@@ -1655,6 +1781,179 @@
       el.addEventListener('pointerleave', function(){ mx(0); my(0); });
     });
   }
+
+  /* ══════════ shared section nav ══════════ */
+  WW.goSection = function(sel){
+    var el = sel === '#top' ? document.body : document.querySelector(sel);
+    if(!el) return;
+    if(lenis) lenis.scrollTo(sel === '#top' ? 0 : el, { duration: 1.2 });
+    else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  };
+
+  /* ══════════ live intelligence embed (click-to-load facade) ══════════ */
+  (function(){
+    var facade = document.getElementById('intel-facade');
+    var stage  = document.getElementById('intel-stage');
+    if(!facade || !stage) return;
+    function goLive(){
+      if(stage.dataset.live) return;
+      stage.dataset.live = '1';
+      var load = document.createElement('div');
+      load.className = 'intel-loading';
+      load.textContent = 'CONNECTING TO LIVE FEED…';
+      var f = document.createElement('iframe');
+      f.src = 'https://alertguru.base44.app/';
+      f.title = 'Alert Guru — live crypto intelligence';
+      f.loading = 'lazy';
+      f.setAttribute('allow', 'autoplay; fullscreen');
+      f.addEventListener('load', function(){ load.remove(); });
+      facade.remove();
+      stage.appendChild(load);
+      stage.appendChild(f);
+    }
+    facade.addEventListener('click', goLive);
+    WW.goLiveIntel = function(){ WW.goSection('#intel'); setTimeout(goLive, 320); };
+  })();
+
+  /* ══════════ live market feed — Binance public WS (graceful fallback) ══════════ */
+  (function(){
+    if(typeof WebSocket === 'undefined') return;
+    var qWrap = document.getElementById('q-btc-wrap');
+    var qBtc  = document.getElementById('q-btc');
+    function usd(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+    function paint(sym, last, openp){
+      gotData = true;
+      var pct = openp ? (last - openp) / openp * 100 : 0;
+      var up = pct >= 0, col = up ? 'var(--candle)' : 'var(--down)';
+      var txt = usd(last) + ' ' + (up ? '▲' : '▼') + Math.abs(pct).toFixed(2) + '%';
+      document.querySelectorAll('.lv[data-sym="' + sym + '"]').forEach(function(el){ el.textContent = txt; el.style.color = col; });
+      if(sym === 'btc'){
+        if(qBtc){ qBtc.textContent = usd(last); qBtc.style.color = col; }
+        if(qWrap && qWrap.hidden) qWrap.hidden = false;
+      }
+    }
+    var ws, tries = 0, dead = false, gotData = false;
+    function connect(){
+      if(dead || document.hidden) return;
+      try{ ws = new WebSocket('wss://stream.binance.com:9443/stream?streams=btcusdt@miniTicker/ethusdt@miniTicker'); }
+      catch(e){ return; }
+      ws.onmessage = function(ev){
+        try{
+          var d = JSON.parse(ev.data).data; if(!d) return;
+          if(d.s === 'BTCUSDT') paint('btc', parseFloat(d.c), parseFloat(d.o));
+          else if(d.s === 'ETHUSDT') paint('eth', parseFloat(d.c), parseFloat(d.o));
+          tries = 0;
+        }catch(e){}
+      };
+      ws.onclose = function(){ if(!dead && !document.hidden && tries < 5){ tries++; setTimeout(connect, 1500 * tries); } };
+      ws.onerror = function(){ try{ ws.close(); }catch(e){} };
+    }
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){ if(ws) try{ ws.close(); }catch(e){} }
+      else { tries = 0; connect(); }
+    });
+    connect();
+    setTimeout(function(){ if(!gotData) document.querySelectorAll('.lv').forEach(function(el){ el.textContent = 'LIVE'; el.style.color = 'var(--soft)'; }); }, 7000);
+  })();
+
+  /* ══════════ command terminal (⌘K / slash) ══════════ */
+  (function(){
+    var cmdk = document.getElementById('cmdk');
+    var input = document.getElementById('cmdk-q');
+    var list = document.getElementById('cmdk-list');
+    if(!cmdk || !input || !list) return;
+    var go = function(s){ (WW.goSection || function(){})(s); };
+
+    var CMDS = [
+      { ic:'▦', lbl:'Go to the board', hint:'nav', keys:'work board listings markets', run:function(){ go('#board'); } },
+      { ic:'◉', lbl:'Live Intelligence — go live', hint:'live', keys:'intel intelligence alert guru live feed crypto news', run:function(){ (WW.goLiveIntel || function(){ go('#intel'); })(); } },
+      { ic:'☰', lbl:'The Operator', hint:'nav', keys:'operator about mor moshe menahem who', run:function(){ go('#operator'); } },
+      { ic:'☷', lbl:'Instrument Specs', hint:'nav', keys:'specs capabilities skills services', run:function(){ go('#capabilities'); } },
+      { ic:'✎', lbl:'Place an Order', hint:'nav', keys:'order contact hire work email', run:function(){ go('#contact'); } },
+      { ic:'↑', lbl:'Back to top', hint:'nav', keys:'top home hero start', run:function(){ go('#top'); } },
+      { ic:'☾', lbl:'Set NIGHT session', hint:'phase', keys:'night dark stars', run:function(){ WW.forcePhase && WW.forcePhase('NIGHT'); } },
+      { ic:'☽', lbl:'Set DUSK — bein hashmashot', hint:'phase', keys:'dusk evening bein hashmashot crossing', run:function(){ WW.forcePhase && WW.forcePhase('DUSK'); } },
+      { ic:'☼', lbl:'Set DAWN session', hint:'phase', keys:'dawn morning sunrise', run:function(){ WW.forcePhase && WW.forcePhase('DAWN'); } },
+      { ic:'☀', lbl:'Set DAY session', hint:'phase', keys:'day light noon', run:function(){ WW.forcePhase && WW.forcePhase('DAY'); } },
+      { ic:'⟲', lbl:'Return to real Safed time', hint:'phase', keys:'real now reset live time', run:function(){ WW.realTime && WW.realTime(); } }
+    ];
+    [['LQDX','Liquidex','l-1','https://wattsonworks.github.io/LIQUIDEX/'],
+     ['SURG','Surge Guru','l-2','https://wattsonworks.github.io/SG/'],
+     ['RISK','Risk Engine','l-3','https://wattsonworks.github.io/LRE/'],
+     ['ROUX','ROUX Villa','l-4','https://wattsonworks.github.io/roux/'],
+     ['BFFE','La Buffet','l-5','https://buffet.page.gd/?i=1'],
+     ['JSTA','Jesta','l-6','https://wattsonworks.github.io/JESTA/'],
+     ['AVHU','Avihu','l-7','https://avihu.likesyou.org/'],
+     ['ISRP','Isra.Peptides','l-8','https://wattsonworks.github.io/isra-peptides/'],
+     ['HEAL','Healed IMO','l-9','https://siboimo.freepage.cc/']
+    ].forEach(function(w){
+      CMDS.push({ ic:'▸', lbl:'Open ' + w[1], hint:w[0], keys:(w[1] + ' ' + w[0] + ' open listing').toLowerCase(), run:function(){ (WW.goListing || function(){ go('#' + w[2]); })(w[2]); } });
+      CMDS.push({ ic:'↗', lbl:'Visit ' + w[1], hint:'open ↗', keys:('visit go open ' + w[1] + ' ' + w[0]).toLowerCase(), run:function(){ window.open(w[3], w[3].indexOf('wattsonworks.github.io') >= 0 ? '_self' : '_blank'); } });
+    });
+    CMDS.push({ ic:'⌘', lbl:'GitHub — wattsonworks', hint:'open ↗', keys:'github code source repo', run:function(){ window.open('https://github.com/wattsonworks', '_blank'); } });
+    CMDS.push({ ic:'?', lbl:'Help — show every command', hint:'help', keys:'help commands what can i type', keep:true, run:function(){ input.value = ''; render(''); } });
+
+    var shown = [], sel = 0, open = false, lastFocus = null;
+    function match(q, c){
+      q = q.trim().toLowerCase();
+      if(!q) return 1;
+      var lbl = c.lbl.toLowerCase(), hay = (c.lbl + ' ' + c.keys).toLowerCase();
+      if(lbl.indexOf(q) === 0) return 6;   /* label prefix — strongest */
+      if(lbl.indexOf(q) >= 0) return 5;    /* label substring */
+      if(hay.indexOf(q) >= 0) return 3;    /* keyword substring */
+      var qi = 0; for(var i = 0; i < hay.length && qi < q.length; i++){ if(hay[i] === q[qi]) qi++; }
+      return qi === q.length ? 1 : 0;      /* subsequence */
+    }
+    function render(q){
+      shown = CMDS.map(function(c){ return { c:c, s:match(q, c) }; }).filter(function(o){ return o.s > 0; })
+        .sort(function(a, b){ return b.s - a.s; }).map(function(o){ return o.c; });
+      sel = 0; list.innerHTML = '';
+      if(!shown.length){ var e = document.createElement('li'); e.className = 'cmdk-empty'; e.textContent = 'No matching command — try a name, or “help”.'; list.appendChild(e); return; }
+      shown.forEach(function(c, i){
+        var li = document.createElement('li');
+        li.className = 'cmdk-item' + (i === sel ? ' sel' : ''); li.setAttribute('role', 'option');
+        li.innerHTML = '<span class="ic" aria-hidden="true"></span><span class="lbl"></span><span class="hint"></span>';
+        li.querySelector('.ic').textContent = c.ic;
+        li.querySelector('.lbl').textContent = c.lbl;
+        li.querySelector('.hint').textContent = c.hint;
+        li.addEventListener('mousemove', function(){ if(sel !== i){ sel = i; paintSel(); } });
+        li.addEventListener('click', function(){ exec(i); });
+        list.appendChild(li);
+      });
+    }
+    function paintSel(){
+      var items = list.querySelectorAll('.cmdk-item');
+      items.forEach(function(el, i){ el.classList.toggle('sel', i === sel); });
+      if(items[sel]) items[sel].scrollIntoView({ block: 'nearest' });
+    }
+    function exec(i){ var c = shown[i]; if(!c) return; if(!c.keep) closeCmd(); try{ c.run(); }catch(e){} if(c.keep) input.focus(); }
+    function openCmd(){
+      if(open) return; open = true; lastFocus = document.activeElement;
+      cmdk.hidden = false; requestAnimationFrame(function(){ cmdk.classList.add('on'); });
+      input.value = ''; render(''); setTimeout(function(){ input.focus(); }, 30);
+      if(lenis) lenis.stop();
+    }
+    function closeCmd(){
+      if(!open) return; open = false; cmdk.classList.remove('on');
+      setTimeout(function(){ cmdk.hidden = true; }, 200);
+      if(lenis) lenis.start();
+      if(lastFocus && lastFocus.focus) try{ lastFocus.focus(); }catch(e){}
+    }
+    input.addEventListener('input', function(){ render(input.value); });
+    cmdk.addEventListener('click', function(e){ if(e.target === cmdk) closeCmd(); });
+    var btn = document.getElementById('cmdk-btn'); if(btn) btn.addEventListener('click', openCmd);
+    addEventListener('keydown', function(e){
+      var t = e.target || {}, tag = t.tagName || '';
+      var typing = tag === 'INPUT' || tag === 'TEXTAREA' || t.isContentEditable;
+      if((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)){ e.preventDefault(); open ? closeCmd() : openCmd(); return; }
+      if(e.key === '/' && !typing && !open){ e.preventDefault(); openCmd(); return; }
+      if(!open) return;
+      if(e.key === 'Escape'){ e.preventDefault(); closeCmd(); }
+      else if(e.key === 'ArrowDown'){ e.preventDefault(); sel = Math.min(sel + 1, shown.length - 1); paintSel(); }
+      else if(e.key === 'ArrowUp'){ e.preventDefault(); sel = Math.max(sel - 1, 0); paintSel(); }
+      else if(e.key === 'Enter'){ e.preventDefault(); exec(sel); }
+    });
+  })();
 
   console.log('%c wattsonworks® ' + '%c the safed exchange — folio 2027 · session ' + sessionId + ' ',
     'background:#FF8E2B;color:#130a02;font-weight:700;padding:4px 6px;',
