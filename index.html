@@ -1458,13 +1458,11 @@
     });
   }
 
-  /* ══════════ DMZ highlight — autoplay muted on view (desktop only; reduced-motion + phones keep poster + tap-to-play) ══════════ */
+  /* ══════════ DMZ highlight — autoplay muted on view (all devices) ══════════ */
   (function(){
     var v = document.querySelector('.ah-video');
     if(!v) return;
     v.muted = true; v.loop = true; v.setAttribute('playsinline','');
-    if(reduced) return;
-    if(matchMedia('(pointer:coarse)').matches) return;
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){
         es.forEach(function(e){
@@ -1504,9 +1502,7 @@
       setTimeout(function(){ if(!loaded) load.innerHTML = 'FEED BLOCKED BY YOUR BROWSER — <a href="https://alertguru.base44.app/" target="_blank" rel="noopener" style="color:var(--phosphor)">OPEN THE LIVE TERMINAL ↗</a>'; }, 6500);
     }
     if(goBtn) goBtn.addEventListener('click', goLive);
-    /* phones/tablets keep the facade — user taps "Go live" to load the heavy app (it embeds Twitch/YouTube/Reddit). desktop auto-embeds on approach. */
-    var autoEmbed = !matchMedia('(pointer:coarse)').matches;
-    if(autoEmbed && section && 'IntersectionObserver' in window){
+    if(section && 'IntersectionObserver' in window){
       var io = new IntersectionObserver(function(es){
         es.forEach(function(e){ if(e.isIntersecting){ goLive(); io.disconnect(); } });
       }, { rootMargin: '250px 0px', threshold: 0 });
@@ -1514,7 +1510,7 @@
       var armed = function(){ var r = section.getBoundingClientRect(); if(r.top < innerHeight + 250 && r.bottom > 0){ goLive(); removeEventListener('scroll', armed); } };
       addEventListener('scroll', armed, { passive: true });
       armed();
-    } else if(autoEmbed){ goLive(); }
+    } else { goLive(); }
     window.WW = window.WW || {};
     WW.goLiveIntel = function(){ (WW.goSection || function(){ var s = document.getElementById('intel'); if(s) s.scrollIntoView(); })('#intel'); setTimeout(goLive, 320); };
   })();
