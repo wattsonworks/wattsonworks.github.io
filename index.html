@@ -101,7 +101,8 @@
           { "@type": "ListItem", "position": 6, "name": "Jesta · ג׳סטה", "url": "https://wattsonworks.github.io/JESTA/" },
           { "@type": "ListItem", "position": 7, "name": "אביהו הגנן היהודי", "url": "https://avihu.likesyou.org/" },
           { "@type": "ListItem", "position": 8, "name": "Isra.Peptides", "url": "https://wattsonworks.github.io/isra-peptides/" },
-          { "@type": "ListItem", "position": 9, "name": "Healed IMO — SIBO/IMO recovery guide", "url": "https://siboimo.freepage.cc/" }
+          { "@type": "ListItem", "position": 9, "name": "Healed IMO — SIBO/IMO recovery guide", "url": "https://siboimo.freepage.cc/" },
+          { "@type": "ListItem", "position": 10, "name": "Web3 Surge & Risk Engine [SurgeGuru] — free TradingView indicator", "url": "https://www.tradingview.com/script/wcqFvNTR-Web3-Surge-Risk-Engine-SRE/" }
         ]
       }
     }
@@ -586,24 +587,11 @@
   .ah-cap .serif{color:var(--accent)}
   .ah-cap a{color:var(--accent)}
   .ah-cap a:hover{color:var(--candle)}
-  .ah-sclaunch{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;
-    text-decoration:none;color:var(--ink);overflow:hidden;
-    background:radial-gradient(130% 100% at 50% 130%, rgba(255,142,43,.18), transparent 62%), #0c0c0f}
-  .scl-eq{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;gap:5px;opacity:.22;pointer-events:none}
-  .scl-eq i{width:6px;height:18%;background:var(--accent);animation:eq 1.1s ease-in-out infinite}
-  .scl-eq i:nth-child(2n){animation-duration:.8s}
-  .scl-eq i:nth-child(3n){animation-duration:1.35s;background:var(--candle)}
-  .scl-eq i:nth-child(4n){animation-duration:.65s}
-  .scl-eq i:nth-child(5n){animation-duration:1.05s}
-  @keyframes eq{0%,100%{height:16%}50%{height:82%}}
-  .scl-cta{position:relative;z-index:1;display:inline-flex;align-items:center;gap:.7rem;
-    font-family:var(--mono);font-size:clamp(.9rem,1.6vw,1.1rem);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
-    padding:.95rem 1.5rem;border:1px solid var(--accent);background:rgba(7,7,8,.62);transition:background .3s var(--ease),color .3s}
-  .scl-play{color:var(--accent);transition:color .3s}
-  .ah-sclaunch:hover .scl-cta,.ah-sclaunch:focus-visible .scl-cta{background:var(--accent);color:var(--accent-ink)}
-  .ah-sclaunch:hover .scl-play,.ah-sclaunch:focus-visible .scl-play{color:var(--accent-ink)}
-  .ah-sclaunch:focus-visible{outline:none}
-  .scl-meta{position:relative;z-index:1;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .ah-tracks{display:flex;flex-direction:column;gap:.7rem;padding:.85rem}
+  .ah-track{display:flex;flex-direction:column;gap:.4rem}
+  .ah-track-h{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+  .ah-track-h .acc{color:var(--accent);font-weight:400;margin-inline-end:.3em}
+  .sc-embed{width:100%;height:160px;border:0;display:block;background:var(--bg-2)}
   @media(max-width:760px){.ah-grid{grid-template-columns:1fr}}
 
   /* ───────────── command terminal ───────────── */
@@ -747,7 +735,7 @@
   <section id="board" aria-labelledby="board-h">
     <div class="sec-head">
       <h2 id="board-h">The Board <span class="he" dir="rtl" lang="he">הלוח</span></h2>
-      <span class="count idx-readout" id="idx-readout">09 LISTINGS</span>
+      <span class="count idx-readout" id="idx-readout">10 LISTINGS</span>
     </div>
 
     <div class="board-list" id="board-list">
@@ -827,16 +815,40 @@
               </div>
             </div></div>
           </li>
+
+          <li class="listing" id="l-10" data-tkr="SRE" data-base="0">
+            <div class="l-bar">
+              <span class="l-idx">04</span>
+              <span class="l-tkr" data-flap>SRE</span>
+              <a class="l-name" href="https://www.tradingview.com/script/wcqFvNTR-Web3-Surge-Risk-Engine-SRE/" data-flap-name>Web3 Surge &amp; Risk Engine</a>
+              <span class="l-sect">Fintech · Free indicator</span>
+              <span class="l-quote up">★ FREE</span>
+            </div>
+            <div class="l-detail"><div class="l-detail-in">
+              <figure class="l-media"><img loading="lazy" src="assets/work/sre.svg" alt="Web3 Surge & Risk Engine — leaderboard and sector rotation"><span class="wipe"></span></figure>
+              <div class="l-info">
+                <p class="l-desc">A <b>free</b> TradingView indicator scoring an <b>AI×Web3 universe</b> of 20 tokens — cross-sectional Surge + Risk ranking, a live leaderboard, sector rotation, market breadth &amp; regime, with surge and rotation alerts.</p>
+                <dl class="l-data">
+                  <dt>Role</dt><dd>Design · Build · Pine v6</dd>
+                  <dt>Market</dt><dd>TradingView</dd>
+                  <dt>Status</dt><dd><span class="lamp"></span>LIVE · FREE</dd>
+                  <dt>Price</dt><dd>FREE</dd>
+                </dl>
+                <svg class="spark" viewBox="0 0 200 48" aria-hidden="true"><path class="ar" d="M0,40 28,32 56,34 84,22 112,26 140,14 168,18 200,6 V48 H0 Z"/><polyline class="ln" pathLength="100" points="0,40 28,32 56,34 84,22 112,26 140,14 168,18 200,6"/><circle class="dot" cx="200" cy="6" r="2.6"/></svg>
+                <div class="l-cta"><a class="ticket" href="https://www.tradingview.com/script/wcqFvNTR-Web3-Surge-Risk-Engine-SRE/" data-exec>Get it free — TradingView ↗<span class="filled" aria-hidden="true">ADDED ✓</span></a></div>
+              </div>
+            </div></div>
+          </li>
         </ol>
       </div>
 
       <div class="sector">
         <h3 class="sector-head"><span>Sector 02 — Places</span><span class="he" dir="rtl" lang="he">מקומות</span></h3>
-        <ol start="4">
+        <ol start="5">
 
           <li class="listing" id="l-4" data-tkr="ROUX" data-base="900.00" data-owner>
             <div class="l-bar">
-              <span class="l-idx">04</span>
+              <span class="l-idx">05</span>
               <span class="l-tkr" data-flap>ROUX</span>
               <a class="l-name" href="https://wattsonworks.github.io/roux/" data-flap-name>Roux Villa<span class="he" dir="rtl" lang="he">וילת רוקס</span></a>
               <span class="l-sect">Hospitality · Owner</span>
@@ -861,7 +873,7 @@
 
           <li class="listing" id="l-5" data-tkr="BFFE" data-base="89.00" data-owner>
             <div class="l-bar">
-              <span class="l-idx">05</span>
+              <span class="l-idx">06</span>
               <span class="l-tkr" data-flap>BFFE</span>
               <a class="l-name" href="https://buffet.page.gd/?i=1" data-flap-name>La Buffet<span class="he" dir="rtl" lang="he">לה בופה</span></a>
               <span class="l-sect">Restaurant · Owner</span>
@@ -888,11 +900,11 @@
 
       <div class="sector">
         <h3 class="sector-head"><span>Sector 03 — Life</span><span class="he" dir="rtl" lang="he">חיים</span></h3>
-        <ol start="6">
+        <ol start="7">
 
           <li class="listing" id="l-6" data-tkr="JSTA" data-base="18.00">
             <div class="l-bar">
-              <span class="l-idx">06</span>
+              <span class="l-idx">07</span>
               <span class="l-tkr" data-flap>JSTA</span>
               <a class="l-name" href="https://wattsonworks.github.io/JESTA/" data-flap-name>Jesta<span class="he" dir="rtl" lang="he">ג׳סטה</span></a>
               <span class="l-sect">Community · App</span>
@@ -919,7 +931,7 @@
 
           <li class="listing" id="l-7" data-tkr="AVHU" data-base="500.00">
             <div class="l-bar">
-              <span class="l-idx">07</span>
+              <span class="l-idx">08</span>
               <span class="l-tkr" data-flap>AVHU</span>
               <a class="l-name" href="https://avihu.likesyou.org/" data-flap-name>Avihu<span class="he" dir="rtl" lang="he">הגנן היהודי</span></a>
               <span class="l-sect">Landscaping · Catalog</span>
@@ -943,7 +955,7 @@
 
           <li class="listing" id="l-8" data-tkr="ISRP" data-base="120.00">
             <div class="l-bar">
-              <span class="l-idx">08</span>
+              <span class="l-idx">09</span>
               <span class="l-tkr" data-flap>ISRP</span>
               <a class="l-name" href="https://wattsonworks.github.io/isra-peptides/" data-flap-name>Isra.Peptides</a>
               <span class="l-sect">Research · Education</span>
@@ -967,7 +979,7 @@
 
           <li class="listing quiet" id="l-9" data-tkr="HEAL" data-quiet>
             <div class="l-bar">
-              <span class="l-idx">09</span>
+              <span class="l-idx">10</span>
               <span class="l-tkr">HEAL</span>
               <a class="l-name" href="https://siboimo.freepage.cc/">Healed IMO</a>
               <span class="l-sect">Recovery · Guide</span>
@@ -1051,7 +1063,7 @@
           <p id="manifesto">I’m Mor Moshe Menahem — designer, developer and trading enthusiast. I own and run <em class="serif">ROUX Villa</em> and <em class="serif">La Buffet</em> in Safed, and I build the digital products behind them — research, interface, code and SEO, end-to-end. The same discipline drives the real-time trading tools I ship for my own desk.</p>
         </div>
         <div class="facts">
-          <div class="fact" data-reveal><b><span data-count="9" data-pad="2">09</span></b><span>Live listings on the board</span></div>
+          <div class="fact" data-reveal><b><span data-count="10" data-pad="2">10</span></b><span>Live listings on the board</span></div>
           <div class="fact" data-reveal><b>EN·<em>HE</em></b><span>Bilingual — full RTL craft</span></div>
           <div class="fact" data-reveal><b><span data-count="2" data-pad="2">02</span></b><span>Venues owned &amp; run in Safed</span></div>
         </div>
@@ -1119,15 +1131,22 @@
       <figure class="ah-panel">
         <figcaption class="ah-bar">
           <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="ah-title">SOUNDCLOUD — NATURE RAVE / TECH</span>
+          <span class="ah-title">SOUNDCLOUD — TWO PROJECTS</span>
           <a class="ah-open" href="https://soundcloud.com/limgamosz" target="_blank" rel="noopener" data-hover>SoundCloud ↗</a>
         </figcaption>
-        <a class="ah-media ah-sclaunch" href="https://soundcloud.com/limgamosz" target="_blank" rel="noopener" aria-label="Play MOSZ & Limga on SoundCloud — opens SoundCloud in a new tab">
-          <span class="scl-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-          <span class="scl-cta"><span class="scl-play" aria-hidden="true">▶</span> Play on SoundCloud ↗</span>
-          <span class="scl-meta">MOSZ &amp; Limga — nature rave · tech-house</span>
-        </a>
-        <p class="ah-cap"><b>South-America-style nature rave</b> — organic tech-house built from field-recorded jungle and stone. Off-desk frequencies for <em class="serif">Safed</em> nights.</p>
+        <div class="ah-tracks">
+          <div class="ah-track">
+            <span class="ah-track-h"><b class="acc">▶</b> MOSZ &amp; Limga — nature rave / tech-house</span>
+            <iframe class="sc-embed" title="MOSZ & Limga on SoundCloud" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/limgamosz&color=%23ff8e2b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+          </div>
+          <div class="ah-track">
+            <span class="ah-track-h"><b class="acc">▶</b> IVYMORR — psytrance sketchbook</span>
+            <iframe class="sc-embed" title="IVYMORR on SoundCloud" loading="lazy" scrolling="no" frameborder="no" allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/ivymorr&color=%23ff8e2b&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"></iframe>
+          </div>
+        </div>
+        <p class="ah-cap">Two off-desk projects — <b>MOSZ &amp; Limga</b> (nature-rave / tech-house) and <b>IVYMORR</b> (a psytrance sketchbook). Press play, or open on <a href="https://soundcloud.com/limgamosz" target="_blank" rel="noopener" data-hover>SoundCloud ↗</a>.</p>
       </figure>
 
     </div>
@@ -1803,13 +1822,14 @@
     addEventListener('resize', layoutDetail);
     if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ layoutDetail(); ScrollTrigger.refresh(); });
 
+    var STEPS = Math.max(1, listings.length - 1);
     var current = -1;
     function openIdx(i){
       if(i === current) return;
       current = i;
       listings.forEach(function(li, j){ li.classList.toggle('open', j === i); });
       activate(listings[i]);
-      if(idxReadout) idxReadout.textContent = String(i+1).padStart(2,'0') + ' / 09';
+      if(idxReadout) idxReadout.textContent = String(i+1).padStart(2,'0') + ' / ' + String(listings.length).padStart(2,'0');
       railLinks.forEach(function(a, j){
         a.classList.toggle('act', j === i);
         if(j === i) a.querySelector('.nm').textContent = ' — ' + railNames[i];
@@ -1817,15 +1837,15 @@
     }
 
     var st = ScrollTrigger.create({
-      trigger: board, start: 'top top', end: '+=4200', pin: true, anticipatePin: 1,
-      snap: { snapTo: 1/8, duration: { min: .25, max: .6 }, delay: .1, ease: 'power2.inOut' },
-      onUpdate: function(self){ openIdx(Math.round(self.progress * 8)); },
+      trigger: board, start: 'top top', end: '+=' + (STEPS * 525), pin: true, anticipatePin: 1,
+      snap: { snapTo: 1/STEPS, duration: { min: .25, max: .6 }, delay: .1, ease: 'power2.inOut' },
+      onUpdate: function(self){ openIdx(Math.round(self.progress * STEPS)); },
       onToggle: function(self){ rail.classList.toggle('on', self.isActive); },
       onEnter: function(){ openIdx(0); }
     });
 
     function scrollToIdx(i){
-      var y = st.start + (i/8) * (st.end - st.start) + 2;
+      var y = st.start + (i/STEPS) * (st.end - st.start) + 2;
       if(lenis) lenis.scrollTo(y, { duration: .8 }); else scrollTo(0, y);
     }
     railLinks.forEach(function(a, i){
@@ -1863,7 +1883,7 @@
       board.classList.remove('exchange');
       rail.classList.remove('on');
       listings.forEach(function(li){ li.classList.remove('open'); activate(li); });
-      if(idxReadout) idxReadout.textContent = '09 LISTINGS';
+      if(idxReadout) idxReadout.textContent = String(listings.length).padStart(2,'0') + ' LISTINGS';
       ScrollTrigger.refresh();
     }
     deskMq.addEventListener('change', function(e){ if(!e.matches) teardown(); });
@@ -1892,7 +1912,7 @@
     } else {
       docEl.classList.add('no-scan');
     }
-    if(idxReadout) idxReadout.textContent = '09 LISTINGS';
+    if(idxReadout) idxReadout.textContent = String(listings.length).padStart(2,'0') + ' LISTINGS';
     WW.goListing = function(id){ var el = document.getElementById(id); if(!el) return; if(lenis) lenis.scrollTo(el, { duration: 1.2 }); else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); activate(el); };
   }
 
@@ -2012,6 +2032,7 @@
     [['LQDX','Liquidex','l-1','https://wattsonworks.github.io/LIQUIDEX/'],
      ['SURG','Surge Guru','l-2','https://wattsonworks.github.io/SG/'],
      ['RISK','Risk Engine','l-3','https://wattsonworks.github.io/LRE/'],
+     ['SRE','Web3 Surge & Risk Engine','l-10','https://www.tradingview.com/script/wcqFvNTR-Web3-Surge-Risk-Engine-SRE/'],
      ['ROUX','ROUX Villa','l-4','https://wattsonworks.github.io/roux/'],
      ['BFFE','La Buffet','l-5','https://buffet.page.gd/?i=1'],
      ['JSTA','Jesta','l-6','https://wattsonworks.github.io/JESTA/'],

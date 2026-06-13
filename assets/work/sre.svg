@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-label="Web3 Surge & Risk Engine — leaderboard and sector heatmap">
+<rect width="400" height="225" fill="#0b0e11"/>
+<text x="16" y="26" font-family="ui-monospace,monospace" font-size="11" letter-spacing="2" fill="#ECE8DF">SURGE / RISK ENGINE</text>
+<text x="384" y="26" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" letter-spacing="1.5" fill="#3DE8A0">● LIVE · FREE</text>
+<line x1="16" y1="36" x2="384" y2="36" stroke="#2A2E39" stroke-width="1"/>
+<g font-family="ui-monospace,monospace" font-size="9.5">
+<circle cx="24" cy="52" r="3" fill="#10D6BE"/><text x="34" y="55" fill="#ECE8DF">TAO</text><text x="150" y="55" text-anchor="end" fill="#16C784">+24.1%</text>
+<rect x="160" y="47" width="120" height="9" rx="1" fill="#16C784" fill-opacity="0.85"/><text x="300" y="55" fill="#16C784">92</text><text x="356" y="55" text-anchor="end" fill="#FFD24D">★ HOT</text>
+<circle cx="24" cy="70" r="3" fill="#A86BFF"/><text x="34" y="73" fill="#ECE8DF">FET</text><text x="150" y="73" text-anchor="end" fill="#16C784">+11.4%</text>
+<rect x="160" y="65" width="86" height="9" rx="1" fill="#16C784" fill-opacity="0.6"/><text x="300" y="73" fill="#9BE635">78</text><text x="356" y="73" text-anchor="end" fill="#9BE635">UP</text>
+<circle cx="24" cy="88" r="3" fill="#5FE049"/><text x="34" y="91" fill="#ECE8DF">SOL</text><text x="150" y="91" text-anchor="end" fill="#16C784">+6.2%</text>
+<rect x="160" y="83" width="64" height="9" rx="1" fill="#16C784" fill-opacity="0.45"/><text x="300" y="91" fill="#9BE635">66</text><text x="356" y="91" text-anchor="end" fill="#8A93A6">—</text>
+<circle cx="24" cy="106" r="3" fill="#FF7A33"/><text x="34" y="109" fill="#ECE8DF">RENDER</text><text x="150" y="109" text-anchor="end" fill="#EA3943">-3.1%</text>
+<rect x="160" y="101" width="40" height="9" rx="1" fill="#EA3943" fill-opacity="0.5"/><text x="300" y="109" fill="#FF7A33">41</text><text x="356" y="109" text-anchor="end" fill="#8A93A6">—</text>
+<circle cx="24" cy="124" r="3" fill="#FF5252"/><text x="34" y="127" fill="#ECE8DF">AVAX</text><text x="150" y="127" text-anchor="end" fill="#EA3943">-7.8%</text>
+<rect x="160" y="119" width="26" height="9" rx="1" fill="#EA3943" fill-opacity="0.7"/><text x="300" y="127" fill="#EA3943">23</text><text x="356" y="127" text-anchor="end" fill="#EA3943">WEAK</text>
+</g>
+<line x1="16" y1="142" x2="384" y2="142" stroke="#2A2E39" stroke-width="1"/>
+<text x="16" y="160" font-family="ui-monospace,monospace" font-size="9" letter-spacing="1.5" fill="#8957e5">SECTOR ROTATION</text>
+<g font-family="ui-monospace,monospace" font-size="9">
+<text x="16" y="180" fill="#FFD24D">★ AI &amp; AGENTS</text><rect x="120" y="173" width="120" height="8" rx="1" fill="#A855F7"/><text x="250" y="180" fill="#A855F7">▲</text>
+<text x="16" y="196" fill="#ECE8DF">LAYER 1 / 2</text><rect x="120" y="189" width="86" height="8" rx="1" fill="#2C5BD6"/><text x="250" y="196" fill="#16C784">▲</text>
+<text x="16" y="212" fill="#ECE8DF">DePIN</text><rect x="120" y="205" width="54" height="8" rx="1" fill="#FF7A33"/><text x="250" y="212" fill="#EA3943">▼</text>
+</g>
+<text x="384" y="212" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" fill="#16C784">RISK-ON · 64% BULL</text>
+</svg>
