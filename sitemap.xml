@@ -11,6 +11,7 @@
   <sitemap><loc>https://wattsonworks.github.io/JESTA/sitemap.xml</loc></sitemap>
   <sitemap><loc>https://wattsonworks.github.io/healed-imo/sitemap.xml</loc></sitemap>
   <sitemap><loc>https://wattsonworks.github.io/into-the-routine/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://wattsonworks.github.io/dune-pilgrim/sitemap.xml</loc></sitemap>
   <!-- AVIHU moved to its own origin (https://avihu.likesyou.org) — it carries its
        own robots.txt + sitemap.xml and is submitted to Search Console separately. -->
 

@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DUNE PILGRIM — an endless desert you glide, dive and draw through · wattsonworks®</title>
+<meta name="description" content="DUNE PILGRIM — a browser toy by Mor Moshe Menahem. Sixteen sine waves make a seamless desert with no tiles and no edges: glide it, dive under its sea, draw glyphs to change the weather. WebGL, one file, no install.">
+<meta name="theme-color" content="#08060e">
+<link rel="canonical" href="https://wattsonworks.github.io/dune-pilgrim/">
+
+<meta property="og:title" content="DUNE PILGRIM — an endless desert you glide, dive and draw through">
+<meta property="og:description" content="Sixteen sine waves, no tiles, no edges. Hold to glide, dive under the water, draw a shape to cast. A wattsonworks toy — WebGL, one file, no install.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wattsonworks.github.io/dune-pilgrim/">
+<meta property="og:image" content="https://wattsonworks.github.io/dune-pilgrim/img/dune-pilgrim-cover.webp">
+<meta property="og:image:alt" content="DUNE PILGRIM — a lone figure gliding over an endless dune sea">
+<meta property="og:site_name" content="wattsonworks">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DUNE PILGRIM — glide an endless desert in your browser">
+<meta name="twitter:description" content="Sixteen sine waves, no tiles, no edges. Glide, dive, draw a shape to cast. No install.">
+<meta name="twitter:image" content="https://wattsonworks.github.io/dune-pilgrim/img/dune-pilgrim-cover.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2308060e'/%3E%3Cpath d='M3 22c5-7 9 2 13-4s6 3 13-5' fill='none' stroke='%23D69656' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='23' cy='9' r='2.6' fill='%23F6DCB2'/%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "@id": "https://wattsonworks.github.io/dune-pilgrim/#game",
+      "name": "DUNE PILGRIM",
+      "url": "https://wattsonworks.github.io/dune-pilgrim/",
+      "description": "An endless procedural desert you glide, dive and draw through. Sixteen shaped sine waves generate the terrain in JavaScript and GLSL at once, so physics matches pixels. Browser-based, WebGL, no install.",
+      "image": "https://wattsonworks.github.io/dune-pilgrim/img/dune-pilgrim-cover.webp",
+      "playMode": "SinglePlayer",
+      "gamePlatform": ["Web browser", "Desktop", "Mobile"],
+      "applicationCategory": "Game",
+      "operatingSystem": "Any (WebGL-capable browser)",
+      "inLanguage": "en",
+      "genre": ["Exploration", "Sandbox", "Art game"],
+      "author": { "@id": "https://wattsonworks.github.io/#mor" },
+      "publisher": { "@id": "https://wattsonworks.github.io/#mor" },
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "isPartOf": { "@id": "https://wattsonworks.github.io/#website" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://wattsonworks.github.io/dune-pilgrim/#page",
+      "url": "https://wattsonworks.github.io/dune-pilgrim/",
+      "name": "DUNE PILGRIM — wattsonworks",
+      "isPartOf": { "@id": "https://wattsonworks.github.io/#website" },
+      "about": { "@id": "https://wattsonworks.github.io/dune-pilgrim/#game" },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "wattsonworks", "item": "https://wattsonworks.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Dune Pilgrim", "item": "https://wattsonworks.github.io/dune-pilgrim/" }
+        ]
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#08060e;
+    --bg-2:#0e0b16;
+    --ink:#F6ECDA;
+    --soft:#9a9086;
+    --faint:#7c7469;
+    --line:rgba(246,236,218,.12);
+    --sand:#D69656;
+    --sand-hi:#F6DCB2;
+    --sea:#5FA9C9;
+    --verd:#7FBF6A;
+    --ink-on-sand:#150c04;
+    --serif:'Instrument Serif',Georgia,serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --disp:'Archivo',Impact,sans-serif;
+    --ease:cubic-bezier(.62,.05,.18,.99);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+  body{background:var(--bg);color:var(--ink);font-family:var(--disp);line-height:1.55;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  ::selection{background:var(--sand);color:var(--ink-on-sand)}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ul,ol{list-style:none}
+  .mono{font-family:var(--mono)}
+  .serif{font-family:var(--serif);font-style:italic}
+  .vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .skip{position:fixed;top:-100px;left:1rem;z-index:300;background:var(--sand);color:var(--ink-on-sand);
+    padding:.6rem 1rem;font-family:var(--mono);font-size:.8rem;transition:top .2s}
+  .skip:focus{top:1rem}
+
+  /* ───────────── atmosphere ───────────── */
+  .dunes{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(1200px 620px at 68% 8%, rgba(214,150,86,.16), transparent 64%),
+      radial-gradient(1500px 900px at 30% 104%, rgba(95,169,201,.07), transparent 70%),
+      var(--bg)}
+  .grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 9s steps(10) infinite}
+  @keyframes grain{
+    0%,100%{transform:translate(0,0)}20%{transform:translate(3%,2%)}40%{transform:translate(4%,-2%)}
+    60%{transform:translate(2%,-4%)}80%{transform:translate(-3%,3%)}
+  }
+  @media (prefers-reduced-motion:reduce){.grain{animation:none}}
+
+  .wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 clamp(1.1rem,3.4vw,2.6rem)}
+
+  /* ───────────── status bar ───────────── */
+  .bar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:.7rem clamp(1.1rem,3.4vw,2.6rem);border-bottom:1px solid var(--line);
+    background:rgba(8,6,14,.78);backdrop-filter:blur(10px);
+    font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
+  .bar a.home{color:var(--ink)}
+  .bar a.home:hover{color:var(--sand)}
+  .bar .live{color:var(--sand)}
+  .bar .dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--verd);
+    margin-inline-end:.5em;box-shadow:0 0 0 0 rgba(127,191,106,.6);animation:pulse 2.6s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 7px rgba(127,191,106,0)}100%{box-shadow:0 0 0 0 rgba(127,191,106,0)}}
+  @media (max-width:640px){.bar .hide-s{display:none}}
+
+  /* ───────────── hero ───────────── */
+  .hero{padding:clamp(3.2rem,11vh,7rem) 0 clamp(2rem,6vh,3.4rem)}
+  .eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--sand);
+    display:flex;gap:.9rem;flex-wrap:wrap;align-items:center;margin-bottom:clamp(1rem,3vh,1.8rem)}
+  .eyebrow span:not(:last-child):after{content:"·";margin-inline-start:.9rem;color:var(--faint)}
+  h1{font-weight:800;font-stretch:118%;text-transform:uppercase;letter-spacing:-.028em;line-height:.86;
+    font-size:clamp(3rem,13.5vw,9.5rem);color:var(--ink)}
+  h1 i{font-style:normal;color:var(--sand)}
+  .lede{margin-top:clamp(1.2rem,3.6vh,2.2rem);max-width:62ch;font-size:clamp(1.05rem,2.1vw,1.42rem);
+    line-height:1.62;color:#DCD2C2}
+  .lede em{font-family:var(--serif);font-style:italic;color:var(--sand-hi)}
+
+  .cta-row{display:flex;flex-wrap:wrap;gap:.8rem 1rem;align-items:center;margin-top:clamp(1.6rem,4.4vh,2.6rem)}
+  .enter{display:inline-flex;align-items:center;gap:.9rem;padding:.95rem 1.7rem;border:1px solid var(--sand);
+    background:var(--sand);color:var(--ink-on-sand);font-family:var(--mono);font-weight:600;font-size:.78rem;
+    letter-spacing:.24em;text-transform:uppercase;transition:transform .35s var(--ease),background .35s,color .35s}
+  .enter:hover{transform:translateY(-2px);background:var(--sand-hi);border-color:var(--sand-hi)}
+  .enter:focus-visible{outline:2px solid var(--sand-hi);outline-offset:3px}
+  .ghost{display:inline-flex;align-items:center;gap:.7rem;padding:.95rem 1.4rem;border:1px solid var(--line);
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);
+    transition:border-color .35s,color .35s}
+  .ghost:hover{border-color:var(--sand);color:var(--ink)}
+  .fineprint{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+    margin-top:1rem}
+
+  /* ───────────── cover ───────────── */
+  .cover{position:relative;margin:clamp(1.6rem,5vh,3rem) 0 0;border:1px solid var(--line);overflow:hidden;
+    background:#0b0812;aspect-ratio:16/9}
+  .cover img{width:100%;height:100%;object-fit:cover;filter:saturate(1.04)}
+  .cover .cap{position:absolute;left:0;bottom:0;padding:.5rem .8rem;background:rgba(8,6,14,.72);
+    border-top:1px solid var(--line);border-right:1px solid var(--line);
+    font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+  .cover .cap b{color:var(--sand);font-weight:400}
+  .cover .cap i{font-style:normal;color:var(--faint)}
+  .cover.art{background:
+      radial-gradient(120% 90% at 74% 18%, rgba(246,220,178,.30), transparent 58%),
+      radial-gradient(80% 70% at 20% 96%, rgba(95,169,201,.14), transparent 66%),
+      linear-gradient(#120c14, #08060e 68%)}
+
+  /* ───────────── sections ───────────── */
+  section{position:relative;z-index:2;padding:clamp(3rem,9vh,6rem) 0}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+    border-bottom:1px solid var(--line);padding-bottom:.9rem;margin-bottom:clamp(1.4rem,4vh,2.4rem)}
+  .sec-head h2{font-family:var(--mono);font-weight:600;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sand)}
+  .sec-head .count{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--faint)}
+  .prose{max-width:64ch;font-size:1.02rem;line-height:1.75;color:#CFC6B7}
+  .prose + .prose{margin-top:1.1rem}
+  .prose b{color:var(--ink);font-weight:600}
+  .prose em{font-family:var(--serif);font-style:italic;color:var(--sand-hi)}
+
+  /* controls */
+  .ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(1rem,3vw,2.2rem)}
+  .ctrl-card{border:1px solid var(--line);padding:clamp(1rem,2.4vw,1.5rem);background:rgba(246,236,218,.015)}
+  .ctrl-card h3{font-family:var(--mono);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:1rem;display:flex;justify-content:space-between}
+  .ctrl-card h3 b{color:var(--sand);font-weight:400}
+  .keys{display:grid;grid-template-columns:auto 1fr;gap:.55rem 1rem;align-items:baseline;
+    font-size:.94rem;color:#CFC6B7}
+  .keys dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--sand-hi);
+    border:1px solid var(--line);padding:.16rem .5rem;justify-self:start;white-space:nowrap}
+  .keys dd{padding-bottom:.1rem}
+
+  /* systems */
+  .sys{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1px;background:var(--line);
+    border:1px solid var(--line)}
+  .sys li{background:var(--bg);padding:clamp(1rem,2.2vw,1.4rem);transition:background .4s}
+  .sys li:hover{background:var(--bg-2)}
+  .sys h3{font-family:var(--mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--sand);
+    margin-bottom:.6rem;display:flex;gap:.6rem;align-items:baseline}
+  .sys h3 span{color:var(--faint)}
+  .sys p{font-size:.92rem;line-height:1.6;color:#BFB6A8}
+
+  /* glyph strip */
+  .glyphs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+  .glyphs li{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+    border:1px solid var(--line);padding:.34rem .66rem;color:var(--soft)}
+  .glyphs li.combo{border-color:rgba(214,150,86,.45);color:var(--sand-hi)}
+
+  /* spec table */
+  .spec{width:100%;border-collapse:collapse;font-size:.92rem}
+  .spec th,.spec td{text-align:start;padding:.72rem .2rem;border-bottom:1px solid var(--line);vertical-align:baseline}
+  .spec th{font-family:var(--mono);font-weight:400;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--faint);width:min(38%,230px)}
+  .spec td{color:#CFC6B7}
+  .spec code{font-family:var(--mono);font-size:.86em;color:var(--sand-hi);
+    border:1px solid var(--line);padding:.06rem .34rem}
+
+  /* seeds */
+  .seeds{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.3rem}
+  .seeds a{font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
+    border:1px solid var(--line);padding:.5rem .85rem;color:var(--soft);transition:border-color .3s,color .3s}
+  .seeds a:hover{border-color:var(--sand);color:var(--sand-hi)}
+
+  /* closing */
+  .close-cta{border:1px solid var(--line);padding:clamp(1.6rem,5vw,3rem);text-align:center;
+    background:radial-gradient(700px 300px at 50% 0%, rgba(214,150,86,.10), transparent 70%)}
+  .close-cta p{max-width:48ch;margin:0 auto 1.6rem;color:#CFC6B7}
+
+  footer{position:relative;z-index:2;border-top:1px solid var(--line);margin-top:clamp(2rem,6vh,4rem);
+    padding:1.4rem clamp(1.1rem,3.4vw,2.6rem);display:flex;flex-wrap:wrap;gap:.8rem 1.6rem;
+    justify-content:space-between;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--faint)}
+  footer a:hover{color:var(--sand)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="dunes" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="bar">
+  <a class="home" href="../">← wattsonworks<sup>®</sup></a>
+  <span class="hide-s">Dune Pilgrim · toy · WebGL</span>
+  <span class="live"><i class="dot" aria-hidden="true"></i>playable</span>
+</div>
+
+<main id="main">
+
+  <header class="hero wrap">
+    <div class="eyebrow">
+      <span>Sector 04 — Play</span><span>Personal</span><span>2026</span><span>No install</span>
+    </div>
+    <h1>Dune<br>Pilgrim<i>.</i></h1>
+    <p class="lede">An endless desert that was never drawn by anyone. Sixteen shaped sine waves decide where the
+      mountains stand and where the sea gets in — <em>no tiles, no chunks, no edges</em> — and you walk into the
+      middle of it with a scarf, a long stride and the ability to draw.</p>
+
+    <div class="cta-row">
+      <a class="enter" href="play/">Enter the world ↗</a>
+      <a class="ghost" href="#controls">How to move</a>
+      <a class="ghost" href="#build">How it's built</a>
+    </div>
+    <p class="fineprint">Runs in the browser · WebGL · keyboard, mouse or touch · sound on · one save, kept on your device</p>
+
+    <!-- Cover art. To use a real in-game frame instead, drop a 16:9 image at
+         img/dune-pilgrim-cover.webp and point this <img> and the og:image at it. -->
+    <figure class="cover" id="cover">
+      <img src="img/cover.svg" width="1200" height="675" alt="A lone figure with a streaming scarf on a ridge above an endless dune sea, low sun, water caught in the basin below">
+      <span class="cap"><b>DUNE PILGRIM</b> — the ridge at first light <i>· illustration</i></span>
+    </figure>
+  </header>
+
+  <!-- ═══════════ WHAT IT IS ═══════════ -->
+  <section id="about" class="wrap">
+    <div class="sec-head">
+      <h2>What it is</h2>
+      <span class="count">01</span>
+    </div>
+    <p class="prose">There is no score, no timer and nothing chasing you. You are a pilgrim in a desert that keeps
+      going in every direction, and the whole of the game is <b>getting good at moving through it</b>. You hold to
+      glide, and she runs, then skims, then leaves the ground. Land on the right face of a dune at the right moment
+      and flick sideways, and the landing becomes a bounce instead of a stop. Chain enough of those and the desert
+      starts to feel like water.</p>
+    <p class="prose">Then you find out the sea is real. Dive, and the light stops behaving like air — red dies within
+      a few metres, green holds, blue carries — and shafts of sun hang in the water where the world put them, not
+      where the screen did. Underneath there are things moving that are much larger than you.</p>
+    <p class="prose">And the desert listens. <em>Hold right mouse and draw a shape</em> and the world reads it: a
+      circle, a spiral, a triangle, a Z. Rain arrives. Grass comes up. A hole opens through the rock in front of
+      you. Draw two in a row and they combine into something neither one does alone.</p>
+  </section>
+
+  <!-- ═══════════ CONTROLS ═══════════ -->
+  <section id="controls" class="wrap">
+    <div class="sec-head">
+      <h2>How to move</h2>
+      <span class="count">02</span>
+    </div>
+    <div class="ctrls">
+
+      <div class="ctrl-card">
+        <h3><span>Desktop</span><b>mouse + keys</b></h3>
+        <dl class="keys">
+          <dt>click</dt><dd>enter the world — the veil lifts and the pointer locks</dd>
+          <dt>hold / W</dt><dd>glide: she runs, skims, then flies</dd>
+          <dt>mouse</dt><dd>steer, and look around</dd>
+          <dt>space</dt><dd>climb</dd>
+          <dt>shift</dt><dd>dive — into the ground, or into the sea</dd>
+          <dt>A / D</dt><dd>flick sideways the instant you land, and it becomes a bounce</dd>
+          <dt>right mouse</dt><dd>hold and draw a shape to cast it</dd>
+          <dt>P</dt><dd>photo mode — she steps out of frame</dd>
+          <dt>esc</dt><dd>release the pointer</dd>
+        </dl>
+      </div>
+
+      <div class="ctrl-card">
+        <h3><span>Touch</span><b>phone + tablet</b></h3>
+        <dl class="keys">
+          <dt>hold</dt><dd>glide</dd>
+          <dt>drag</dt><dd>steer</dd>
+          <dt>two fingers</dt><dd>dive</dd>
+          <dt>flick</dt><dd>sideways the instant you land, to bounce</dd>
+          <dt>double tap</dt><dd>then draw a shape to cast</dd>
+          <dt>under water</dt><dd>point where you want to go, and hold</dd>
+          <dt>three fingers</dt><dd>photo mode</dd>
+        </dl>
+      </div>
+
+    </div>
+
+    <ul class="glyphs" aria-label="Shapes the world recognises">
+      <li>circle</li><li>circle ccw</li><li>spiral</li><li>spiral ccw</li><li>triangle</li>
+      <li>square</li><li>Z</li><li>S</li><li>V</li><li>arc</li><li>caret</li><li>infinity</li>
+      <li>line up</li><li>line down</li><li>line back</li>
+      <li class="combo">spiral ccw → Z = storm</li>
+      <li class="combo">circle → spiral</li>
+      <li class="combo">circle ccw → circle</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════ SYSTEMS ═══════════ -->
+  <section id="systems" class="wrap">
+    <div class="sec-head">
+      <h2>What is running under it</h2>
+      <span class="count">03</span>
+    </div>
+    <ul class="sys">
+      <li>
+        <h3>The land <span>00</span></h3>
+        <p>Sixteen shaped sine waves, four of them mountain-scale, written twice — once in JavaScript, once in
+          GLSL — so the physics agrees with the pixels exactly. No hashing, no noise textures, no tiles. Two very
+          long waves decide where continents rise and where the sea gets in.</p>
+      </li>
+      <li>
+        <h3>Water <span>01</span></h3>
+        <p>A real second world. Extinction kills red first, in-scatter replaces distance with open blue, and the
+          sun shafts are anchored in world space so they hold still while you swim through them. The surface reads
+          as a bright lid that recedes as she goes down.</p>
+      </li>
+      <li>
+        <h3>The pilgrim <span>02</span></h3>
+        <p>A body, not a capsule. She banks into turns, drops her shoulder into a landing, gets her breath back
+          after a long climb, shields her eyes against a low sun, trails a hand through tall grass and shallow
+          water, and every so often turns to look back at what she made.</p>
+      </li>
+      <li>
+        <h3>Glyphs <span>03</span></h3>
+        <p>Fifteen shapes the world can read, drawn with the mouse or a finger. Each one is confirmed back to you
+          as a blueprint, so you see what the desert understood. Cast two within a few seconds and they combine —
+          a counter-spiral into a Z turns rain into a storm.</p>
+      </li>
+      <li>
+        <h3>Fauna <span>04</span></h3>
+        <p>Five kinds of bird — swift, heron, raptor, ibis, nightjar — three beasts and three sea creatures, all
+          instanced, all flocking. Fish flash when a school turns. Something long lives deep enough that you have
+          to go looking for it.</p>
+      </li>
+      <li>
+        <h3>Weather &amp; sky <span>05</span></h3>
+        <p>A two-minute day on a lifted arc, so nights are a short shallow twilight instead of a black screen. The
+          moon runs an eight-day cycle and the tide follows it twice a day — the surface moves, the terrain never
+          does, so nothing can drift out of sync.</p>
+      </li>
+      <li>
+        <h3>Memory <span>06</span></h3>
+        <p>The world saves itself to your device: what you planted, the rivers you cut, the craters you left, how
+          green it has become. Come back a day later and the grass has grown while you were gone.</p>
+      </li>
+      <li>
+        <h3>Sound <span>07</span></h3>
+        <p>Everything but the score is synthesised live in the Web Audio graph — tones, impacts, the noise of
+          water — tuned per event. Two music beds are embedded in the file itself, so the world has nothing to
+          fetch and never waits on a network.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════ BUILD ═══════════ -->
+  <section id="build" class="wrap">
+    <div class="sec-head">
+      <h2>How it's built</h2>
+      <span class="count">04</span>
+    </div>
+    <p class="prose">One HTML file. Open it and the world exists — there is no build step, no bundler, no server
+      and nothing to install. The only dependency is <b>three.js r128</b>, which is served from this site rather
+      than a CDN, so the page keeps working when a CDN does not.</p>
+    <p class="prose">It was written the way I now write most of my toys: <em>in conversation</em> — arguing with a
+      model about what the light should do, then hand-tuning every constant until the desert felt like a place
+      instead of a demo.</p>
+
+    <table class="spec">
+      <tbody>
+        <tr><th>Engine</th><td>three.js r128, WebGL 1 — custom GLSL for terrain, water, sky, fog and shadow</td></tr>
+        <tr><th>Terrain</th><td>16 sine waves + 3 river waves, evaluated identically in JS and GLSL</td></tr>
+        <tr><th>Delivery</th><td>a single self-contained page, ~3.5 MB, music embedded as data</td></tr>
+        <tr><th>Persistence</th><td><code>localStorage</code> — one world per browser, grown forward on return</td></tr>
+        <tr><th>Seed</th><td><code>?seed=77345</code> — any integer builds a different desert</td></tr>
+        <tr><th>Reset</th><td><code>?fresh=1</code> — start a clean world, keeping the same seed</td></tr>
+        <tr><th>Input</th><td>pointer lock + keyboard, or multi-touch; photo mode on both</td></tr>
+        <tr><th>Needs</th><td>a WebGL-capable browser and a discrete-ish GPU for a comfortable frame rate</td></tr>
+      </tbody>
+    </table>
+
+    <div class="seeds" aria-label="Other worlds">
+      <a href="play/?seed=77345">seed 77345 — home</a>
+      <a href="play/?seed=1204">seed 1204</a>
+      <a href="play/?seed=88118">seed 88118</a>
+      <a href="play/?seed=31415">seed 31415</a>
+      <a href="play/?fresh=1">start clean</a>
+    </div>
+  </section>
+
+  <!-- ═══════════ ENTER ═══════════ -->
+  <section class="wrap">
+    <div class="close-cta">
+      <p class="prose" style="max-width:48ch;margin-inline:auto">Best with sound on, in a full window. Click once,
+        hold, and keep holding.</p>
+      <a class="enter" href="play/">Enter the world ↗</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© <span id="yr">2026</span> wattsonworks® · Safed IL</span>
+  <span><a href="../">← back to the board</a> · <a href="play/">play dune pilgrim</a></span>
+  <span>Built by hand · all systems nominal</span>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

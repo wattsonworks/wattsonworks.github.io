@@ -104,7 +104,8 @@
           { "@type": "ListItem", "position": 9, "name": "Healed IMO — SIBO/IMO recovery guide", "url": "https://siboimo.freepage.cc/" },
           { "@type": "ListItem", "position": 10, "name": "Web3 Surge & Risk Engine [SurgeGuru] — free TradingView indicator", "url": "https://www.tradingview.com/script/wcqFvNTR-Web3-Surge-Risk-Engine-SRE/" },
           { "@type": "ListItem", "position": 11, "name": "Into the Routine — 7-night gut-reset retreat at The Way Inn, Safed", "url": "https://wattsonworks.github.io/into-the-routine/" },
-          { "@type": "ListItem", "position": 12, "name": "The Way Inn — boutique hotel, Old City of Safed", "url": "https://wattsonworks.github.io/TWI/" }
+          { "@type": "ListItem", "position": 12, "name": "The Way Inn — boutique hotel, Old City of Safed", "url": "https://wattsonworks.github.io/TWI/" },
+          { "@type": "ListItem", "position": 13, "name": "Dune Pilgrim — an endless procedural desert, playable in the browser", "url": "https://wattsonworks.github.io/dune-pilgrim/" }
         ]
       }
     }
@@ -400,6 +401,14 @@
   #board.exchange .l-detail-in>*{opacity:0;transition:opacity .45s var(--ease) .2s}
   #board.exchange .listing.open .l-detail-in>*{opacity:1}
   #board.exchange .l-foot{display:none}
+  /* the board is pinned to one screen: when the rows no longer leave room for an
+     open detail pane, JS adds .tight and everything gives up a few pixels */
+  #board.exchange.tight .l-bar{padding:.32rem .2rem}
+  #board.exchange.tight .sector-head{padding:.24rem .2rem}
+  #board.exchange.tight .l-name{font-size:clamp(1.02rem,2.1vw,1.32rem)}
+  #board.exchange.tight .sec-head{margin-bottom:.45rem;padding-bottom:.45rem}
+  #board.exchange.tight{padding-top:2.9rem}
+
   @media(max-height:840px){
     #board.exchange{padding-top:3rem}
     #board.exchange .sec-head{margin-bottom:.5rem;padding-bottom:.5rem}
@@ -763,7 +772,7 @@
 <div class="tape" aria-hidden="true">
   <div class="track" id="tape-track"></div>
 </div>
-<p class="vh">wattsonworks runs twelve live products: LIQUIDEX, Surge Guru, the Risk Engine and the free Web3 Surge &amp; Risk Engine for traders; The Way Inn boutique hotel, ROUX Villa, La Buffet and the Into the Routine gut-reset retreat in Safed; Jesta, Avihu the gardener, Isra.Peptides and the Healed IMO recovery guide.</p>
+<p class="vh">wattsonworks runs thirteen live products: LIQUIDEX, Surge Guru, the Risk Engine and the free Web3 Surge &amp; Risk Engine for traders; The Way Inn boutique hotel, ROUX Villa, La Buffet and the Into the Routine gut-reset retreat in Safed; Jesta, Avihu the gardener, Isra.Peptides and the Healed IMO recovery guide; and Dune Pilgrim, a procedural desert playable in the browser.</p>
 
 <main id="main">
 
@@ -771,7 +780,7 @@
   <section id="board" aria-labelledby="board-h">
     <div class="sec-head">
       <h2 id="board-h">The Board <span class="he" dir="rtl" lang="he">הלוח</span></h2>
-      <span class="count idx-readout" id="idx-readout">12 LISTINGS</span>
+      <span class="count idx-readout" id="idx-readout">13 LISTINGS</span>
     </div>
 
     <div class="board-list" id="board-list">
@@ -1088,6 +1097,37 @@
                   <text x="2" y="44">2018</text><text x="178" y="44">2026</text>
                 </svg>
                 <div class="l-cta"><a class="ticket" href="https://siboimo.freepage.cc/" data-exec data-quiet-cta>Read the guide ↗<span class="filled" aria-hidden="true">SENT ✓</span></a></div>
+              </div>
+            </div></div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="sector">
+        <h3 class="sector-head"><span>Sector 04 — Play</span><span class="he" dir="rtl" lang="he">משחק</span></h3>
+        <ol start="13">
+
+          <li class="listing" id="l-13" data-tkr="DUNE" data-base="0" data-owner>
+            <div class="l-bar">
+              <span class="l-idx">13</span>
+              <span class="l-tkr" data-flap>DUNE</span>
+              <a class="l-name" href="https://wattsonworks.github.io/dune-pilgrim/" data-flap-name>Dune Pilgrim<span class="he" dir="rtl" lang="he">עולי הדיונות</span></a>
+              <span class="l-sect">Game · Owner</span>
+              <span class="l-quote">▲ FREE</span>
+            </div>
+            <div class="l-detail"><div class="l-detail-in">
+              <figure class="l-media"><img loading="lazy" src="assets/work/dune-pilgrim.webp" alt="Dune Pilgrim — a lone figure gliding over an endless procedural dune sea"><span class="wipe"></span></figure>
+              <div class="l-info">
+                <span class="stamp" aria-hidden="true">OWNER · <span class="he" dir="rtl" lang="he">בעלים</span></span>
+                <p class="l-desc">An <b>endless procedural desert</b> you glide, dive and draw through — sixteen sine waves, no tiles and no edges, written twice so the physics matches the pixels. WebGL in one file, no install.</p>
+                <dl class="l-data">
+                  <dt>Role</dt><dd>Design · Code</dd>
+                  <dt>Stack</dt><dd>three.js · GLSL</dd>
+                  <dt>Status</dt><dd><span class="lamp"></span>PLAYABLE</dd>
+                  <dt>Term</dt><dd>2026 →</dd>
+                </dl>
+                <svg class="spark" viewBox="0 0 200 48" aria-hidden="true"><path class="ar" d="M0,40 25,28 50,36 75,20 100,30 125,14 150,24 175,10 200,18 V48 H0 Z"/><polyline class="ln" pathLength="100" points="0,40 25,28 50,36 75,20 100,30 125,14 150,24 175,10 200,18"/><circle class="dot" cx="200" cy="18" r="2.6"/></svg>
+                <div class="l-cta"><a class="ticket" href="https://wattsonworks.github.io/dune-pilgrim/" data-exec>Play — Execute ↗<span class="filled" aria-hidden="true">FILLED ✓</span></a></div>
               </div>
             </div></div>
           </li>
@@ -1590,7 +1630,8 @@
       '<span class="he" dir="rtl" lang="he">לה בופה · בוקר בצפת</span>',
       'SUN <span data-tape-sun>' + fmtSun(WW.sun.elev) + '</span> OVER MERON',
       'SESSION ' + sessionId, 'EN ↔ HE RTL',
-      'JSTA · BID / ASK', 'AVHU · 500+ PLANTS', 'ISRP · RUO', 'HEAL · n=1'
+      'JSTA · BID / ASK', 'AVHU · 500+ PLANTS', 'ISRP · RUO', 'HEAL · n=1',
+      'DUNE ▲ PLAYABLE · NO INSTALL'
     ];
     var html = '<span class="seg">' + segs.map(function(s){ return s + ' <i>✦</i>'; }).join('') + '</span>';
     tapeTrack.innerHTML = html + html;
@@ -1995,7 +2036,7 @@
       rail.appendChild(a); railLinks.push(a);
     });
 
-    function layoutDetail(){
+    function availDetail(){
       /* available height for the open detail pane */
       var head = board.querySelector('.sec-head');
       var bars = 0;
@@ -2003,7 +2044,13 @@
       var sects = 0;
       board.querySelectorAll('.sector-head').forEach(function(h){ sects += h.offsetHeight; });
       var pad = parseFloat(getComputedStyle(board).paddingTop) + 20;
-      var avail = innerHeight - head.offsetHeight - bars - sects - pad - 24;
+      return innerHeight - head.offsetHeight - bars - sects - pad - 24;
+    }
+    function layoutDetail(){
+      /* measure loose; if the rows have eaten the detail pane, tighten and measure once more */
+      board.classList.remove('tight');
+      var avail = availDetail();
+      if(avail < 170){ board.classList.add('tight'); avail = availDetail(); }
       board.style.setProperty('--detailH', Math.max(170, avail) + 'px');
     }
     layoutDetail();
@@ -2228,7 +2275,8 @@
      ['JSTA','Jesta','l-6','https://wattsonworks.github.io/JESTA/'],
      ['AVHU','Avihu','l-7','https://avihu.likesyou.org/'],
      ['ISRP','Isra.Peptides','l-8','https://wattsonworks.github.io/isra-peptides/'],
-     ['HEAL','Healed IMO','l-9','https://siboimo.freepage.cc/']
+     ['HEAL','Healed IMO','l-9','https://siboimo.freepage.cc/'],
+     ['DUNE','Dune Pilgrim','l-13','https://wattsonworks.github.io/dune-pilgrim/']
     ].forEach(function(w){
       CMDS.push({ ic:'▸', lbl:'Open ' + w[1], hint:w[0], keys:(w[1] + ' ' + w[0] + ' open listing').toLowerCase(), run:function(){ (WW.goListing || function(){ go('#' + w[2]); })(w[2]); } });
       CMDS.push({ ic:'↗', lbl:'Visit ' + w[1], hint:'open ↗', keys:('visit go open ' + w[1] + ' ' + w[0]).toLowerCase(), run:function(){ window.open(w[3], w[3].indexOf('wattsonworks.github.io') >= 0 ? '_self' : '_blank'); } });

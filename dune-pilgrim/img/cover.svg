@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img"
+     aria-label="Dune Pilgrim — a lone figure with a streaming scarf standing on a ridge above an endless dune sea, low sun, birds overhead">
+  <title>Dune Pilgrim — the ridge at first light</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#09060F"/>
+      <stop offset="38%"  stop-color="#1C1020"/>
+      <stop offset="66%"  stop-color="#43201A"/>
+      <stop offset="86%"  stop-color="#8B4720"/>
+      <stop offset="100%" stop-color="#D69656"/>
+    </linearGradient>
+    <radialGradient id="sunglow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FFEECB" stop-opacity=".95"/>
+      <stop offset="34%"  stop-color="#F6B96A" stop-opacity=".40"/>
+      <stop offset="100%" stop-color="#D69656" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8A5029" stop-opacity=".85"/>
+      <stop offset="100%" stop-color="#4E2C1C" stop-opacity=".85"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#5E9EB4"/>
+      <stop offset="30%"  stop-color="#316E86"/>
+      <stop offset="100%" stop-color="#102A35"/>
+    </linearGradient>
+    <linearGradient id="mid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C98D51"/><stop offset="100%" stop-color="#754526" stop-opacity=".94"/>
+    </linearGradient>
+    <linearGradient id="near" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#33201A"/><stop offset="100%" stop-color="#120A0C"/>
+    </linearGradient>
+    <linearGradient id="scarfA" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%"   stop-color="#F6DCB2"/>
+      <stop offset="55%"  stop-color="#E5A768" stop-opacity=".85"/>
+      <stop offset="100%" stop-color="#D69656" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#D69656" stop-opacity="0"/>
+      <stop offset="62%"  stop-color="#E9A96A" stop-opacity=".26"/>
+      <stop offset="100%" stop-color="#E9A96A" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="softer" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+    <radialGradient id="vig" cx="50%" cy="52%" r="74%">
+      <stop offset="58%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity=".58"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ── sky ── -->
+  <rect width="1200" height="675" fill="url(#sky)"/>
+
+  <g fill="#F6ECDA">
+    <circle cx="118" cy="54"  r="1.5" opacity=".70"/><circle cx="252" cy="96"  r="1.1" opacity=".45"/>
+    <circle cx="386" cy="42"  r="1.3" opacity=".58"/><circle cx="512" cy="118" r="1.0" opacity=".32"/>
+    <circle cx="646" cy="66"  r="1.4" opacity=".50"/><circle cx="742" cy="30"  r="1.1" opacity=".60"/>
+    <circle cx="884" cy="104" r="1.0" opacity=".26"/><circle cx="1012" cy="58" r="1.3" opacity=".44"/>
+    <circle cx="1128" cy="126" r="1.0" opacity=".22"/><circle cx="196" cy="168" r="1.0" opacity=".20"/>
+    <circle cx="960" cy="176" r="1.0" opacity=".18"/><circle cx="430" cy="150" r="1.0" opacity=".22"/>
+  </g>
+
+  <!-- the sun, low and hazed -->
+  <circle cx="905" cy="418" r="250" fill="url(#sunglow)"/>
+  <circle cx="905" cy="418" r="44" fill="#FFEFD2" opacity=".9" filter="url(#soft)"/>
+  <circle cx="905" cy="418" r="22" fill="#FFF7E7"/>
+
+  <!-- birds, small and high -->
+  <g stroke="#160D14" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".7">
+    <path d="M300 156c8-8 14-8 22 0 8-8 14-8 22 0"/>
+    <path d="M372 120c6-6 11-6 17 0 6-6 11-6 17 0" opacity=".8"/>
+    <path d="M252 200c5-5 9-5 14 0 5-5 9-5 14 0" opacity=".55"/>
+    <path d="M700 132c7-7 12-7 19 0 7-7 12-7 19 0" opacity=".45"/>
+  </g>
+
+  <!-- horizon haze -->
+  <rect x="0" y="300" width="1200" height="215" fill="url(#haze)"/>
+
+  <!-- ── far ranges ── -->
+  <path d="M0 450c96-32 150 16 232-6 82-22 118-70 206-56 88 14 128 64 214 50 86-14 140-68 232-50 92 18 128 56 316 38v251H0z"
+        fill="url(#far)" opacity=".55"/>
+  <path d="M0 450c96-32 150 16 232-6 82-22 118-70 206-56 88 14 128 64 214 50 86-14 140-68 232-50 92 18 128 56 316 38"
+        fill="none" stroke="#F0B575" stroke-width="1.6" opacity=".35"/>
+
+  <!-- ── the sea, caught in the basin ── -->
+  <path d="M-60 540c110-28 216-20 328-24 92-3 160-14 250-8 90 6 150 20 252 16 106-4 156-16 250-24v96H-60z"
+        fill="url(#sea)" opacity=".82"/>
+  <g stroke="#C8ECF8" stroke-width="2" opacity=".30" stroke-linecap="round" filter="url(#softer)">
+    <path d="M266 552h92"/><path d="M436 562h136"/><path d="M672 546h104"/><path d="M876 556h120"/>
+    <path d="M344 574h72" opacity=".7"/><path d="M716 578h88" opacity=".6"/>
+  </g>
+  <!-- sun path on the water -->
+  <path d="M886 534h38l24 84h-86z" fill="#FFE2AE" opacity=".22" filter="url(#softer)"/>
+
+  <!-- ── mid dunes ── -->
+  <path d="M0 552c140-52 226 6 344-24 118-30 190-84 320-56 130 28 208 84 330 56 122-28 128-44 206-52v199H0z"
+        fill="url(#mid)"/>
+  <path d="M0 552c140-52 226 6 344-24 118-30 190-84 320-56 130 28 208 84 330 56 122-28 128-44 206-52"
+        fill="none" stroke="#F6DCB2" stroke-width="2.2" opacity=".5"/>
+
+  <!-- windblown sand streaming off the crest, behind her -->
+  <g stroke="#F6DCB2" fill="none" stroke-linecap="round" opacity=".18">
+    <path d="M300 470c62-16 128-12 186 6" stroke-width="1.5"/>
+    <path d="M352 480c52-12 108-8 156 8" stroke-width="1.1" opacity=".7"/>
+  </g>
+
+  <!-- ── near ridge ── -->
+  <path d="M0 658c116-84 210-52 318-96 108-44 176-118 302-96 126 22 196 106 316 92 120-14 190-64 264-84v201H0z"
+        fill="url(#near)"/>
+  <path d="M0 658c116-84 210-52 318-96 108-44 176-118 302-96 126 22 196 106 316 92 120-14 190-64 264-84"
+        fill="none" stroke="#E0A468" stroke-width="2.2" opacity=".5"/>
+
+  <!-- ── the pilgrim, on the crest ── -->
+  <g transform="translate(624 472) scale(1.22)">
+    <!-- her shadow, thrown long away from the sun -->
+    <ellipse cx="-46" cy="3" rx="78" ry="5" fill="#0A0509" opacity=".5"/>
+    <!-- scarf, streaming back on the wind -->
+    <path d="M-4 -74C-46 -88 -100 -72 -146 -90c-36-14-68-6-96 8"
+          fill="none" stroke="url(#scarfA)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M-4 -66C-40 -74 -88 -60 -124 -72" fill="none" stroke="#F6DCB2" stroke-width="2.4"
+          stroke-linecap="round" opacity=".42"/>
+    <!-- robe: standing, leaning into the wind, hem lifting behind her -->
+    <path d="M4 0h-16c-6 0-9-4-8-10l9-42c2-11 6-19 11-24l4-4c3-3 7-3 10 0l4 5c4 5 6 12 7 21l6 44c1 6-2 10-8 10z"
+          fill="#1C0F15"/>
+    <path d="M-11 -14c-10 4-22 6-34 4 11-5 21-12 29-20z" fill="#1C0F15" opacity=".85"/>
+    <!-- head, hood and the rim-light off the low sun -->
+    <path d="M8 -96c7 0 12 6 12 14 0 7-5 13-12 13s-12-6-12-13c0-8 5-14 12-14z" fill="#1C0F15"/>
+    <path d="M15 -105c5 3 7 8 6 14" fill="none" stroke="#FFEBC6" stroke-width="2.2" stroke-linecap="round" opacity=".92"/>
+    <path d="M16 -80c6 4 8 12 9 21l6 42c1 8-2 13-8 15" fill="none" stroke="#F0B87A" stroke-width="2.5"
+          stroke-linecap="round" opacity=".8"/>
+  </g>
+
+  <!-- a standing stone further along the ridge -->
+  <g transform="translate(1022 498)" opacity=".92">
+    <ellipse cx="-10" cy="3" rx="30" ry="3.6" fill="#0A0509" opacity=".45"/>
+    <path d="M0 0l-8-44c-2-10 2-16 10-17l7-1c8-1 12 4 12 14L14 0z" fill="#180E12"/>
+    <path d="M17 -50c4 2 5 7 4 13L14 -4" fill="none" stroke="#E0A468" stroke-width="1.8" opacity=".65"/>
+  </g>
+
+  <!-- grain + vignette -->
+  <rect width="1200" height="675" filter="url(#grain)" opacity=".05" style="mix-blend-mode:overlay"/>
+  <rect width="1200" height="675" fill="url(#vig)"/>
+</svg>
