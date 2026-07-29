@@ -290,6 +290,10 @@
     <p class="prose">And the desert listens. <em>Hold right mouse and draw a shape</em> and the world reads it: a
       circle, a spiral, a triangle, a Z. Rain arrives. Grass comes up. A hole opens through the rock in front of
       you. Draw two in a row and they combine into something neither one does alone.</p>
+    <p class="prose">What you do stays done. The world writes itself to your device — the rivers you cut, the
+      craters you left, the green you started — and it keeps growing while you are gone. Households appear and
+      grow, roads join them, caravans walk the roads. Every so often, far out, <em>another pilgrim</em> comes over
+      a ridge, crosses your path, stops for a moment, and carries on. It remembers how many times you have met.</p>
   </section>
 
   <!-- ═══════════ CONTROLS ═══════════ -->
@@ -333,10 +337,10 @@
     <ul class="glyphs" aria-label="Shapes the world recognises">
       <li>circle</li><li>circle ccw</li><li>spiral</li><li>spiral ccw</li><li>triangle</li>
       <li>square</li><li>Z</li><li>S</li><li>V</li><li>arc</li><li>caret</li><li>infinity</li>
-      <li>line up</li><li>line down</li><li>line back</li>
+      <li>line up</li><li>line down</li><li>line across</li><li>line back</li>
       <li class="combo">spiral ccw → Z = storm</li>
-      <li class="combo">circle → spiral</li>
-      <li class="combo">circle ccw → circle</li>
+      <li class="combo">circle → spiral = cyclone garden</li>
+      <li class="combo">circle ccw → circle = oasis</li>
     </ul>
   </section>
 
@@ -351,48 +355,77 @@
         <h3>The land <span>00</span></h3>
         <p>Sixteen shaped sine waves, four of them mountain-scale, written twice — once in JavaScript, once in
           GLSL — so the physics agrees with the pixels exactly. No hashing, no noise textures, no tiles. Two very
-          long waves decide where continents rise and where the sea gets in.</p>
+          long waves decide where continents rise and where the sea gets in; two more noise fields split the
+          result into four countries — dune, salt pan, ash field, red canyon — and everything above 1,150 m goes
+          under snow.</p>
       </li>
       <li>
-        <h3>Water <span>01</span></h3>
-        <p>A real second world. Extinction kills red first, in-scatter replaces distance with open blue, and the
-          sun shafts are anchored in world space so they hold still while you swim through them. The surface reads
-          as a bright lid that recedes as she goes down.</p>
+        <h3>Overhead <span>01</span></h3>
+        <p>A second surface hangs above the first. Most of the world is open sky, but a small share of it has rock
+          overhead and a fraction of that closes into a tunnel — solid over dry land, passive over water. It is
+          what lets every pond keep a rock lid with an open eye at its centre, and a flooded chamber under that,
+          wider than the water you can see.</p>
       </li>
       <li>
-        <h3>The pilgrim <span>02</span></h3>
+        <h3>Rivers <span>02</span></h3>
+        <p>Draw an S and a river starts. It runs downhill, merges with what it meets, pools where it cannot climb,
+          and if it reaches the sea it lays down a braided delta of pools and marsh. Cenotes deepen every time
+          lightning hits the water.</p>
+      </li>
+      <li>
+        <h3>Inhabitants <span>03</span></h3>
+        <p>Households grow through three levels and turn into lighthouses near a beacon. Worn stone roads join the
+          ones close enough to be neighbours, and caravans walk them — a laden beast leading six walkers, every
+          third one carrying a lamp after dark. And once in a while another pilgrim comes over the horizon,
+          crosses your path, stops for you, and goes on. It counts how many times that has happened.</p>
+      </li>
+      <li>
+        <h3>Water <span>04</span></h3>
+        <p>A real second world. Extinction kills red within about twenty metres, in-scatter replaces distance
+          with open blue, and the sun shafts are anchored in world space so they hold still while you swim through
+          them. Marine snow drifts. A resident shoal flashes in waves and parts around her. Eight species live at
+          overlapping depths — shoal, angel, tang and wrasse up top, turtle and ray below, jellies deeper, and a
+          gulper down where the light has gone.</p>
+      </li>
+      <li>
+        <h3>The pilgrim <span>05</span></h3>
         <p>A body, not a capsule. She banks into turns, drops her shoulder into a landing, gets her breath back
           after a long climb, shields her eyes against a low sun, trails a hand through tall grass and shallow
           water, and every so often turns to look back at what she made.</p>
       </li>
       <li>
-        <h3>Glyphs <span>03</span></h3>
-        <p>Fifteen shapes the world can read, drawn with the mouse or a finger. Each one is confirmed back to you
-          as a blueprint, so you see what the desert understood. Cast two within a few seconds and they combine —
-          a counter-spiral into a Z turns rain into a storm.</p>
+        <h3>Glyphs <span>06</span></h3>
+        <p>Sixteen shapes the world can read, drawn with the mouse or a finger, each confirmed back to you as a
+          blueprint so you see what the desert understood. An S carves a river. A triangle underwater bores a
+          passage through solid rock. A caret holds the sky where it stands. Cast two within a few seconds and
+          they combine: a counter-spiral into a Z turns rain into a storm, a circle into a spiral plants
+          everything it crosses, a circle reversed opens an oasis.</p>
       </li>
       <li>
-        <h3>Fauna <span>04</span></h3>
-        <p>Five kinds of bird — swift, heron, raptor, ibis, nightjar — three beasts and three sea creatures, all
-          instanced, all flocking. Fish flash when a school turns. Something long lives deep enough that you have
-          to go looking for it.</p>
+        <h3>Fauna <span>07</span></h3>
+        <p>Five kinds of bird — swift, heron, raptor, ibis, nightjar — plus beasts that migrate between ponds,
+          all instanced and all flocking. Anything airborne reads a ground height that already counts the water,
+          so nothing dives into a pond by mistake. Something long lives deep enough that you have to go looking
+          for it.</p>
       </li>
       <li>
-        <h3>Weather &amp; sky <span>05</span></h3>
-        <p>A two-minute day on a lifted arc, so nights are a short shallow twilight instead of a black screen. The
-          moon runs an eight-day cycle and the tide follows it twice a day — the surface moves, the terrain never
-          does, so nothing can drift out of sync.</p>
+        <h3>Weather &amp; sky <span>08</span></h3>
+        <p>A two-minute day on a lifted arc, so nights are a short shallow twilight instead of a black screen,
+          and five weather states that turn over on their own across the same two minutes. The moon runs an
+          eight-day cycle and the tide follows it twice a day — the surface moves, the terrain never does, so
+          nothing can drift out of sync. Draw a caret to hold the sky where it is, and again to let it go.</p>
       </li>
       <li>
-        <h3>Memory <span>06</span></h3>
-        <p>The world saves itself to your device: what you planted, the rivers you cut, the craters you left, how
-          green it has become. Come back a day later and the grass has grown while you were gone.</p>
+        <h3>Memory <span>09</span></h3>
+        <p>The world saves itself to your device: what you planted, the rivers you cut, the craters you left,
+          the ponds, the households, how green it has become, and everyone you met. Reloading changes nothing, but
+          leave it overnight and the grass has grown while you were gone — up to a thirty-hour ceiling.</p>
       </li>
       <li>
-        <h3>Sound <span>07</span></h3>
-        <p>Everything but the score is synthesised live in the Web Audio graph — tones, impacts, the noise of
-          water — tuned per event. Two music beds are embedded in the file itself, so the world has nothing to
-          fetch and never waits on a network.</p>
+        <h3>Sound <span>10</span></h3>
+        <p>Two tracks embedded in the file itself and decoded through the Web Audio context — theme first, four
+          seconds of nothing, then a sample-accurate loop. Everything else is filtered noise: wind, sand, water,
+          thunder. The reverb answers the room, so a jungle swallows sound and a rock shaft rings.</p>
       </li>
     </ul>
   </section>

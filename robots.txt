@@ -13,5 +13,10 @@ Disallow: /LIQUIDEX/LIQUIDEX.txt
 # Stale generated artifact on the peptides site
 Disallow: /isra-peptides/standalone.html
 
+# Dune Pilgrim working notes and dev tooling — in the repo for whoever picks the
+# game up next, not pages anyone should land on from a search result
+Disallow: /dune-pilgrim/HANDOFF.txt
+Disallow: /dune-pilgrim/tools/
+
 # Master sitemap index (references every project's sitemap)
 Sitemap: https://wattsonworks.github.io/sitemap.xml

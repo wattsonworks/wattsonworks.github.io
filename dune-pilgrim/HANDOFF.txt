@@ -1,0 +1,396 @@
+================================================================================
+DUNE PILGRIM - HANDOFF TO CLAUDE CODE
+================================================================================
+
+WHAT THIS IS
+------------
+A single self-contained HTML file: a procedural desert/ocean world in the spirit
+of Journey and ABZU, played on an iPhone in the Claude app's artifact viewer.
+One character (referred to as "she" throughout the source comments), gesture
+casting, an ocean you dive into, a world that remembers what you did to it.
+
+The deliverable is ONE FILE. There is no build step, no bundler, no modules.
+Every edit is a surgical string replacement inside that file.
+
+  dune-pilgrim.html    ~3.5 MB
+  dune-pilgrim.txt     identical copy; the user's viewer needs a .txt mirror,
+                       so ALWAYS `cp` the html to the txt after every change
+
+Of that 3.5 MB, about 3.2 MB is two base64-embedded audio tracks. The actual
+source is ~330 KB. Do not be alarmed by the file size and do not try to
+"optimise" it by removing the audio.
+
+Only external dependency: three.js r128 from cdnjs. Everything else - terrain,
+water, sky, characters, creatures, post-processing - is hand-written GLSL and
+plain ES5-style JavaScript in one IIFE.
+
+
+================================================================================
+1. THE VERIFICATION GATES - READ THIS FIRST
+================================================================================
+
+This project accumulated four test gates because I repeatedly shipped broken
+builds while believing they were fine. Each gate exists because of a specific
+class of bug that reached the user. The tooling lived in /home/claude and is
+probably gone; REBUILD IT BEFORE MAKING CHANGES. It pays for itself within two
+edits.
+
+GATE 1 - apply.sh (run after every single edit, takes ~2s)
+  a) Node parse check on the whole file. Catches unbalanced braces, orphaned
+     `else` branches left behind by a string replacement, etc.
+  b) Duplicate-uniform lint. Walks every ShaderMaterial, expands the shared GLSL
+     string constants, and fails if any uniform is declared twice in one stage.
+     This fires constantly and correctly - the shared blocks already declare a
+     lot (see section 3).
+  c) Use-before-declaration lint. Within each shader stage, fails if an
+     identifier is read before its `float x = ...` line. GLSL has no hoisting;
+     JavaScript habits produce this bug repeatedly.
+
+GATE 2 - harness.js (headless sim, ~30s)
+  Loads the game source into Node with stubs for window/document/WebGL/Audio,
+  captures the requestAnimationFrame callback, and drives real frames. Then it
+  runs feature probes with hard assertions. The current suite asserts:
+    - all sim state finite after 3600 frames
+    - hair roots span <0.20m of scalp; head <0.30m wide
+    - the dress clears the torso at every shared height
+    - a delta forms with enough pools, reach and fan spread
+    - the other pilgrim appears far away, walks, and stops for you
+    - a caravan sets out, stays within 2m of the road, and completes
+    - no point is submerged where no water surface is drawn
+    - a pond opens into a chamber; no dry ground is roofed
+    - fish are in sight, the school parts around her, none pass through her
+    - away-growth: reload changes nothing, overnight grows, 30h caps
+    - all 5 weather states plus a full day inside 120s; CARET holds both
+    - camera framing never exceeds 24 degrees off axis
+    - dress and body share one pivot at every lean angle
+    - the roof is rare (3-30% of world), forms tunnels, and is solid
+    - only the airborne down-arrow gesture slows time
+    - music: web audio path, theme then a gapless loop with a 4s gap
+    - all 16 spells, 5 combos, 16 echoes, bloom, flow, save/load, gesture replay
+
+  IMPORTANT: the harness stubs are load-bearing. Missing stubs have twice made
+  a working feature look broken (see section 6).
+
+GATE 3 - check.js (headless Chromium with SwiftShader, ~60s)
+  Regenerates a test copy from the LIVE file each run (a stale-copy bug once
+  cost several rounds), forces renderer.compile() on every material, and:
+    a) reports any GLSL compile error with line numbers
+    b) wraps gl.uniform2fv/3fv/4fv on the live context and flags any value
+       uploaded without a length property
+  (b) exists because compiling a shader only proves the GLSL parses. A
+  JavaScript type mismatch feeding it - a THREE.Color where a Vector3 was
+  expected - compiles clean and then kills the frame loop on the device. That
+  shipped once. Do not remove this trap.
+
+GATE 4 - errcheck.js (Chromium, taps the screen, ~40s)
+  Loads the page, waits, simulates the entry touch, then reads the on-screen
+  hint element. If the game threw during init or entry, the hint contains the
+  error text instead of the control instructions. This is the only gate that
+  catches "the user sees a dark screen with a small error".
+
+Run all four before presenting anything. If you change a shader, gates 1 and 3
+are mandatory. If you change physics or a system, gates 2 and 4 are mandatory.
+
+
+================================================================================
+2. HARD RULES / INVARIANTS
+================================================================================
+
+DUPLICATED LOGIC THAT MUST STAY IN SYNC
+  Several rules exist in BOTH JavaScript (for physics) and GLSL (for rendering).
+  Every single time these drifted apart, the user hit a visible bug. When you
+  touch one, touch the other in the same edit.
+
+  a) Terrain height. JS terrainRaw() and the GLSL terrainRaw() must produce
+     identical values: 16 shaped waves + 2 continent waves + riverbed channels +
+     craters + green zones.
+  b) Ceiling height. JS ceilRaw() and the ceiling material's GLSL ceilAt().
+  c) Water visibility. JS pondVisible() and the pond-disc shader's dLo/dHi fade
+     curve. waterTop() only counts a point as water when pondVisible() > 0.35,
+     so the edge you see is the edge you swim at. This one caused three separate
+     "I walk 1cm and I'm underwater" reports. Do not add a fade to one side
+     without adding it to the other.
+  d) The belly/chamber geometry: the lid curve appears in ceilRaw, in the
+     ceiling GLSL, and in waterTop's chamber test.
+
+GLSL GOTCHAS
+  - `cast` is a reserved word. So are the obvious ones; if a name errors for no
+    reason, rename it.
+  - The shared string constants (GLSL_FOG, GLSL_SKY, GLSL_LAND_HEAD) already
+    declare uSub, uSubCol, uSubY, uCamPos, uTime and others. Redeclaring is an
+    error the duplicate lint will catch.
+  - applyFog's signature takes (col, dist, fogCol, vdir, sunDir, keyCol, fragY)
+    and vdir is passed NEGATED at every existing call site. Copy an existing
+    call rather than writing a new one.
+  - Uniform value types must match what the GLSL expects. SKY.keyCol is a
+    THREE.Vector3, not a Color. Color.copy(Vector3) silently produces undefined
+    r/g/b, which compiles fine and then fails at upload.
+  - No `continue` inside a GLSL for-loop on some drivers is risky; the existing
+    code does use it and SwiftShader accepts it, but if a device reports
+    problems, that is a candidate.
+
+BEHAVIOUR THE USER HAS EXPLICITLY ASKED FOR - DO NOT REGRESS
+  - No emoji anywhere in code or output.
+  - slowmo() is deliberately INERT. Only the down-arrow gesture drawn while
+    airborne bends time, via slowmoNow(). 91 call sites remain but do nothing;
+    that is intentional, not dead code to clean up.
+  - The arcade beeps are off. tone() is gated behind a BEEPS flag set to false,
+    and the ambient synth pad is pinned to zero gain. noiseHit() (filtered noise
+    for wind, sand, water, thunder) stays. Any new sound must be a falling
+    sweep below ~900 Hz; rising sweeps into the kHz range are the "tshh" the
+    user repeatedly complained about.
+  - Vegetation is not masonry. Palms, bushes and banners must never call
+    impact(), shake(), or damp velocity. Stone still does.
+  - Anything airborne must use airH(x, z, height), which takes the highest of a
+    wide ground sample and the water surface. Using groundH() directly makes
+    birds and cloth dive into every pond, because a pond is a hole.
+  - The figure leans as ONE piece: the lean goes on the pilgrim group, and the
+    robe mesh adds no rotation of its own.
+  - Weather and the sun both cycle unattended, 120s each. CARET pauses and
+    resumes both.
+
+KEY CONSTANTS
+  SEA_Y 40 (tide +/-2.6m twice a day)     DAY 120s
+  WX_HOLD [16,30,14,20,40] = 120s         CEIL_OPEN 620
+  CR_MAX 12 craters                        POND_MAX 60
+  CENOTE_MAX 250m                          BELLY_K 2.6
+  GZ_RMAX 95 (green zone cap)              GZ_KEEP 400
+  Snow line 1150-1420m                     16 gestures
+
+GESTURE MAP (the non-obvious ones)
+  CARET      hold / release the sky (weather + sun)
+  LINE_DOWN  airborne: the only slow-motion in the game
+  TRIANGLE   underwater: bore a 103m passage through rock
+  LINE_BACK  advance the weather by hand
+  S          carve a river (this one cuts 9m-deep craters; it has exposed two
+             separate bugs by lowering terrain near ponds - test with it)
+
+
+================================================================================
+3. SYSTEMS MAP (where to look)
+================================================================================
+
+WORLD
+  Terrain: polar grid that rides with the player, 16+2 waves, riverbed channels,
+  craters (merging, with pond-protection on eviction), green zones. Four biomes
+  from two independent noise fields: dune / salt pan / ash field / red canyon.
+  Ceiling field: a second surface overhead. Open sky 92% of the world; 7.6% has
+  rock overhead; 0.08% closes into a tunnel. Solid on dry land, passive over
+  water. This is what makes the pond chambers possible.
+  Ponds: tessellated discs, per-pond deep flag, cenotes deepen 34m per water
+  strike to 250m. Each pond has a rock lid with an open eye at the centre and a
+  flooded chamber 2.6x wider than the visible disc.
+  Rivers: flow downhill, merge, pool where they cannot climb, and build a
+  braided delta of 16-24 pools with marsh when they reach the sea.
+
+WATER / UNDERWATER
+  Extinction is wavelength-weighted and strong (red gone by ~20m). In-scatter
+  carries a floor plus a bioluminescent lift so the deep stays saturated blue
+  instead of going black. World-anchored light shafts hang from the surface.
+  Marine snow: 5200 motes on mobile in a 90m box, size-capped at 14px.
+  Resident shoal: 260 mobile / 520 desktop, one body, flashes in waves, parts
+  around her, snaps into place when it re-forms.
+  Species: 8 sea types (shoal, angel, tang, wrasse, turtle, ray, jelly, gulper),
+  ~2280 world total, overlapping depth windows.
+  Reef floor: 9-17 pieces per 64m cell in five tint families.
+
+CHARACTER
+  A group: robe lathe (hem to collar at 1.43), skin torso, head at 1.603 with
+  jaw/nose/brow/hair cap/bun, two arms with cloth upper and skin forearm, 14
+  hair strands rooted on an arc of scalp, 2 neck ribbons, and a scarf ribbon
+  that doubles as a glider above length 24.
+  Five self-directed behaviours: breath/effort, shielding her eyes from a low
+  sun, trailing a hand through grass or shallow water, glancing back at green
+  she planted, and absorbing landings through the knees.
+  The dress is 26-40mm wider than the torso at every shared height. If you
+  change either profile, re-check that.
+
+INHABITANTS
+  Households grow through 3 levels, become lighthouses near beacons, and are
+  joined by worn stone roads when within 260m. Caravans walk those roads: a
+  laden beast leading six walkers, every third carrying a lamp after dark.
+  The other pilgrim appears 300-470m out, crosses your path, stops within 34m,
+  and goes on. Meetings are counted and saved.
+
+AUDIO
+  Two embedded tracks decoded through the Web Audio context (NOT via <audio>
+  elements - those never play on iOS for payloads this size, and the context is
+  already unlocked by the entry tap). Theme plays once, 4s gap, then a
+  sample-accurate gapless loop. Reverb responds to walls at two ranges, a roof
+  overhead, and canopy - jungle swallows sound, a rock shaft rings.
+
+PERSISTENCE
+  localStorage. Saves craters, green zones, razed and planted objects, ponds,
+  rivers, houses, fixed thermals, verdancy, meetings, day phase, position.
+  Restore happens at the BOTTOM of the file, after all declarations. A save
+  timestamp drives away-growth: under 90s counts as a reload and changes
+  nothing; 30 hours is the ceiling. ?fresh=1 resets, ?seed=N shares a world.
+
+
+================================================================================
+4. THE MASTER PLAN - 22 OF 40 DONE
+================================================================================
+
+BUILT
+  U1 rune glyphs on deep walls      U3 rivers build deltas
+  U4 double dives                   U5 kelp gardens from bloom
+  U7 lighthouses                    U8 carve wake in shallow water
+  U12 scarf becomes glider          U13 vent geysers breach the surface
+  U16 colossus footprint pools      U17 moon with real phase
+  U20 seed sharing in the URL       N1 caves, spans and tunnels
+  N2 roads between households       N3 caravans
+  N4 time passes while away         N6 ice at altitude
+  N7 volcanism in the ash field     N11 wind as a spatial field
+  N12 sound propagation             N14 the tide
+  N16 fossils                       N17 the second pilgrim
+  N19 weather fronts
+
+REMAINING 18, IN THE ORDER I WOULD DO THEM
+
+  1. N13 CONSTELLATIONS TEACH GESTURES
+     The sky becomes the instruction manual. Each of the 16 gestures gets a
+     constellation whose star pattern IS the gesture shape. Look up at night,
+     trace what you see, cast it. Highest payoff left: it solves discoverability
+     without any UI, and the star field and gesture blueprint system both
+     already exist. Blueprint drawing already animates a gesture back at you
+     after a successful cast; reuse that renderer against sky positions.
+
+  2. N5 SEASONS
+     Cheap now that a day is 120s. A season every N days shifting the palette,
+     the snow line, plant tint and which fauna are present. The verdancy value
+     and the biome noise fields give you most of the hooks.
+
+  3. U9 THERMALS FEED CURRENTS
+     Air and water become one system: a gale star that creates a permanent
+     thermal on land should also drive an ocean current beneath it. Both systems
+     exist independently (thermalsFixed, and 3 infinite current bands); the work
+     is coupling them and making the coupling legible.
+
+  4. U2 HOUSEHOLDS FISH
+     Households near water send out a boat. Small, and it makes settlements feel
+     like they have a livelihood rather than just growing. The caravan system is
+     the template - copy its structure.
+
+  5. N8 MIGRATION EVENTS
+     Once or twice a day the whole flock or herd crosses the world in one
+     direction, and you can join them. Beast migration between ponds already
+     exists; this is the spectacle version.
+
+  6. N10 SYMBIOSIS
+     Species that follow each other: cleaner fish on a turtle, birds riding a
+     colossus, jellies drifting in a current. Cheap, and it makes the ecology
+     read as connected instead of parallel.
+
+  7. U6 STAR DEPTH-PARTNERS
+     Falling stars that land in water sink and become something you retrieve at
+     depth. Pearls already work this way; this ties the star and pearl systems
+     together.
+
+  8. U14 RUNES TEACH COMBOS
+     Monoliths already carry rune glyphs. Make specific monoliths teach specific
+     two-gesture combos when you approach and read them.
+
+  9. N20 LIVING MAP
+     A gesture that shows you the world you have made: green zones, ponds,
+     households, roads, deltas, the other pilgrim's path. All the data exists;
+     this is a rendering and composition problem.
+
+ 10. U15 ENTERABLE RUINS
+     Arches and monoliths currently have no interior. With the ceiling field in
+     place, an interior is a local lid plus a floor drop - the same trick the
+     pond chambers use.
+
+ 11. N15 DEEP RUINS WITH STORY
+     A sunken city at depth that rewards exploration with something to read or
+     see rather than something to collect.
+
+ 12. U18 ENDING SCALES WITH THE MAP
+     The finale should reflect how much of the world you actually changed:
+     verdancy, pond count, household levels, meetings with the other pilgrim.
+
+ 13. N18 ASYNCHRONOUS TRACES
+     Seed sharing exists; this is the next step - leave a mark others find.
+     Needs a decision about whether anything leaves the device.
+
+ 14. N9 (unbuilt from the original list) COMPANION CREATURE
+     Something that chooses to travel with you. Emotionally the biggest item
+     left, and the hardest to get right - a bad companion is worse than none.
+
+ REMAINING SMALLER / SPECULATIVE
+     Cenote wall glyph variety, seabed structure beyond the reef floor, kelp on
+     chamber walls at all depths (the walls are still bare where the floor is
+     dense), and the finale corridor.
+
+
+================================================================================
+5. KNOWN WEAK POINTS
+================================================================================
+
+PERFORMANCE, UNTESTED ON DEVICE
+  The last few changes added a lot: the reef floor went 29x denser, sea life
+  from ~300 to ~2280, marine snow to 5200 on mobile, plus a second full terrain
+  mesh for the ceiling and a cloned character for the other pilgrim. If the user
+  reports stutter, the levers in order are: reef clump count per cell, the
+  mobile multiplier on instanced fauna (currently half of each maximum), snow
+  count, then the ceiling mesh resolution. Do NOT thin the species list - the
+  variety is what the user asked for.
+
+STILL NOT MATCHING THE REFERENCE
+  The user's benchmark is ABZU and they have said several times, correctly, that
+  it does not match yet. What has been fixed: extinction, in-scatter, deep-water
+  luminance, object lighting underwater (kelp used to render as black
+  silhouettes because both the colour ramp and the lighting keyed on N.L and
+  multiplied), marine snow density, a resident shoal, reef floor density.
+  What is still missing: the chamber and shaft WALLS are bare while the floor is
+  dense; there is no large-scale rock structure underwater to swim through or
+  around; and there is no massed-creature set piece.
+
+THE ARTIFACT VIEWER
+  The user plays in the Claude app's artifact viewer on an iPhone. Constraints
+  observed the hard way: iOS will not play audio before a touch; media elements
+  refuse large data: URIs (hence Web Audio); the viewer is a portrait phone
+  screen so composition matters more than on desktop.
+
+
+================================================================================
+6. PROCESS LESSONS - THE MISTAKES I ACTUALLY MADE
+================================================================================
+
+These cost the user many round trips. They are worth internalising.
+
+1. LOOK AT THE RESULT. I spent six rounds tuning the character from colour
+   values and radii while the user told me she looked wrong. The moment I built
+   a script that posed the camera on her and screenshotted it, I saw in one
+   image that her dress was a cone 1.32m across on a 1.78m figure - a lampshade.
+   No amount of reasoning about hex values would have found that. Build the
+   screenshot harness early and use it.
+
+2. WHEN A RULE EXISTS TWICE, MAKE IT ONE FUNCTION. The "I walk 1cm and I'm
+   underwater" bug happened three times because water visibility lived in a
+   shader and water physics lived in JavaScript, and I kept editing one. The fix
+   was a single function both sides read. Look for other instances of this shape.
+
+3. CHANGING A CONSTANT MEANS CHECKING EVERY FORMULA THAT USES IT. I raised the
+   hair strand count from 3 to 14 across several edits and never revisited the
+   root-offset formula, which only centred exactly three strands. The result was
+   a metre of hair roots in a straight line beside her head.
+
+4. MAKE THE TEST'S WORLD MATCH THE THING BEING TESTED. Three probes failed on
+   working code: the caravan test ran 3000 frames when a journey needs 4300-7800;
+   the delta test put a river on a mountaintop with no coast within 30km; the
+   shoal test called a function that does not drive frames in this harness.
+   Each cost a round trip and briefly made me distrust good code.
+
+5. A PASSING TEST SUITE IS A CLAIM, NOT A FACT. Three separate times the suite
+   reported green on a build that was broken on the device - once because the
+   harness lacked atob/Blob/URL so the music path could not run at all, once
+   because a gesture cooldown silently blocked the second probe call, and once
+   because compiling shaders does not exercise uniform upload. When the user
+   reports a bug that "cannot" exist, the gap is in the gate.
+
+6. FIX THE CAUSE, NOT THE SYMPTOM. Slow motion firing on every bounce was not a
+   threshold to tune - the apex trigger fired at 3.6m and a bounce clears 4.5m,
+   so every single hop hit it. The right fix was making slow motion a
+   deliberate act instead of something that happens to her.
+
+================================================================================
