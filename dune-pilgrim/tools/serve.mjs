@@ -28,7 +28,22 @@ import { createServer } from 'node:http';
 import { createReadStream, statSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join, extname, normalize } from 'node:path';
-import { networkInterfaces } from 'node:os';
+import { networkInterfaces, hostname } from 'node:os';
+import { execFileSync } from 'node:child_process';
+
+/* Ask the Tailscale CLI for this machine's MagicDNS name, so the line you type
+   on the phone is printed rather than described. Absent CLI, absent tailnet and
+   a CLI that errors all mean the same thing here: skip it. */
+function magicDNS() {
+  for (const bin of ['tailscale', '/usr/bin/tailscale', 'C:\\Program Files\\Tailscale\\tailscale.exe']) {
+    try {
+      const out = execFileSync(bin, ['status', '--json'], { encoding: 'utf8', timeout: 4000, stdio: ['ignore', 'pipe', 'ignore'] });
+      const self = JSON.parse(out).Self;
+      if (self?.DNSName) return self.DNSName.replace(/\.$/, '');
+    } catch { /* next candidate */ }
+  }
+  return null;
+}
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '../..');                       // the repo root
@@ -99,7 +114,13 @@ server.listen(PORT, '0.0.0.0', () => {
   if (!rows.some(r => r.tailscale)) {
     console.log('\n  No 100.x address found — is Tailscale up? (tailscale status)');
   }
-  console.log(`\n  On the phone, MagicDNS is easier than the number:`);
-  console.log(`  http://<this-machine-name>:${PORT}${PLAY}`);
+  const dns = magicDNS();
+  console.log(`\n  On the phone, a name beats a number:`);
+  console.log(`  http://${dns || hostname().toLowerCase()}:${PORT}${PLAY}`);
+  if (dns) {
+    console.log(`\n  For https (no port, real certificate), in another terminal:`);
+    console.log(`  tailscale serve --bg ${PORT}`);
+    console.log(`  https://${dns}${PLAY}`);
+  }
   console.log(`\n  The project page is at ${'/dune-pilgrim/'} · ctrl-c to stop\n`);
 });
