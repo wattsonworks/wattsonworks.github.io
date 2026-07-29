@@ -1,5 +1,40 @@
 # Dune Pilgrim — working on the game
 
+## Playing it on the phone, off your own machine
+
+```sh
+git clone -b claude/new-session-sdrw00 https://github.com/wattsonworks/wattsonworks.github.io
+cd wattsonworks.github.io
+node dune-pilgrim/tools/serve.mjs          # binds 0.0.0.0:8080, prints every address
+```
+
+It marks the Tailscale address (`100.x.x.x`) in its output, but MagicDNS is
+easier to type on a phone:
+
+```
+http://<this-machine-name>:8080/dune-pilgrim/play/
+```
+
+Then **Share → Add to Home Screen**. The page declares itself a full-screen web
+app with its own icon, so it opens with no Safari chrome — which on a phone is
+the difference between playing it and looking at it through a browser.
+
+Plain http is fine over a tailnet: Web Audio, `localStorage` and fullscreen do
+not require a secure context, and the entry tap is what unlocks audio on iOS.
+For real HTTPS, leave the server running and put Tailscale in front of it:
+
+```sh
+tailscale serve --bg 8080                  # https://<machine>.<tailnet>.ts.net/dune-pilgrim/play/
+tailscale serve --https=443 off            # when you are done
+```
+
+A tailnet address is reachable only by your own devices. `tailscale funnel` is
+the one that publishes to the whole internet — different command, on purpose.
+
+No Node on the machine? `python3 -m http.server 8080 --bind 0.0.0.0` from the
+repo root serves the same paths, without the address printout.
+
+
 The game is one hand-edited HTML file (`../play/index.html`). No build step, no
 bundler, no modules — every change is a surgical string replacement inside that
 file. `HANDOFF.txt` in the parent folder is the full context: invariants, the
